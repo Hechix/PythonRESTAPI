@@ -8,7 +8,7 @@ def peticion(cliente_conexion, cliente_direccion):
     # TODO EN #3
     print(cliente_direccion)
     http = cliente_conexion.recv(1024)
-    # print(http)
+    print(http)
     cliente_conexion.sendall(http)
     cliente_conexion.close()
 
