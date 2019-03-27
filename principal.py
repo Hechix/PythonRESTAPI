@@ -16,17 +16,16 @@ def peticion(cliente_conexion, cliente_direccion):
     print(http)
     cliente_conexion.sendall(http)
     cliente_conexion.close()
-    SERVIDOR_ENCENDIDO = False
 
 def main():
-    global HPRESTAPI
+    global SERVIDOR_ENCENDIDO,SERVIDOR_ENLACE
     leerConfiguracion()
     logging.basicConfig(format='%(asctime)s - %(message)s', level=logging.INFO, datefmt='%d-%m-%y %H:%M:%S')
     logging.debug('INICIANDO SERVER')
-    servidor, puerto = '', 80 #Leer esto de configuracion
+    servidor, puerto = '', 80 
     servidor_escucha = socket(AF_INET, SOCK_STREAM)
     servidor_escucha.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
-    servidor_escucha.bind((servidor, puerto))
+    servidor_escucha.bind(SERVIDOR_ENLACE)
     servidor_escucha.listen(10)
 
     logging.debug("SERVER INICIADO")
@@ -43,4 +42,5 @@ def main():
 
 if __name__ == '__main__':
     SERVIDOR_ENCENDIDO = True
+    SERVIDOR_ENLACE = ('',-1)#Modificar esto de configuracion
     main()
