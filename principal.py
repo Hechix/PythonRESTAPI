@@ -9,14 +9,14 @@ def leerConfiguracion():
 
 
 def peticion(cliente_conexion, cliente_direccion):
-    global HPRESTAPI
+    global SERVIDOR_ENCENDIDO
     #TODO EN #3
     print(cliente_direccion)
     http = cliente_conexion.recv(1024)
     print(http)
     cliente_conexion.sendall(http)
     cliente_conexion.close()
-    HPRESTAPI = False
+    SERVIDOR_ENCENDIDO = False
 
 def main():
     global HPRESTAPI
@@ -30,8 +30,7 @@ def main():
     servidor_escucha.listen(10)
 
     logging.debug("SERVER INICIADO")
-    HPRESTAPI = True
-    while HPRESTAPI:
+    while SERVIDOR_ENCENDIDO:
         try:
             cliente_conexion, cliente_direccion = servidor_escucha.accept()
             peti = Thread(target=peticion, args=(
@@ -43,5 +42,5 @@ def main():
 
 
 if __name__ == '__main__':
-    HPRESTAPI = True
+    SERVIDOR_ENCENDIDO = True
     main()
