@@ -21,6 +21,30 @@ def main():
     servidor_escucha.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     servidor_escucha.bind(CONFIGURACION['SERVIDOR_ENLACE'])
     servidor_escucha.listen(10)
+    logging.info("Bienvenido a\n\
+ _   _           _     _      _               \n\
+| | | |         | |   (_)    ( )              \n\
+| |_| | ___  ___| |__  ___  _|/ ___           \n\
+|  _  |/ _ \/ __| '_ \| \ \/ / / __|          \n\
+| | | |  __/ (__| | | | |>  <  \__ \          \n\
+\_| |_/\___|\___|_| |_|_/_/\_\ |___/          \n\
+                                              \n\
+______      _   _                             \n\
+| ___ \    | | | |                            \n\
+| |_/ /   _| |_| |__   ___  _ __              \n\
+|  __/ | | | __| '_ \ / _ \| '_ \             \n\
+| |  | |_| | |_| | | | (_) | | | |            \n\
+\_|   \__, |\__|_| |_|\___/|_| |_|            \n\
+       __/ |                                  \n\
+      |___/                                   \n\
+______ _____ _____ _____    ___  ______ _____ \n\
+| ___ \  ___/  ___|_   _|  / _ \ | ___ \_   _|\n\
+| |_/ / |__ \ `--.  | |   / /_\ \| |_/ / | |  \n\
+|    /|  __| `--. \ | |   |  _  ||  __/  | |  \n\
+| |\ \| |___/\__/ / | |   | | | || |    _| |_ \n\
+\_| \_\____/\____/  \_/   \_| |_/\_|    \___/ \n\
+                                              \n\
+                                              ")
     while CONFIGURACION['SERVIDOR_ENCENDIDO']:
         try:
             cliente_conexion, cliente_direccion = servidor_escucha.accept()
