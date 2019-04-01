@@ -12,9 +12,7 @@ class Peticion:
 
     def procesar(self):
         self.datos_recibidos = self.cliente_conexion.recv(8192)
-        print(self.datos_recibidos)
         tipo_peticion = self.datos_recibidos.decode('utf-8').split(' ')[0]
-        print(tipo_peticion)
 
         if tipo_peticion == 'GET':
             if not self.CONFIGURACION['ACEPTAR_GET']:
@@ -60,8 +58,6 @@ class Peticion:
 
         if codigo_estado in codigos_estado.keys() and not contenido:
             contenido = codigos_estado[codigo_estado]
-
-        print(codigo_estado, contenido)
 
         # TODO Crear HTML y enviarlo
 

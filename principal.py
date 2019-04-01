@@ -43,7 +43,6 @@ ______ _____ _____ _____    ___  ______ _____ \n\
                 cliente_conexion, cliente_direccion, CONFIGURACION, logging)
             hilo = Thread(target=peticion.procesar)
             hilo.start()
-            break
         except Exception as e:
             logging.error("/!\\ ERROR - " + str(e))
 
