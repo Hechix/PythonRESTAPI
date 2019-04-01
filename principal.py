@@ -1,16 +1,7 @@
 from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
 from threading import Thread
 import logging
-
-
-def peticion(cliente_conexion, cliente_direccion):
-    global SERVIDOR_ENCENDIDO
-    # TODO EN #3
-    print(cliente_direccion)
-    http = cliente_conexion.recv(1024)
-    print(http)
-    cliente_conexion.sendall(http)
-    cliente_conexion.close()
+from Peticion import Peticion
 
 
 def main():
@@ -48,10 +39,11 @@ ______ _____ _____ _____    ___  ______ _____ \n\
     while CONFIGURACION['SERVIDOR_ENCENDIDO']:
         try:
             cliente_conexion, cliente_direccion = servidor_escucha.accept()
-            peti = Thread(target=peticion, args=(
-                cliente_conexion, cliente_direccion,))
-            peti.start()
-
+            peticion = Peticion(
+                cliente_conexion, cliente_direccion, CONFIGURACION, logging)
+            hilo = Thread(target=peticion.procesar)
+            hilo.start()
+            break
         except Exception as e:
             logging.error("/!\\ ERROR - " + str(e))
 
@@ -84,7 +76,7 @@ def cargar_configuracion():
 
                             else:
                                 CONFIGURACION[parametro] = valor
-                                
+
                         else:
                             logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
                                                 level=logging.INFO, datefmt='%d-%m-%y %H:%M:%S')
