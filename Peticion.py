@@ -21,10 +21,34 @@ class Peticion:
                 self.logging.info('No aceptamos GET')
                 self.devolver_estado(403)
 
-        self.cliente_conexion.sendall(self.datos_recibidos)
-        self.cliente_conexion.close()
+            self.GET()
 
-    def devolver_estado(codigo_estado=500, contenido=False):
+        elif tipo_peticion == 'POST':
+            if not self.CONFIGURACION['ACEPTAR_POST']:
+                self.logging.info('No aceptamos POST')
+                self.devolver_estado(403)
+
+            self.POST()
+        elif tipo_peticion == 'PUT':
+            if not self.CONFIGURACION['ACEPTAR_PUT']:
+                self.logging.info('No aceptamos PUT')
+                self.devolver_estado(403)
+
+            self.PUT()
+        elif tipo_peticion == 'DELETE':
+            if not self.CONFIGURACION['ACEPTAR_DELETE']:
+                self.logging.info('No aceptamos DELETE')
+                self.devolver_estado(403)
+
+            self.DELETE()
+
+        else:
+            raise Exception('Ultima salida no implementada')
+            # TODO Gestionar que ocurre cuando hay una peticion no soportada
+
+        self.devolver_estado(200, self.datos_recibidos)
+
+    def devolver_estado(self, codigo_estado=500, contenido=False):
         codigos_estado = {
             200: 'OK',
             400: 'PETICION_INCORRECTA',
@@ -38,3 +62,20 @@ class Peticion:
             contenido = codigos_estado[codigo_estado]
 
         print(codigo_estado, contenido)
+
+        # TODO Crear HTML y enviarlo
+
+        self.cliente_conexion.sendall(contenido)
+        self.cliente_conexion.close()
+
+    def GET(self):
+        raise Exception('GET no implementado')
+
+    def POST(self):
+        raise Exception('POST no implementado')
+
+    def PUT(self):
+        raise Exception('PUT no implementado')
+
+    def DELETE(self):
+        raise Exception('DELETE no implementado')
