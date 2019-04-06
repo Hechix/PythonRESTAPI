@@ -1,3 +1,4 @@
+import almacenamiento
 class Peticion:
     def __init__(self, cliente_conexion, cliente_direccion, CONFIGURACION, logging):
         self.cliente_conexion = cliente_conexion
@@ -65,7 +66,8 @@ class Peticion:
         self.cliente_conexion.close()
 
     def GET(self):
-        raise Exception('GET no implementado')
+        almacenamiento.leer_json()
+        #raise Exception('GET no implementado')
 
     def POST(self):
         raise Exception('POST no implementado')
