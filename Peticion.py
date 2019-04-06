@@ -99,7 +99,8 @@ class Peticion:
                     self.CONFIGURACION)
                 self.devolver_estado(200, datos_almacenados)
             except Exception:
-                self.devolver_estado(500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
+                self.devolver_estado(
+                    500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
         else:
             separacion_indice_de_parametros = self.URI.split('?')
             trozos_URI = separacion_indice_de_parametros[0].split('/')
@@ -129,12 +130,41 @@ class Peticion:
                 self.devolver_estado(200, str(datos_almacenados))
             except Exception as e:
                 if str(e) in ['ALMACENAMIENTO_JSON_OBJETO_SIN_ATRIBUTO_PRIMARIO', 'ALMACENAMIENTO_JSON_MALFORMADO']:
-                    self.devolver_estado(404,str(e))
+                    self.devolver_estado(404, str(e))
                 else:
                     self.devolver_estado(404)
 
     def POST(self):
-        raise Exception('POST no implementado')
+        trozos_URI = self.URI.split('?')[0].split('/')
+        objeto_recibido = str(self.datos_recibidos.split(b"\r\n\r\n")[1])[2:-1]
+
+        try:
+            # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
+            trozos_URI = [
+                elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
+
+            if len(trozos_URI) == 0:
+                self.devolver_estado(
+                    400, 'NO_SE_PUEDE_ALMACENAR_FUERA_DE_TABLA')
+
+            objeto_creado = almacenamiento.guardar_objeto(
+                self.CONFIGURACION, objeto_recibido, trozos_URI)
+
+            self.devolver_estado(200, objeto_creado)
+
+        except Exception as e:
+            errores_personalizados = [
+                'OBJETO_SIN_ATRIBUTO_PRIMARIO',
+                'NO_EXISTE_LA_TABLA',
+                'ATRIBUTO_PRIMARIO_YA_EXISTENTE'
+            ]
+
+            if str(e) in errores_personalizados:
+                self.devolver_estado(400, str(e))
+
+            else:
+                self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
+                print(str(e))
 
     def PUT(self):
         raise Exception('PUT no implementado')
