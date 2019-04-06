@@ -46,6 +46,8 @@ ______ _____ _____ _____    ___  ______ _____ \n\
         except Exception as e:
             logging.error("/!\\ ERROR - " + str(e))
 
+        
+
 
 def cargar_configuracion():
     global CONFIGURACION

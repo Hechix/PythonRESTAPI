@@ -4,6 +4,11 @@
             "id": 1,
             "titulo": "Hechix's Python REST API",
             "autor": "Hechix"
+        },
+        {
+            "id": 2,
+            "titulo": "Lorem Ipsum",
+            "autor": "Hechix"
         }
     ],
     "comentarios": [
@@ -11,6 +16,11 @@
             "id": 1,
             "contenido": "Este es el .json por defecto! :D",
             "postId": 1
+        },
+        {
+            "id": 2,
+            "contenido": "Audi famam illius.<br>Solus in hostes ruit et patriam servavit.",
+            "postId": 2
         }
     ]
 }

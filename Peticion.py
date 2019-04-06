@@ -62,6 +62,7 @@ class Peticion:
             200: 'OK',
             400: 'PETICION_INCORRECTA',
             403: 'ACCESO_DENEGADO',
+            404: 'NO_EXISTEN_DATOS',
             500: 'ERROR_INTERNO_DEL_SERVIDOR'
         }
 
@@ -91,9 +92,25 @@ class Peticion:
                            '\t -> Finalizada la conexion')
 
     def GET(self):
-        print(self.URI)
-        self.devolver_estado(200, 'Hechix\'s Python REST API')
-        #raise Exception('GET no implementado')
+        self.logging.info(self.cliente_direccion + ' GET ' + self.URI)
+        if self.URI == '/':
+            try:
+                datos_almacenados = almacenamiento.indexar_json(
+                    self.CONFIGURACION)
+                self.devolver_estado(200, datos_almacenados)
+            except Exception:
+                self.devolver_estado(500,'NO_EXISTE_ALMACENAMIENTO_JSON')
+        else:
+            trozos_URI = self.URI.split('/')
+            # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB
+            trozos_URI = [
+                elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
+            try:
+                datos_almacenados = almacenamiento.leer_json(
+                    self.CONFIGURACION, trozos_URI)
+                self.devolver_estado(200, datos_almacenados)
+            except Exception:
+                self.devolver_estado(404)
 
     def POST(self):
         raise Exception('POST no implementado')
