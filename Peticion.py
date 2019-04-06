@@ -85,7 +85,7 @@ class Peticion:
                 pass
 
         self.logging.info(self.cliente_direccion + '\t -> ' +
-                          str(codigo_estado) + ' ' + codigos_estado[codigo_estado])
+                          str(codigo_estado) + ' ' + contenido)
         self.cliente_conexion.sendall(html)
         self.cliente_conexion.close()
         self.logging.debug(self.cliente_direccion +
@@ -127,8 +127,11 @@ class Peticion:
                             else:
                                 indice += 1
                 self.devolver_estado(200, str(datos_almacenados))
-            except Exception:
-                self.devolver_estado(404)
+            except Exception as e:
+                if str(e) in ['ALMACENAMIENTO_JSON_OBJETO_SIN_ATRIBUTO_PRIMARIO', 'ALMACENAMIENTO_JSON_MALFORMADO']:
+                    self.devolver_estado(404,str(e))
+                else:
+                    self.devolver_estado(404)
 
     def POST(self):
         raise Exception('POST no implementado')
