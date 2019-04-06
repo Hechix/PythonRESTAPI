@@ -1,0 +1,16 @@
+{
+    "posts": [
+        {
+            "id": 1,
+            "titulo": "Hechix's Python REST API",
+            "autor": "Hechix"
+        }
+    ],
+    "comentarios": [
+        {
+            "id": 1,
+            "contenido": "¡Este es el .json por defecto!",
+            "postId": 1
+        }
+    ]
+}
