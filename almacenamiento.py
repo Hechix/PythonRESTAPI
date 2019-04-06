@@ -65,7 +65,7 @@ def guardar_objeto(CONFIGURACION, objeto, indices):
         json = json_load(archivo)
 
     if not indices[0] in json.keys():
-        raise Exception('NO_EXISTE_LA_TABLA')
+        raise Exception('NO_EXISTE_EL_DESTINO')
 
     encontrado = False
     for objeto_almacenado in json[indices[0]]:

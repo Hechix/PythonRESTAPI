@@ -145,7 +145,7 @@ class Peticion:
 
             if len(trozos_URI) == 0:
                 self.devolver_estado(
-                    400, 'NO_SE_PUEDE_ALMACENAR_FUERA_DE_TABLA')
+                    400, 'NO_EXISTE_EL_DESTINO')
 
             objeto_creado = almacenamiento.guardar_objeto(
                 self.CONFIGURACION, objeto_recibido, trozos_URI)
@@ -155,7 +155,7 @@ class Peticion:
         except Exception as e:
             errores_personalizados = [
                 'OBJETO_SIN_ATRIBUTO_PRIMARIO',
-                'NO_EXISTE_LA_TABLA',
+                'NO_EXISTE_EL_DESTINO',
                 'ATRIBUTO_PRIMARIO_YA_EXISTENTE'
             ]
 
