@@ -121,7 +121,7 @@ def cargar_configuracion():
                 logging.basicConfig(format='%(asctime)s - %(message)s',
                                     level=logging.INFO, datefmt='%d-%m-%y %H:%M:%S')
 
-'''
+
 if __name__ == '__main__':
     CONFIGURACION = {
         'SERVIDOR_ENCENDIDO': True,
@@ -140,3 +140,4 @@ if __name__ == '__main__':
 import almacenamiento
 print('\n'*50)
 almacenamiento.leer_json()
+'''
