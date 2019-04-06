@@ -1,3 +1,6 @@
+import almacenamiento
+
+
 class Peticion:
     def __init__(self, cliente_conexion, cliente_direccion, CONFIGURACION, logging):
         self.cliente_conexion = cliente_conexion
@@ -86,8 +89,8 @@ class Peticion:
                            '\t -> Finalizada la conexion')
 
     def GET(self):
-        print(self.datos_recibidos)
         self.devolver_estado(200, 'Hechix\'s Python REST API')
+        #raise Exception('GET no implementado')
 
     def POST(self):
         raise Exception('POST no implementado')
