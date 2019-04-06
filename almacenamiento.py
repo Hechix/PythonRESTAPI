@@ -1,12 +1,10 @@
 from json import load as jsonload
 
 
-def leer_json():
+def leer_json(CONFIGURACION):
     json = []
-    with open("db.json", 'r')as archivo:
+    with open(CONFIGURACION['FICHERO_JSON'], 'r')as archivo:
         json = jsonload(archivo)
-
-    procesar_campo(json)
 
 
 def procesar_campo(cosa, ind=0):

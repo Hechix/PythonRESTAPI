@@ -9,7 +9,7 @@
     "comentarios": [
         {
             "id": 1,
-            "contenido": "¡Este es el .json por defecto!",
+            "contenido": "Este es el .json por defecto! :D",
             "postId": 1
         }
     ]
