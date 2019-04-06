@@ -2,15 +2,29 @@
     "posts": [
         {
             "id": 1,
+            "fecha": "28/3/19",
             "titulo": "Hechix's Python REST API",
+            "autor": "Hechix"
+        },
+        {
+            "id": 2,
+            "fecha": "1/4/19",
+            "titulo": "Lorem Ipsum",
             "autor": "Hechix"
         }
     ],
     "comentarios": [
         {
             "id": 1,
+            "fecha": "28/3/19",
             "contenido": "Este es el .json por defecto! :D",
             "postId": 1
+        },
+        {
+            "id": 2,
+            "fecha": "1/4/19",
+            "contenido": "Audi famam illius.<br>Solus in hostes ruit et patriam servavit.",
+            "postId": 2
         }
     ]
 }
