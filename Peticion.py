@@ -9,13 +9,15 @@ class Peticion:
         self.datos_recibidos = b''
         self.logging = logging
         self.CONFIGURACION = CONFIGURACION
-
+        self.URI = '/'
         self.logging.debug('Inicializada Peticion para ' +
                            self.cliente_direccion)
 
     def procesar(self):
         self.datos_recibidos = self.cliente_conexion.recv(8192)
-        tipo_peticion = self.datos_recibidos.decode('utf-8').split(' ')[0]
+        trozos_peticion = self.datos_recibidos.decode('utf-8').split(' ')
+        tipo_peticion = trozos_peticion[0]
+        self.URI = trozos_peticion[1]
 
         if tipo_peticion == 'GET':
             if not self.CONFIGURACION['ACEPTAR_GET']:
@@ -60,6 +62,7 @@ class Peticion:
             200: 'OK',
             400: 'PETICION_INCORRECTA',
             403: 'ACCESO_DENEGADO',
+            404: 'NO_EXISTEN_DATOS',
             500: 'ERROR_INTERNO_DEL_SERVIDOR'
         }
 
@@ -89,8 +92,43 @@ class Peticion:
                            '\t -> Finalizada la conexion')
 
     def GET(self):
-        self.devolver_estado(200, 'Hechix\'s Python REST API')
-        #raise Exception('GET no implementado')
+        self.logging.info(self.cliente_direccion + ' GET ' + self.URI)
+        if self.URI == '/':
+            try:
+                datos_almacenados = almacenamiento.indexar_json(
+                    self.CONFIGURACION)
+                self.devolver_estado(200, datos_almacenados)
+            except Exception:
+                self.devolver_estado(500, 'NO_EXISTE_ALMACENAMIENTO_JSON')
+        else:
+            separacion_indice_de_parametros = self.URI.split('?')
+            trozos_URI = separacion_indice_de_parametros[0].split('/')
+            # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
+            trozos_URI = [
+                elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
+            try:
+                datos_almacenados = almacenamiento.leer_json(
+                    self.CONFIGURACION, trozos_URI)
+                # Si existen parametros, por cada parametro y por cada dato recuperado se comprueba, solo funciona con objetos
+                if len(separacion_indice_de_parametros) > 1:
+                    if not isinstance(datos_almacenados, list):
+                        self.devolver_estado(400)
+                        return True
+                    parametros = separacion_indice_de_parametros[1].split("&")
+                    for parametro in parametros:
+                        indice = 0
+                        while indice < len(datos_almacenados):
+                            if not isinstance(datos_almacenados[indice], dict):
+                                self.devolver_estado(400)
+                                return True
+                            if not str(datos_almacenados[indice][parametro.split("=")[0]]) == str(parametro.split("=")[1]):
+                                datos_almacenados.remove(
+                                    datos_almacenados[indice])
+                            else:
+                                indice += 1
+                self.devolver_estado(200, str(datos_almacenados))
+            except Exception:
+                self.devolver_estado(404)
 
     def POST(self):
         raise Exception('POST no implementado')
