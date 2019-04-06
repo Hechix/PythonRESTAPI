@@ -92,7 +92,6 @@ class Peticion:
                            '\t -> Finalizada la conexion')
 
     def GET(self):
-<<<<<<< HEAD
         self.logging.info(self.cliente_direccion + ' GET ' + self.URI)
         if self.URI == '/':
             try:
@@ -112,10 +111,6 @@ class Peticion:
                 self.devolver_estado(200, datos_almacenados)
             except Exception:
                 self.devolver_estado(404)
-=======
-        print(self.URI)
-        self.devolver_estado(200, 'Hechix\'s Python REST API')
->>>>>>> 284def08be50933640ff758aa9d9d10e61ccabce
 
     def POST(self):
         raise Exception('POST no implementado')
