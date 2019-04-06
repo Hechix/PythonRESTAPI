@@ -8,6 +8,7 @@ def leer_json():
     procesar_campo(json)
 
 def procesar_campo(cosa,ind = 0):
+    # Esto sera para en la version 1.0 formar el indice
     #print(type(cosa),cosa)
     if isinstance(cosa,dict):
         for campo in cosa: 
