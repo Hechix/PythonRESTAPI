@@ -1,4 +1,6 @@
 import almacenamiento
+
+
 class Peticion:
     def __init__(self, cliente_conexion, cliente_direccion, CONFIGURACION, logging):
         self.cliente_conexion = cliente_conexion
