@@ -164,7 +164,6 @@ class Peticion:
 
             else:
                 self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
-                print(str(e))
 
     def PUT(self):
         raise Exception('PUT no implementado')
