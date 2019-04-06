@@ -9,13 +9,15 @@ class Peticion:
         self.datos_recibidos = b''
         self.logging = logging
         self.CONFIGURACION = CONFIGURACION
-
+        self.URI = '/'
         self.logging.debug('Inicializada Peticion para ' +
                            self.cliente_direccion)
 
     def procesar(self):
         self.datos_recibidos = self.cliente_conexion.recv(8192)
-        tipo_peticion = self.datos_recibidos.decode('utf-8').split(' ')[0]
+        trozos_peticion = self.datos_recibidos.decode('utf-8').split(' ')
+        tipo_peticion = trozos_peticion[0]
+        self.URI = trozos_peticion[1]
 
         if tipo_peticion == 'GET':
             if not self.CONFIGURACION['ACEPTAR_GET']:
@@ -89,6 +91,7 @@ class Peticion:
                            '\t -> Finalizada la conexion')
 
     def GET(self):
+        print(self.URI)
         self.devolver_estado(200, 'Hechix\'s Python REST API')
         #raise Exception('GET no implementado')
 
