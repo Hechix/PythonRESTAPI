@@ -103,7 +103,7 @@ class Peticion:
         else:
             separacion_indice_de_parametros = self.URI.split('?')
             trozos_URI = separacion_indice_de_parametros[0].split('/')
-            # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB
+            # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
             trozos_URI = [
                 elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
             try:
