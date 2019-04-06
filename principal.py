@@ -131,6 +131,7 @@ if __name__ == '__main__':
         'REGISTRO_ALMACENAR': False,
         'TIPO_SERVER': 'JSON',
         'FICHERO_JSON': 'db.json',  # TODO :  Cargar esto desde parametro de terminal
+        'JSON_ATRIBUTO_PRIMARIO': 'id',
         'ACEPTAR_GET': True,
         'ACEPTAR_POST':  True,
         'ACEPTAR_PUT': True,

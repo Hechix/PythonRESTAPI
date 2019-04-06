@@ -22,12 +22,29 @@ def leer_json(CONFIGURACION, indices):
         elif isinstance(puntero, list):
             encontrado = False
             for indice_listado in range(len(puntero)):
-                if str(puntero[indice_listado]['id']) == str(indices[indice_actual]):
+                if isinstance(puntero[indice_listado], list):
+                    raise Exception('ALMACENAMIENTO_JSON_MALFORMADO')
+
+                # Comprobacion de como está escrito el atributo primario, para evitar problemas como ID en vez de id
+                atributo_primario = ''
+                if CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'].lower() in puntero[indice_listado].keys():
+                    atributo_primario = CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'].lower(
+                    )
+                elif CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'].upper() in puntero[indice_listado].keys():
+                    atributo_primario = CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'].upper(
+                    )
+                else:
+                    raise Exception(
+                        'ALMACENAMIENTO_JSON_OBJETO_SIN_ATRIBUTO_PRIMARIO')
+
+                if str(puntero[indice_listado][atributo_primario]) == str(indices[indice_actual]):
                     puntero = puntero[indice_listado]
                     encontrado = True
                     break
+
             if not encontrado:
                 raise Exception('NO_EXISTEN_DATOS')
+
             indice_actual += 1
     return puntero
 
