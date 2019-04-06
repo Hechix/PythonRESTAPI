@@ -136,8 +136,3 @@ if __name__ == '__main__':
         'ACEPTAR_DELETE': True
     }
     main()
-'''
-import almacenamiento
-print('\n'*50)
-almacenamiento.leer_json()
-'''

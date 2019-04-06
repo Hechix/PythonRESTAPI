@@ -87,9 +87,7 @@ class Peticion:
                            '\t -> Finalizada la conexion')
 
     def GET(self):
-        print(self.datos_recibidos)
         self.devolver_estado(200, 'Hechix\'s Python REST API')
-        almacenamiento.leer_json()
         #raise Exception('GET no implementado')
 
     def POST(self):
