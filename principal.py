@@ -46,8 +46,6 @@ ______ _____ _____ _____    ___  ______ _____ \n\
         except Exception as e:
             logging.error("/!\\ ERROR - " + str(e))
 
-        
-
 
 def cargar_configuracion():
     global CONFIGURACION
@@ -132,7 +130,7 @@ if __name__ == '__main__':
         'REGISTRO_DEBUG': True,
         'REGISTRO_ALMACENAR': False,
         'TIPO_SERVER': 'JSON',
-        'FICHERO_JSON': 'db.json', # TODO :  Cargar esto desde parametro de terminal
+        'FICHERO_JSON': 'db.json',  # TODO :  Cargar esto desde parametro de terminal
         'ACEPTAR_GET': True,
         'ACEPTAR_POST':  True,
         'ACEPTAR_PUT': True,

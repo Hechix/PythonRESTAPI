@@ -99,7 +99,7 @@ class Peticion:
                     self.CONFIGURACION)
                 self.devolver_estado(200, datos_almacenados)
             except Exception:
-                self.devolver_estado(500,'NO_EXISTE_ALMACENAMIENTO_JSON')
+                self.devolver_estado(500, 'NO_EXISTE_ALMACENAMIENTO_JSON')
         else:
             trozos_URI = self.URI.split('/')
             # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB
