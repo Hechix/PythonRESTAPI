@@ -16,35 +16,41 @@ class Peticion:
 
         if tipo_peticion == 'GET':
             if not self.CONFIGURACION['ACEPTAR_GET']:
-                self.logging.info('No aceptamos GET')
+                self.logging.info(self.cliente_direccion +
+                                  '\t -> ' + 'No aceptamos GET')
                 self.devolver_estado(403)
-
-            self.GET()
+            else:
+                self.GET()
 
         elif tipo_peticion == 'POST':
             if not self.CONFIGURACION['ACEPTAR_POST']:
-                self.logging.info('No aceptamos POST')
+                self.logging.info(self.cliente_direccion +
+                                  '\t -> ' + 'No aceptamos POST')
                 self.devolver_estado(403)
+            else:
+                self.POST()
 
-            self.POST()
         elif tipo_peticion == 'PUT':
             if not self.CONFIGURACION['ACEPTAR_PUT']:
-                self.logging.info('No aceptamos PUT')
+                self.logging.info(self.cliente_direccion +
+                                  '\t -> ' + 'No aceptamos PUT')
                 self.devolver_estado(403)
+            else:
+                self.PUT()
 
-            self.PUT()
         elif tipo_peticion == 'DELETE':
             if not self.CONFIGURACION['ACEPTAR_DELETE']:
-                self.logging.info('No aceptamos DELETE')
+                self.logging.info(self.cliente_direccion +
+                                  '\t -> ' + 'No aceptamos DELETE')
                 self.devolver_estado(403)
-
-            self.DELETE()
+            else:
+                self.DELETE()
 
         else:
             raise Exception('Ultima salida no implementada')
             # TODO Gestionar que ocurre cuando hay una peticion no soportada
 
-        self.devolver_estado(200, self.datos_recibidos)
+        #self.devolver_estado(200, self.datos_recibidos)
 
     def devolver_estado(self, codigo_estado=500, contenido=False):
         codigos_estado = {
@@ -53,19 +59,35 @@ class Peticion:
             403: 'ACCESO_DENEGADO',
             500: 'ERROR_INTERNO_DEL_SERVIDOR'
         }
+
         if not isinstance(codigo_estado, int) or codigo_estado < 1:
             codigo_estado = 500
 
         if codigo_estado in codigos_estado.keys() and not contenido:
             contenido = codigos_estado[codigo_estado]
 
-        # TODO Crear HTML y enviarlo
+        html = 'HTTP/1.0 '+str(codigo_estado)+' ' + \
+            codigos_estado[codigo_estado]+'\r\r\n\r\n' + contenido
 
-        self.cliente_conexion.sendall(contenido)
+        try:
+            html = html.encode('cp1252')
+        except:
+            try:
+                html = html.encode('utf-8')
+                self.logging.info('Aviso: Codificada la respuesta con UTF-8')
+            except:
+                pass
+
+        self.logging.info(self.cliente_direccion + '\t -> ' +
+                          str(codigo_estado) + ' ' + codigos_estado[codigo_estado])
+        self.cliente_conexion.sendall(html)
         self.cliente_conexion.close()
+        self.logging.debug(self.cliente_direccion +
+                           '\t -> Finalizada la conexion')
 
     def GET(self):
-        raise Exception('GET no implementado')
+        print(self.datos_recibidos)
+        self.devolver_estado(200, 'Hechix\'s Python REST API')
 
     def POST(self):
         raise Exception('POST no implementado')
