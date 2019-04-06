@@ -10,6 +10,7 @@ def cargar_json(CONFIGURACION):
 
 def leer_json(CONFIGURACION, indices):
     puntero = cargar_json(CONFIGURACION)
+    # Se recorre el árbol JSON buscando los objetos que coincidan con los indices extraidos de la URI
     indice_actual = 0
     while indice_actual < len(indices):
         if isinstance(puntero, dict):
@@ -28,14 +29,14 @@ def leer_json(CONFIGURACION, indices):
             if not encontrado:
                 raise Exception('NO_EXISTEN_DATOS')
             indice_actual += 1
-    return str(puntero)
+    return puntero
 
 
 def indexar_json(CONFIGURACION):
     puntero = cargar_json(CONFIGURACION)
     return str(list(puntero.keys()))
 
-
+'''
 def procesar_campo(cosa, ind=0):
     # Esto sera para en la version 1.0 formar el indice
     # print(type(cosa),cosa)
@@ -51,3 +52,4 @@ def procesar_campo(cosa, ind=0):
 
     elif isinstance(cosa, (str, int)):
         print('\t'*ind, cosa)
+'''

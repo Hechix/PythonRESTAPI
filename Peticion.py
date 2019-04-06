@@ -101,14 +101,32 @@ class Peticion:
             except Exception:
                 self.devolver_estado(500, 'NO_EXISTE_ALMACENAMIENTO_JSON')
         else:
-            trozos_URI = self.URI.split('/')
+            separacion_indice_de_parametros = self.URI.split('?')
+            trozos_URI = separacion_indice_de_parametros[0].split('/')
             # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB
             trozos_URI = [
                 elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
             try:
                 datos_almacenados = almacenamiento.leer_json(
                     self.CONFIGURACION, trozos_URI)
-                self.devolver_estado(200, datos_almacenados)
+                # Si existen parametros, por cada parametro y por cada dato recuperado se comprueba, solo funciona con objetos
+                if len(separacion_indice_de_parametros) > 1:
+                    if not isinstance(datos_almacenados,list):
+                        self.devolver_estado(400)
+                        return True
+                    parametros = separacion_indice_de_parametros[1].split("&")
+                    for parametro in parametros:
+                        indice = 0
+                        while indice < len(datos_almacenados):
+                            if not isinstance(datos_almacenados[indice],dict):
+                                self.devolver_estado(400)
+                                return True
+                            if not str(datos_almacenados[indice][parametro.split("=")[0]]) == str(parametro.split("=")[1]):
+                                datos_almacenados.remove(
+                                    datos_almacenados[indice])
+                            else:
+                                indice += 1
+                self.devolver_estado(200, str(datos_almacenados))
             except Exception:
                 self.devolver_estado(404)
 

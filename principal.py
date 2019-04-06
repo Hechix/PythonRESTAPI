@@ -45,6 +45,7 @@ ______ _____ _____ _____    ___  ______ _____ \n\
             hilo.start()
         except Exception as e:
             logging.error("/!\\ ERROR - " + str(e))
+        break
 
 
 def cargar_configuracion():
