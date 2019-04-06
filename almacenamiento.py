@@ -2,7 +2,7 @@ from json import load as json_load, loads as json_loads, dump as json_dump
 
 
 def cargar_json(CONFIGURACION):
-    json = []
+    json = {}
     with open(CONFIGURACION['FICHERO_JSON'], 'r')as archivo:
         json = json_load(archivo)
     return json
@@ -61,8 +61,7 @@ def guardar_objeto(CONFIGURACION, objeto, indices):
     if not CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'] in objeto.keys():
         raise Exception('OBJETO_SIN_ATRIBUTO_PRIMARIO')
 
-    with open(CONFIGURACION['FICHERO_JSON'], 'r')as archivo:
-        json = json_load(archivo)
+    json = cargar_json(CONFIGURACION)
 
     if not indices[0] in json.keys():
         raise Exception('NO_EXISTE_EL_DESTINO')
