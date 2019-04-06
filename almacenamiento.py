@@ -1,10 +1,10 @@
-from json import load as jsonload
+from json import load as json_load, loads as json_loads, dump as json_dump
 
 
 def cargar_json(CONFIGURACION):
-    json = []
+    json = {}
     with open(CONFIGURACION['FICHERO_JSON'], 'r')as archivo:
-        json = jsonload(archivo)
+        json = json_load(archivo)
     return json
 
 
@@ -52,6 +52,34 @@ def leer_json(CONFIGURACION, indices):
 def indexar_json(CONFIGURACION):
     puntero = cargar_json(CONFIGURACION)
     return str(list(puntero.keys()))
+
+
+def guardar_objeto(CONFIGURACION, objeto, indices):
+    objeto = json_loads(objeto)
+
+    if not CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'] in objeto.keys():
+        raise Exception('OBJETO_SIN_ATRIBUTO_PRIMARIO')
+
+    json = cargar_json(CONFIGURACION)
+
+    if not indices[0] in json.keys():
+        raise Exception('NO_EXISTE_EL_DESTINO')
+
+    encontrado = False
+    for objeto_almacenado in json[indices[0]]:
+        if objeto[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]] == objeto_almacenado[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]]:
+            encontrado = True
+            break
+
+    if encontrado:
+        raise Exception('ATRIBUTO_PRIMARIO_YA_EXISTENTE')
+
+    json[indices[0]].append(objeto)
+
+    with open(CONFIGURACION['FICHERO_JSON'], 'w')as archivo:
+        json_dump(json, archivo)
+
+    return str(objeto)
 
 
 '''
