@@ -111,14 +111,14 @@ class Peticion:
                     self.CONFIGURACION, trozos_URI)
                 # Si existen parametros, por cada parametro y por cada dato recuperado se comprueba, solo funciona con objetos
                 if len(separacion_indice_de_parametros) > 1:
-                    if not isinstance(datos_almacenados,list):
+                    if not isinstance(datos_almacenados, list):
                         self.devolver_estado(400)
                         return True
                     parametros = separacion_indice_de_parametros[1].split("&")
                     for parametro in parametros:
                         indice = 0
                         while indice < len(datos_almacenados):
-                            if not isinstance(datos_almacenados[indice],dict):
+                            if not isinstance(datos_almacenados[indice], dict):
                                 self.devolver_estado(400)
                                 return True
                             if not str(datos_almacenados[indice][parametro.split("=")[0]]) == str(parametro.split("=")[1]):

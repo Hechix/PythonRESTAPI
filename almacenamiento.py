@@ -36,6 +36,7 @@ def indexar_json(CONFIGURACION):
     puntero = cargar_json(CONFIGURACION)
     return str(list(puntero.keys()))
 
+
 '''
 def procesar_campo(cosa, ind=0):
     # Esto sera para en la version 1.0 formar el indice
