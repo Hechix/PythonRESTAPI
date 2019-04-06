@@ -99,7 +99,7 @@ class Peticion:
                     self.CONFIGURACION)
                 self.devolver_estado(200, datos_almacenados)
             except Exception:
-                self.devolver_estado(500, 'NO_EXISTE_ALMACENAMIENTO_JSON')
+                self.devolver_estado(500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
         else:
             separacion_indice_de_parametros = self.URI.split('?')
             trozos_URI = separacion_indice_de_parametros[0].split('/')
