@@ -92,6 +92,7 @@ class Peticion:
                            '\t -> Finalizada la conexion')
 
     def GET(self):
+        #TODO #22 MOVER ESTO A ANTES DE LLAMAR LA FUNCION
         self.logging.info(self.cliente_direccion + ' GET ' + self.URI)
         if self.URI == '/':
             try:
@@ -135,6 +136,7 @@ class Peticion:
                     self.devolver_estado(404)
 
     def POST(self):
+        # TODO #22 LANZAR ERROR EN POST CON ARGUMENTOS
         trozos_URI = self.URI.split('?')[0].split('/')
         objeto_recibido = str(self.datos_recibidos.split(b"\r\n\r\n")[1])[2:-1]
 
@@ -169,4 +171,5 @@ class Peticion:
         raise Exception('PUT no implementado')
 
     def DELETE(self):
-        raise Exception('DELETE no implementado')
+        self.devolver_estado(400)
+
