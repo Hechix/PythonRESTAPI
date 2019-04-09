@@ -77,7 +77,7 @@ def guardar_objeto(CONFIGURACION, objeto, indices):
 
 
 def buscar_objeto(CONFIGURACION, indices, json, atributo_primario=None):
-    if atributo_primario == None:
+    if atributo_primario == None and len(indices) == 2:
         atributo_primario = indices[1]
     atributo_primario = str(atributo_primario)
 

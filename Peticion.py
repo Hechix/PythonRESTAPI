@@ -186,6 +186,7 @@ class Peticion:
 
         if not len(trozos_URI) == 2: 
             self.devolver_estado(400)
+            return
 
         json = almacenamiento.cargar_json(self.CONFIGURACION)
         encontrado, objeto_encontrado = almacenamiento.buscar_objeto(self.CONFIGURACION, trozos_URI, json)
