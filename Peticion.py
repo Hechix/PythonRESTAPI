@@ -178,6 +178,7 @@ class Peticion:
 
         if len(trozos_URI) > 1:
             self.devolver_estado(400)
+            return
 
         trozos_URI = trozos_URI[0].split("/") 
         # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares

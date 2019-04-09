@@ -87,7 +87,6 @@ def buscar_objeto(CONFIGURACION, indices, json, atributo_primario=None):
     for objeto_almacenado in json[indices[0]]:
         if atributo_primario == str(objeto_almacenado[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]]):
             return True, objeto_almacenado
-            break
 
     return False, None
 
