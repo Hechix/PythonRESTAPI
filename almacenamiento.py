@@ -62,14 +62,8 @@ def guardar_objeto(CONFIGURACION, objeto, indices):
 
     json = cargar_json(CONFIGURACION)
 
-    if not indices[0] in json.keys():
-        raise Exception('NO_EXISTE_EL_DESTINO')
-
-    encontrado = False
-    for objeto_almacenado in json[indices[0]]:
-        if objeto[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]] == objeto_almacenado[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]]:
-            encontrado = True
-            break
+    encontrado, objeto_encontrado = buscar_objeto(
+        CONFIGURACION, indices, json, objeto[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]])
 
     if encontrado:
         raise Exception('ATRIBUTO_PRIMARIO_YA_EXISTENTE')
@@ -80,6 +74,28 @@ def guardar_objeto(CONFIGURACION, objeto, indices):
         json_dump(json, archivo)
 
     return str(objeto)
+
+
+def buscar_objeto(CONFIGURACION, indices, json, atributo_primario=None):
+    if atributo_primario == None and len(indices) == 2:
+        atributo_primario = indices[1]
+    atributo_primario = str(atributo_primario)
+
+    if not indices[0] in json.keys():
+        raise Exception('NO_EXISTE_EL_DESTINO')
+
+    for objeto_almacenado in json[indices[0]]:
+        if atributo_primario == str(objeto_almacenado[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]]):
+            return True, objeto_almacenado
+
+    return False, None
+
+
+def borrar_objeto(CONFIGURACION, indices, json, objeto):
+
+    json[indices[0]].remove(objeto)
+    with open(CONFIGURACION['FICHERO_JSON'], 'w')as archivo:
+        json_dump(json, archivo)
 
 
 '''
