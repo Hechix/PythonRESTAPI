@@ -12,32 +12,29 @@ def leer_json(CONFIGURACION, indices):
     puntero = cargar_json(CONFIGURACION)
     # Se recorre el árbol JSON buscando los objetos que coincidan con los indices extraidos de la URI
     indice_actual = 0
+    
     while indice_actual < len(indices):
+
         if isinstance(puntero, dict):
+
             if indices[indice_actual] in puntero.keys():
+
                 puntero = puntero[indices[indice_actual]]
                 indice_actual += 1
+
             else:
                 raise Exception('NO_EXISTEN_DATOS')
+
         elif isinstance(puntero, list):
+
             encontrado = False
+
             for indice_listado in range(len(puntero)):
+
                 if isinstance(puntero[indice_listado], list):
                     raise Exception('ALMACENAMIENTO_JSON_MALFORMADO')
 
-                # Comprobacion de como está escrito el atributo primario, para evitar problemas como ID en vez de id
-                atributo_primario = ''
-                if CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'].lower() in puntero[indice_listado].keys():
-                    atributo_primario = CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'].lower(
-                    )
-                elif CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'].upper() in puntero[indice_listado].keys():
-                    atributo_primario = CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'].upper(
-                    )
-                else:
-                    raise Exception(
-                        'ALMACENAMIENTO_JSON_OBJETO_SIN_ATRIBUTO_PRIMARIO')
-
-                if str(puntero[indice_listado][atributo_primario]) == str(indices[indice_actual]):
+                if str(puntero[indice_listado][CONFIGURACION['JSON_ATRIBUTO_PRIMARIO']]) == str(indices[indice_actual]):
                     puntero = puntero[indice_listado]
                     encontrado = True
                     break
@@ -46,6 +43,7 @@ def leer_json(CONFIGURACION, indices):
                 raise Exception('NO_EXISTEN_DATOS')
 
             indice_actual += 1
+
     return puntero
 
 
