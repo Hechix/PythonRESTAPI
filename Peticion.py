@@ -24,7 +24,7 @@ class Peticion:
             if not self.CONFIGURACION['ACEPTAR_GET']:
                 self.logging.info(self.cliente_direccion +
                                   '\t-> ' + 'No aceptamos GET')
-                self.devolver_estado(403)
+                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
             else:
                 self.GET()
 
@@ -32,7 +32,7 @@ class Peticion:
             if not self.CONFIGURACION['ACEPTAR_POST']:
                 self.logging.info(self.cliente_direccion +
                                   '\t-> ' + 'No aceptamos POST')
-                self.devolver_estado(403)
+                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
             else:
                 self.POST()
 
@@ -40,7 +40,7 @@ class Peticion:
             if not self.CONFIGURACION['ACEPTAR_PUT']:
                 self.logging.info(self.cliente_direccion +
                                   '\t-> ' + 'No aceptamos PUT')
-                self.devolver_estado(403)
+                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
             else:
                 self.PUT()
 
@@ -48,13 +48,12 @@ class Peticion:
             if not self.CONFIGURACION['ACEPTAR_DELETE']:
                 self.logging.info(self.cliente_direccion +
                                   '\t-> ' + 'No aceptamos DELETE')
-                self.devolver_estado(403)
+                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
             else:
                 self.DELETE()
 
         else:
-            raise Exception('Ultima salida no implementada')
-            # TODO Gestionar que ocurre cuando hay una peticion no soportada
+            self.devolver_estado(403, 'METODO_NO_ADMITIDO')
 
         #self.devolver_estado(200, self.datos_recibidos)
 
@@ -73,7 +72,6 @@ class Peticion:
         if codigo_estado in codigos_estado.keys() and not contenido:
             contenido = codigos_estado[codigo_estado]
 
-        # TODO #22 EL mensaje de error se envía junto al codigo en la cabecera
         html = 'HTTP/1.0 '+str(codigo_estado) + '\r\r\n\r\n' + contenido
 
         try:
@@ -135,9 +133,14 @@ class Peticion:
                     self.devolver_estado(404)
 
     def POST(self):
-        # TODO #22 LANZAR ERROR EN POST CON ARGUMENTOS
-        trozos_URI = self.URI.split('?')[0].split('/')
+        trozos_URI = self.URI.split('?')
         objeto_recibido = str(self.datos_recibidos.split(b"\r\n\r\n")[1])[2:-1]
+
+        if len(trozos_URI) > 1:
+            self.devolver_estado(400)
+            return
+
+        trozos_URI = trozos_URI[0].split("/")
 
         try:
             # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
@@ -168,8 +171,6 @@ class Peticion:
                 self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
 
     def PUT(self):
-
-         # TODO #22 LANZAR ERROR EN POST CON ARGUMENTOS
         trozos_URI = self.URI.split('?')
         objeto_recibido = str(self.datos_recibidos.split(b"\r\n\r\n")[1])[2:-1]
 
