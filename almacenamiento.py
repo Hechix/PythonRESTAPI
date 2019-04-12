@@ -65,6 +65,8 @@ def guardar_objeto(CONFIGURACION, objeto, indices):
     encontrado, objeto_encontrado, indice_objeto_almacenado = buscar_objeto(
         CONFIGURACION, indices, json, objeto[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]])
 
+    objeto_encontrado= indice_objeto_almacenado = None
+
     if encontrado:
         raise Exception('ATRIBUTO_PRIMARIO_YA_EXISTENTE')
 
@@ -88,8 +90,10 @@ def buscar_objeto(CONFIGURACION, indices, json, atributo_primario=None):
         raise Exception('NO_EXISTE_EL_DESTINO')
 
     if isinstance(json[indices[0]], list):
+        
         for indice_objeto_almacenado in range(len(json[indices[0]])):
             objeto_almacenado = json[indices[0]][indice_objeto_almacenado]
+
             if atributo_primario == str(objeto_almacenado[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]]):
                 return True, objeto_almacenado, indice_objeto_almacenado
 
@@ -116,6 +120,8 @@ def modificar_objeto(CONFIGURACION, objeto, indices):
 
     encontrado, objeto_encontrado, indice_objeto_almacenado = buscar_objeto(
         CONFIGURACION, indices, json, objeto[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]])
+
+    objeto_encontrado = None
 
     if not encontrado:
         raise Exception('NO_EXISTE_EL_DESTINO')

@@ -206,6 +206,7 @@ class Peticion:
             else:
                 self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
                 print(str(e))
+                
     def DELETE(self):
 
         #TODO #22 MOVER ESTO A ANTES DE LLAMAR LA FUNCION
@@ -226,10 +227,13 @@ class Peticion:
 
         json = almacenamiento.cargar_json(self.CONFIGURACION)
         encontrado, objeto_encontrado,indice_objeto_almacenado = almacenamiento.buscar_objeto(self.CONFIGURACION, trozos_URI, json)
+
+        indice_objeto_almacenado = None
         
         if encontrado :
             almacenamiento.borrar_objeto(self.CONFIGURACION,trozos_URI,json, objeto_encontrado)
             self.devolver_estado(200)
+
         else:
             self.devolver_estado(404)
             
