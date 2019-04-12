@@ -12,7 +12,7 @@ def leer_json(CONFIGURACION, indices):
     puntero = cargar_json(CONFIGURACION)
     # Se recorre el árbol JSON buscando los objetos que coincidan con los indices extraidos de la URI
     indice_actual = 0
-    
+
     while indice_actual < len(indices):
 
         if isinstance(puntero, dict):

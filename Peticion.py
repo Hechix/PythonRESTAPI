@@ -82,7 +82,7 @@ class Peticion:
                 pass
 
         self.logging.info(self.cliente_direccion + '\t-> ' +
-                          str(codigo_estado) + ' ' + contenido)
+                          str(codigo_estado) + ' ' + (contenido[1:500] + " ..." if len(contenido) > 500 else contenido))
         self.cliente_conexion.sendall(html)
         self.cliente_conexion.close()
         self.logging.debug(self.cliente_direccion +
