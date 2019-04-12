@@ -12,7 +12,7 @@ def main():
     servidor_escucha.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     servidor_escucha.bind(CONFIGURACION['SERVIDOR_ENLACE'])
     servidor_escucha.listen(10)
-    logging.info("Bienvenido a\n\
+    logging.info("Bienvenido a...\n\
  _   _           _     _      _               \n\
 | | | |         | |   (_)    ( )              \n\
 | |_| | ___  ___| |__  ___  _|/ ___           \n\

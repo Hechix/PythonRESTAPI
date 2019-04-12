@@ -4,8 +4,7 @@ import almacenamiento
 class Peticion:
     def __init__(self, cliente_conexion, cliente_direccion, CONFIGURACION, logging):
         self.cliente_conexion = cliente_conexion
-        self.cliente_direccion = cliente_direccion[0] + \
-            ' : ' + str(cliente_direccion[1])
+        self.cliente_direccion = cliente_direccion[0] 
         self.datos_recibidos = b''
         self.logging = logging
         self.CONFIGURACION = CONFIGURACION
@@ -18,11 +17,12 @@ class Peticion:
         trozos_peticion = self.datos_recibidos.decode('utf-8').split(' ')
         tipo_peticion = trozos_peticion[0]
         self.URI = trozos_peticion[1]
+        self.logging.info(self.cliente_direccion + "\t<- " + trozos_peticion[0] +" "+ self.URI)
 
         if tipo_peticion == 'GET':
             if not self.CONFIGURACION['ACEPTAR_GET']:
                 self.logging.info(self.cliente_direccion +
-                                  '\t -> ' + 'No aceptamos GET')
+                                  '\t-> ' + 'No aceptamos GET')
                 self.devolver_estado(403)
             else:
                 self.GET()
@@ -30,7 +30,7 @@ class Peticion:
         elif tipo_peticion == 'POST':
             if not self.CONFIGURACION['ACEPTAR_POST']:
                 self.logging.info(self.cliente_direccion +
-                                  '\t -> ' + 'No aceptamos POST')
+                                  '\t-> ' + 'No aceptamos POST')
                 self.devolver_estado(403)
             else:
                 self.POST()
@@ -38,7 +38,7 @@ class Peticion:
         elif tipo_peticion == 'PUT':
             if not self.CONFIGURACION['ACEPTAR_PUT']:
                 self.logging.info(self.cliente_direccion +
-                                  '\t -> ' + 'No aceptamos PUT')
+                                  '\t-> ' + 'No aceptamos PUT')
                 self.devolver_estado(403)
             else:
                 self.PUT()
@@ -46,7 +46,7 @@ class Peticion:
         elif tipo_peticion == 'DELETE':
             if not self.CONFIGURACION['ACEPTAR_DELETE']:
                 self.logging.info(self.cliente_direccion +
-                                  '\t -> ' + 'No aceptamos DELETE')
+                                  '\t-> ' + 'No aceptamos DELETE')
                 self.devolver_estado(403)
             else:
                 self.DELETE()
@@ -85,16 +85,14 @@ class Peticion:
             except:
                 pass
 
-        self.logging.info(self.cliente_direccion + '\t -> ' +
+        self.logging.info(self.cliente_direccion + '\t-> ' +
                           str(codigo_estado) + ' ' + contenido)
         self.cliente_conexion.sendall(html)
         self.cliente_conexion.close()
         self.logging.debug(self.cliente_direccion +
-                           '\t -> Finalizada la conexion')
+                           '\t-> Finalizada la conexion')
 
     def GET(self):
-        # TODO #22 MOVER ESTO A ANTES DE LLAMAR LA FUNCION
-        self.logging.info(self.cliente_direccion + ' GET ' + self.URI)
         if self.URI == '/':
             try:
                 datos_almacenados = almacenamiento.indexar_json(
@@ -211,9 +209,6 @@ class Peticion:
                 self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
 
     def DELETE(self):
-
-        # TODO #22 MOVER ESTO A ANTES DE LLAMAR LA FUNCION
-        self.logging.info(self.cliente_direccion + ' DELETE ' + self.URI)
         trozos_URI = self.URI.split('?')
 
         if len(trozos_URI) > 1:
