@@ -4,8 +4,7 @@ import almacenamiento
 class Peticion:
     def __init__(self, cliente_conexion, cliente_direccion, CONFIGURACION, logging):
         self.cliente_conexion = cliente_conexion
-        self.cliente_direccion = cliente_direccion[0] + \
-            ' : ' + str(cliente_direccion[1])
+        self.cliente_direccion = cliente_direccion[0]
         self.datos_recibidos = b''
         self.logging = logging
         self.CONFIGURACION = CONFIGURACION
@@ -18,44 +17,43 @@ class Peticion:
         trozos_peticion = self.datos_recibidos.decode('utf-8').split(' ')
         tipo_peticion = trozos_peticion[0]
         self.URI = trozos_peticion[1]
+        self.logging.info(self.cliente_direccion + "\t<- " +
+                          trozos_peticion[0] + " " + self.URI)
 
         if tipo_peticion == 'GET':
             if not self.CONFIGURACION['ACEPTAR_GET']:
                 self.logging.info(self.cliente_direccion +
-                                  '\t -> ' + 'No aceptamos GET')
-                self.devolver_estado(403)
+                                  '\t-> ' + 'No aceptamos GET')
+                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
             else:
                 self.GET()
 
         elif tipo_peticion == 'POST':
             if not self.CONFIGURACION['ACEPTAR_POST']:
                 self.logging.info(self.cliente_direccion +
-                                  '\t -> ' + 'No aceptamos POST')
-                self.devolver_estado(403)
+                                  '\t-> ' + 'No aceptamos POST')
+                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
             else:
                 self.POST()
 
         elif tipo_peticion == 'PUT':
             if not self.CONFIGURACION['ACEPTAR_PUT']:
                 self.logging.info(self.cliente_direccion +
-                                  '\t -> ' + 'No aceptamos PUT')
-                self.devolver_estado(403)
+                                  '\t-> ' + 'No aceptamos PUT')
+                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
             else:
                 self.PUT()
 
         elif tipo_peticion == 'DELETE':
             if not self.CONFIGURACION['ACEPTAR_DELETE']:
                 self.logging.info(self.cliente_direccion +
-                                  '\t -> ' + 'No aceptamos DELETE')
-                self.devolver_estado(403)
+                                  '\t-> ' + 'No aceptamos DELETE')
+                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
             else:
                 self.DELETE()
 
         else:
-            raise Exception('Ultima salida no implementada')
-            # TODO Gestionar que ocurre cuando hay una peticion no soportada
-
-        #self.devolver_estado(200, self.datos_recibidos)
+            self.devolver_estado(403, 'METODO_NO_ADMITIDO')
 
     def devolver_estado(self, codigo_estado=500, contenido=False):
         codigos_estado = {
@@ -72,9 +70,7 @@ class Peticion:
         if codigo_estado in codigos_estado.keys() and not contenido:
             contenido = codigos_estado[codigo_estado]
 
-        # TODO #22 EL mensaje de error se envía junto al codigo en la cabecera
-        html = 'HTTP/1.0 '+str(codigo_estado)+' ' + \
-            codigos_estado[codigo_estado]+'\r\r\n\r\n' + contenido
+        html = 'HTTP/1.0 '+str(codigo_estado) + '\r\r\n\r\n' + contenido
 
         try:
             html = html.encode('cp1252')
@@ -85,16 +81,18 @@ class Peticion:
             except:
                 pass
 
-        self.logging.info(self.cliente_direccion + '\t -> ' +
-                          str(codigo_estado) + ' ' + contenido)
+        self.logging.info(self.cliente_direccion + '\t-> ' +
+                          str(codigo_estado) + ' ' + (contenido[1:500] + " ..." if len(contenido) > 500 else contenido))
         self.cliente_conexion.sendall(html)
         self.cliente_conexion.close()
         self.logging.debug(self.cliente_direccion +
-                           '\t -> Finalizada la conexion')
+                           '\t-> Finalizada la conexion')
 
     def GET(self):
-        # TODO #22 MOVER ESTO A ANTES DE LLAMAR LA FUNCION
-        self.logging.info(self.cliente_direccion + ' GET ' + self.URI)
+        if b"\r\n\r\n" in self.datos_recibidos:
+            self.devolver_estado(400)
+            return
+
         if self.URI == '/':
             try:
                 datos_almacenados = almacenamiento.indexar_json(
@@ -137,9 +135,14 @@ class Peticion:
                     self.devolver_estado(404)
 
     def POST(self):
-        # TODO #22 LANZAR ERROR EN POST CON ARGUMENTOS
-        trozos_URI = self.URI.split('?')[0].split('/')
+        trozos_URI = self.URI.split('?')
         objeto_recibido = str(self.datos_recibidos.split(b"\r\n\r\n")[1])[2:-1]
+
+        if len(trozos_URI) > 1:
+            self.devolver_estado(400)
+            return
+
+        trozos_URI = trozos_URI[0].split("/")
 
         try:
             # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
@@ -170,8 +173,6 @@ class Peticion:
                 self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
 
     def PUT(self):
-
-         # TODO #22 LANZAR ERROR EN POST CON ARGUMENTOS
         trozos_URI = self.URI.split('?')
         objeto_recibido = str(self.datos_recibidos.split(b"\r\n\r\n")[1])[2:-1]
 
@@ -211,9 +212,10 @@ class Peticion:
                 self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
 
     def DELETE(self):
+        if b"\r\n\r\n" in self.datos_recibidos:
+            self.devolver_estado(400)
+            return
 
-        # TODO #22 MOVER ESTO A ANTES DE LLAMAR LA FUNCION
-        self.logging.info(self.cliente_direccion + ' DELETE ' + self.URI)
         trozos_URI = self.URI.split('?')
 
         if len(trozos_URI) > 1:
