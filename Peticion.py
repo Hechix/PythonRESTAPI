@@ -55,8 +55,6 @@ class Peticion:
         else:
             self.devolver_estado(403, 'METODO_NO_ADMITIDO')
 
-        #self.devolver_estado(200, self.datos_recibidos)
-
     def devolver_estado(self, codigo_estado=500, contenido=False):
         codigos_estado = {
             200: 'OK',
