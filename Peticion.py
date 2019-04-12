@@ -92,7 +92,7 @@ class Peticion:
                            '\t -> Finalizada la conexion')
 
     def GET(self):
-        #TODO #22 MOVER ESTO A ANTES DE LLAMAR LA FUNCION
+        # TODO #22 MOVER ESTO A ANTES DE LLAMAR LA FUNCION
         self.logging.info(self.cliente_direccion + ' GET ' + self.URI)
         if self.URI == '/':
             try:
@@ -172,12 +172,12 @@ class Peticion:
          # TODO #22 LANZAR ERROR EN POST CON ARGUMENTOS
         trozos_URI = self.URI.split('?')
         objeto_recibido = str(self.datos_recibidos.split(b"\r\n\r\n")[1])[2:-1]
-        
+
         if len(trozos_URI) > 1:
             self.devolver_estado(400)
             return
 
-        trozos_URI = trozos_URI[0].split("/") 
+        trozos_URI = trozos_URI[0].split("/")
 
         objeto_recibido = str(self.datos_recibidos.split(b"\r\n\r\n")[1])[2:-1]
 
@@ -190,7 +190,8 @@ class Peticion:
                 self.devolver_estado(
                     400, 'NO_EXISTE_EL_DESTINO')
 
-            objeto_creado = almacenamiento.modificar_objeto(self.CONFIGURACION, objeto_recibido, trozos_URI)
+            objeto_creado = almacenamiento.modificar_objeto(
+                self.CONFIGURACION, objeto_recibido, trozos_URI)
 
             self.devolver_estado(200, objeto_creado)
 
@@ -206,10 +207,10 @@ class Peticion:
             else:
                 self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
                 print(str(e))
-                
+
     def DELETE(self):
 
-        #TODO #22 MOVER ESTO A ANTES DE LLAMAR LA FUNCION
+        # TODO #22 MOVER ESTO A ANTES DE LLAMAR LA FUNCION
         self.logging.info(self.cliente_direccion + ' DELETE ' + self.URI)
         trozos_URI = self.URI.split('?')
 
@@ -217,24 +218,25 @@ class Peticion:
             self.devolver_estado(400)
             return
 
-        trozos_URI = trozos_URI[0].split("/") 
+        trozos_URI = trozos_URI[0].split("/")
         # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
-        trozos_URI = [ elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
+        trozos_URI = [
+            elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
 
-        if not len(trozos_URI) == 2: 
+        if not len(trozos_URI) == 2:
             self.devolver_estado(400)
             return
 
         json = almacenamiento.cargar_json(self.CONFIGURACION)
-        encontrado, objeto_encontrado,indice_objeto_almacenado = almacenamiento.buscar_objeto(self.CONFIGURACION, trozos_URI, json)
+        encontrado, objeto_encontrado, indice_objeto_almacenado = almacenamiento.buscar_objeto(
+            self.CONFIGURACION, trozos_URI, json)
 
         indice_objeto_almacenado = None
-        
-        if encontrado :
-            almacenamiento.borrar_objeto(self.CONFIGURACION,trozos_URI,json, objeto_encontrado)
+
+        if encontrado:
+            almacenamiento.borrar_objeto(
+                self.CONFIGURACION, trozos_URI, json, objeto_encontrado)
             self.devolver_estado(200)
 
         else:
             self.devolver_estado(404)
-            
-
