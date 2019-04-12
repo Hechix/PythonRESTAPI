@@ -72,6 +72,7 @@ class Peticion:
         if codigo_estado in codigos_estado.keys() and not contenido:
             contenido = codigos_estado[codigo_estado]
 
+        # TODO #22 EL mensaje de error se envía junto al codigo en la cabecera
         html = 'HTTP/1.0 '+str(codigo_estado)+' ' + \
             codigos_estado[codigo_estado]+'\r\r\n\r\n' + contenido
 
@@ -148,6 +149,7 @@ class Peticion:
             if len(trozos_URI) == 0:
                 self.devolver_estado(
                     400, 'NO_EXISTE_EL_DESTINO')
+                return
 
             objeto_creado = almacenamiento.guardar_objeto(
                 self.CONFIGURACION, objeto_recibido, trozos_URI)
@@ -189,6 +191,7 @@ class Peticion:
             if len(trozos_URI) == 0:
                 self.devolver_estado(
                     400, 'NO_EXISTE_EL_DESTINO')
+                return
 
             objeto_creado = almacenamiento.modificar_objeto(
                 self.CONFIGURACION, objeto_recibido, trozos_URI)
