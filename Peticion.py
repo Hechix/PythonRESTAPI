@@ -4,7 +4,7 @@ import almacenamiento
 class Peticion:
     def __init__(self, cliente_conexion, cliente_direccion, CONFIGURACION, logging):
         self.cliente_conexion = cliente_conexion
-        self.cliente_direccion = cliente_direccion[0] 
+        self.cliente_direccion = cliente_direccion[0]
         self.datos_recibidos = b''
         self.logging = logging
         self.CONFIGURACION = CONFIGURACION
@@ -17,7 +17,8 @@ class Peticion:
         trozos_peticion = self.datos_recibidos.decode('utf-8').split(' ')
         tipo_peticion = trozos_peticion[0]
         self.URI = trozos_peticion[1]
-        self.logging.info(self.cliente_direccion + "\t<- " + trozos_peticion[0] +" "+ self.URI)
+        self.logging.info(self.cliente_direccion + "\t<- " +
+                          trozos_peticion[0] + " " + self.URI)
 
         if tipo_peticion == 'GET':
             if not self.CONFIGURACION['ACEPTAR_GET']:
@@ -73,8 +74,7 @@ class Peticion:
             contenido = codigos_estado[codigo_estado]
 
         # TODO #22 EL mensaje de error se envía junto al codigo en la cabecera
-        html = 'HTTP/1.0 '+str(codigo_estado)+' ' + \
-            codigos_estado[codigo_estado]+'\r\r\n\r\n' + contenido
+        html = 'HTTP/1.0 '+str(codigo_estado) + '\r\r\n\r\n' + contenido
 
         try:
             html = html.encode('cp1252')
