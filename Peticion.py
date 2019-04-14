@@ -101,9 +101,14 @@ class Peticion:
             parametros_URI = []
 
         trozos_URI = separacion_URI_de_parametros[0].split('/')
+
         # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
         trozos_URI = [
             elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
+
+        # Tambien se eliminan los posibles argumentos en blanco
+        parametros_URI = [
+            parametro_en_URI for parametro_en_URI in parametros_URI if parametro_en_URI != '']
 
         if parametros:
             return trozos_URI, parametros_URI
@@ -149,12 +154,15 @@ class Peticion:
                         indice = 0
 
                         while indice < len(datos_almacenados):
+
                             if not isinstance(datos_almacenados[indice], dict):
                                 self.devolver_estado(400)
                                 return True
+
                             if not str(datos_almacenados[indice][parametro.split("=")[0]]) == str(parametro.split("=")[1]):
                                 datos_almacenados.remove(
                                     datos_almacenados[indice])
+
                             else:
                                 indice += 1
 
@@ -171,8 +179,6 @@ class Peticion:
         if len(trozos_URI) > 1:
             self.devolver_estado(400)
             return
-
-        trozos_URI = trozos_URI[0].split("/")
 
         try:
 
