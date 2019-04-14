@@ -175,8 +175,6 @@ class Peticion:
                 self.devolver_estado(400, str(e))
 
             else:
-                print(e)
-                print(objeto_recibido)
                 self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
 
     def PUT(self):
