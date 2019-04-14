@@ -153,6 +153,11 @@ class Peticion:
                 self.devolver_estado(
                     400, 'NO_EXISTE_EL_DESTINO')
                 return
+            if len(trozos_URI) > 1:
+                self.devolver_estado(
+                    400,'DESTINO_INCORRECTO')
+                return
+
 
             almacenamiento.guardar_objeto(
                 self.CONFIGURACION, objeto_recibido, trozos_URI)
@@ -194,6 +199,11 @@ class Peticion:
             if len(trozos_URI) == 0:
                 self.devolver_estado(
                     400, 'NO_EXISTE_EL_DESTINO')
+                return
+                
+            if len(trozos_URI) > 2:
+                self.devolver_estado(
+                    400,'DESTINO_INCORRECTO')
                 return
 
             objeto_creado = almacenamiento.modificar_objeto(
