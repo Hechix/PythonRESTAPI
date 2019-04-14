@@ -20,40 +20,43 @@ class Peticion:
         self.logging.info(self.cliente_direccion + "\t<- " +
                           trozos_peticion[0] + " " + self.URI)
 
-        if tipo_peticion == 'GET':
-            if not self.CONFIGURACION['ACEPTAR_GET']:
-                self.logging.info(self.cliente_direccion +
-                                  '\t-> ' + 'No aceptamos GET')
-                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
-            else:
-                self.GET()
+        try:
+            if tipo_peticion == 'GET':
+                if not self.CONFIGURACION['ACEPTAR_GET']:
+                    self.logging.info(self.cliente_direccion +
+                                      '\t-> ' + 'No aceptamos GET')
+                    self.devolver_estado(403, 'METODO_NO_ADMITIDO')
+                else:
+                    self.GET()
 
-        elif tipo_peticion == 'POST':
-            if not self.CONFIGURACION['ACEPTAR_POST']:
-                self.logging.info(self.cliente_direccion +
-                                  '\t-> ' + 'No aceptamos POST')
-                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
-            else:
-                self.POST()
+            elif tipo_peticion == 'POST':
+                if not self.CONFIGURACION['ACEPTAR_POST']:
+                    self.logging.info(self.cliente_direccion +
+                                      '\t-> ' + 'No aceptamos POST')
+                    self.devolver_estado(403, 'METODO_NO_ADMITIDO')
+                else:
+                    self.POST()
 
-        elif tipo_peticion == 'PUT':
-            if not self.CONFIGURACION['ACEPTAR_PUT']:
-                self.logging.info(self.cliente_direccion +
-                                  '\t-> ' + 'No aceptamos PUT')
-                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
-            else:
-                self.PUT()
+            elif tipo_peticion == 'PUT':
+                if not self.CONFIGURACION['ACEPTAR_PUT']:
+                    self.logging.info(self.cliente_direccion +
+                                      '\t-> ' + 'No aceptamos PUT')
+                    self.devolver_estado(403, 'METODO_NO_ADMITIDO')
+                else:
+                    self.PUT()
 
-        elif tipo_peticion == 'DELETE':
-            if not self.CONFIGURACION['ACEPTAR_DELETE']:
-                self.logging.info(self.cliente_direccion +
-                                  '\t-> ' + 'No aceptamos DELETE')
-                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
-            else:
-                self.DELETE()
+            elif tipo_peticion == 'DELETE':
+                if not self.CONFIGURACION['ACEPTAR_DELETE']:
+                    self.logging.info(self.cliente_direccion +
+                                      '\t-> ' + 'No aceptamos DELETE')
+                    self.devolver_estado(403, 'METODO_NO_ADMITIDO')
+                else:
+                    self.DELETE()
 
-        else:
-            self.devolver_estado(403, 'METODO_NO_ADMITIDO')
+            else:
+                self.devolver_estado(403, 'METODO_NO_ADMITIDO')
+        except:
+            self.devolver_estado()
 
     def devolver_estado(self, codigo_estado=500, contenido=False):
         codigos_estado = {
@@ -89,9 +92,6 @@ class Peticion:
                            '\t-> Finalizada la conexion')
 
     def GET(self):
-        if b"\r\n\r\n" in self.datos_recibidos:
-            self.devolver_estado(400)
-            return
 
         if self.URI == '/':
             try:
@@ -136,7 +136,8 @@ class Peticion:
 
     def POST(self):
         trozos_URI = self.URI.split('?')
-        objeto_recibido = str(self.datos_recibidos.split(b"\r\n\r\n")[1])[2:-1]
+        objeto_recibido = self.datos_recibidos.split(b"\r\n\r\n")[
+            1].decode('utf-8')
 
         if len(trozos_URI) > 1:
             self.devolver_estado(400)
@@ -153,11 +154,15 @@ class Peticion:
                 self.devolver_estado(
                     400, 'NO_EXISTE_EL_DESTINO')
                 return
+            if len(trozos_URI) > 1:
+                self.devolver_estado(
+                    400, 'DESTINO_INCORRECTO')
+                return
 
-            objeto_creado = almacenamiento.guardar_objeto(
+            almacenamiento.guardar_objeto(
                 self.CONFIGURACION, objeto_recibido, trozos_URI)
 
-            self.devolver_estado(200, objeto_creado)
+            self.devolver_estado(200, objeto_recibido)
 
         except Exception as e:
             errores_personalizados = [
@@ -174,7 +179,8 @@ class Peticion:
 
     def PUT(self):
         trozos_URI = self.URI.split('?')
-        objeto_recibido = str(self.datos_recibidos.split(b"\r\n\r\n")[1])[2:-1]
+        objeto_recibido = self.datos_recibidos.split(b"\r\n\r\n")[
+            1].decode('utf-8')
 
         if len(trozos_URI) > 1:
             self.devolver_estado(400)
@@ -182,7 +188,8 @@ class Peticion:
 
         trozos_URI = trozos_URI[0].split("/")
 
-        objeto_recibido = str(self.datos_recibidos.split(b"\r\n\r\n")[1])[2:-1]
+        objeto_recibido = self.datos_recibidos.split(b"\r\n\r\n")[
+            1].decode('utf-8')
 
         try:
             # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
@@ -192,6 +199,11 @@ class Peticion:
             if len(trozos_URI) == 0:
                 self.devolver_estado(
                     400, 'NO_EXISTE_EL_DESTINO')
+                return
+
+            if len(trozos_URI) > 2:
+                self.devolver_estado(
+                    400, 'DESTINO_INCORRECTO')
                 return
 
             objeto_creado = almacenamiento.modificar_objeto(
@@ -212,9 +224,6 @@ class Peticion:
                 self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
 
     def DELETE(self):
-        if b"\r\n\r\n" in self.datos_recibidos:
-            self.devolver_estado(400)
-            return
 
         trozos_URI = self.URI.split('?')
 

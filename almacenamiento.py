@@ -73,8 +73,6 @@ def guardar_objeto(CONFIGURACION, objeto, indices):
     with open(CONFIGURACION['FICHERO_JSON'], 'w')as archivo:
         json_dump(json, archivo)
 
-    return str(objeto)
-
 
 def buscar_objeto(CONFIGURACION, indices, json, atributo_primario=None):
     # En caso de estar buscando para POST o PUT, se usa el atributo primario
