@@ -2,6 +2,7 @@ from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
 from threading import Thread
 import logging
 from Peticion import Peticion
+from webbrowser import open_new_tab as abrir_en_navegador
 
 
 def main():
@@ -12,6 +13,9 @@ def main():
     servidor_escucha.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     servidor_escucha.bind(CONFIGURACION['SERVIDOR_ENLACE'])
     servidor_escucha.listen(10)
+    # TODO Configuracion / linea comandos si se abre automaticamnte o no
+    abrir_en_navegador('http://localhost:' +
+                       str(CONFIGURACION['SERVIDOR_ENLACE'][1]))
     logging.info("Bienvenido a...\n\
  _   _           _     _      _               \n\
 | | | |         | |   (_)    ( )              \n\
@@ -45,6 +49,7 @@ ______ _____ _____ _____    ___  ______ _____ \n\
             hilo.start()
         except Exception as e:
             logging.error("/!\\ ERROR - " + str(e))
+        break
 
 
 def cargar_configuracion():

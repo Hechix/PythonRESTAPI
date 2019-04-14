@@ -85,8 +85,8 @@ class Peticion:
             except:
                 pass
 
-        self.logging.info(self.cliente_direccion + '\t-> ' +
-                          str(codigo_estado) + ' ' + (contenido[1:500] + " ..." if len(contenido) > 500 else contenido))
+        self.logging.info(self.cliente_direccion + '\t-> ' + str(codigo_estado) +
+                          ' ' + (contenido[1:500] + " ..." if len(contenido) > 500 else contenido))
         self.cliente_conexion.sendall(html)
         self.cliente_conexion.close()
         self.logging.debug(self.cliente_direccion +
@@ -131,13 +131,20 @@ class Peticion:
     def GET(self):
 
         if self.URI == '/':
+            # TODO Configuracion: nombre es index
+            # TODO Configuracion: si se carga index o no
             try:
-                datos_almacenados = almacenamiento.indexar_json(
-                    self.CONFIGURACION)
-                self.devolver_estado(200, datos_almacenados)
-            except Exception:
-                self.devolver_estado(
-                    500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
+                with open('public/index.html', 'r') as pagina_bienvenida:
+                    self.devolver_estado(200, pagina_bienvenida.read())
+            except Exception as e:
+                print(e)
+                try:
+                    datos_almacenados = almacenamiento.indexar_json(
+                        self.CONFIGURACION)
+                    self.devolver_estado(200, datos_almacenados)
+                except Exception:
+                    self.devolver_estado(
+                        500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
         else:
             trozos_URI, parametros = self.trocear_URI(parametros=True)
             try:
