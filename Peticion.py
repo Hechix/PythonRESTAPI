@@ -89,7 +89,7 @@ class Peticion:
                            '\t-> Finalizada la conexion')
 
     def GET(self):
-        if b"\r\n\r\n" in self.datos_recibidos:
+        if not self.datos_recibidos.split(b'\r\n\r\n')[1] == b'':
             self.devolver_estado(400)
             return
 
@@ -212,7 +212,7 @@ class Peticion:
                 self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
 
     def DELETE(self):
-        if b"\r\n\r\n" in self.datos_recibidos:
+        if not self.datos_recibidos.split(b'\r\n\r\n')[1] == b'':
             self.devolver_estado(400)
             return
 
