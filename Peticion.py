@@ -55,7 +55,8 @@ class Peticion:
 
             else:
                 self.devolver_estado(403, 'METODO_NO_ADMITIDO')
-        except:
+        except Exception as e:
+            print(e)
             self.devolver_estado()
 
     def devolver_estado(self, codigo_estado=500, contenido=False):
@@ -91,6 +92,37 @@ class Peticion:
         self.logging.debug(self.cliente_direccion +
                            '\t-> Finalizada la conexion')
 
+    def trocear_URI(self, parametros=False):
+        separacion_URI_de_parametros = self.URI.split('?')
+
+        try:
+            parametros_URI = separacion_URI_de_parametros[1].split("&")
+        except:
+            parametros_URI = []
+
+        trozos_URI = separacion_URI_de_parametros[0].split('/')
+        # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
+        trozos_URI = [
+            elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
+
+        if parametros:
+            return trozos_URI, parametros_URI
+        return trozos_URI
+
+    def captura_error(self, error, cod_error=400, msg_error=False):
+        errores_personalizados = [
+            'ALMACENAMIENTO_JSON_OBJETO_SIN_ATRIBUTO_PRIMARIO',
+            'ALMACENAMIENTO_JSON_MALFORMADO',
+            'OBJETO_SIN_ATRIBUTO_PRIMARIO',
+            'NO_EXISTE_EL_DESTINO',
+            'ATRIBUTO_PRIMARIO_YA_EXISTENTE'
+        ]
+
+        if error in errores_personalizados:
+            self.devolver_estado(404, error)
+        else:
+            self.devolver_estado(cod_error, msg_error)
+
     def GET(self):
 
         if self.URI == '/':
@@ -102,22 +134,20 @@ class Peticion:
                 self.devolver_estado(
                     500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
         else:
-            separacion_indice_de_parametros = self.URI.split('?')
-            trozos_URI = separacion_indice_de_parametros[0].split('/')
-            # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
-            trozos_URI = [
-                elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
+            trozos_URI, parametros = self.trocear_URI(parametros=True)
             try:
                 datos_almacenados = almacenamiento.leer_json(
                     self.CONFIGURACION, trozos_URI)
+
                 # Si existen parametros, por cada parametro y por cada dato recuperado se comprueba, solo funciona con objetos
-                if len(separacion_indice_de_parametros) > 1:
+                if len(parametros) > 0:
                     if not isinstance(datos_almacenados, list):
                         self.devolver_estado(400)
                         return True
-                    parametros = separacion_indice_de_parametros[1].split("&")
+
                     for parametro in parametros:
                         indice = 0
+
                         while indice < len(datos_almacenados):
                             if not isinstance(datos_almacenados[indice], dict):
                                 self.devolver_estado(400)
@@ -127,15 +157,14 @@ class Peticion:
                                     datos_almacenados[indice])
                             else:
                                 indice += 1
+
                 self.devolver_estado(200, str(datos_almacenados))
+
             except Exception as e:
-                if str(e) in ['ALMACENAMIENTO_JSON_OBJETO_SIN_ATRIBUTO_PRIMARIO', 'ALMACENAMIENTO_JSON_MALFORMADO']:
-                    self.devolver_estado(404, str(e))
-                else:
-                    self.devolver_estado(404)
+                self.captura_error(str(e), cod_error=404)
 
     def POST(self):
-        trozos_URI = self.URI.split('?')
+        trozos_URI = self.trocear_URI()
         objeto_recibido = self.datos_recibidos.split(b"\r\n\r\n")[
             1].decode('utf-8')
 
@@ -146,14 +175,12 @@ class Peticion:
         trozos_URI = trozos_URI[0].split("/")
 
         try:
-            # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
-            trozos_URI = [
-                elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
 
             if len(trozos_URI) == 0:
                 self.devolver_estado(
                     400, 'NO_EXISTE_EL_DESTINO')
                 return
+
             if len(trozos_URI) > 1:
                 self.devolver_estado(
                     400, 'DESTINO_INCORRECTO')
@@ -165,37 +192,14 @@ class Peticion:
             self.devolver_estado(200, objeto_recibido)
 
         except Exception as e:
-            errores_personalizados = [
-                'OBJETO_SIN_ATRIBUTO_PRIMARIO',
-                'NO_EXISTE_EL_DESTINO',
-                'ATRIBUTO_PRIMARIO_YA_EXISTENTE'
-            ]
-
-            if str(e) in errores_personalizados:
-                self.devolver_estado(400, str(e))
-
-            else:
-                self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
+            self.captura_error(str(e), msg_error='OBJETO_JSON_MALFORMADO')
 
     def PUT(self):
-        trozos_URI = self.URI.split('?')
-        objeto_recibido = self.datos_recibidos.split(b"\r\n\r\n")[
-            1].decode('utf-8')
-
-        if len(trozos_URI) > 1:
-            self.devolver_estado(400)
-            return
-
-        trozos_URI = trozos_URI[0].split("/")
-
+        trozos_URI = self.trocear_URI()
         objeto_recibido = self.datos_recibidos.split(b"\r\n\r\n")[
             1].decode('utf-8')
 
         try:
-            # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
-            trozos_URI = [
-                elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
-
             if len(trozos_URI) == 0:
                 self.devolver_estado(
                     400, 'NO_EXISTE_EL_DESTINO')
@@ -212,29 +216,11 @@ class Peticion:
             self.devolver_estado(200, objeto_creado)
 
         except Exception as e:
-            errores_personalizados = [
-                'OBJETO_SIN_ATRIBUTO_PRIMARIO',
-                'NO_EXISTE_EL_DESTINO'
-            ]
-
-            if str(e) in errores_personalizados:
-                self.devolver_estado(400, str(e))
-
-            else:
-                self.devolver_estado(400, 'OBJETO_JSON_MALFORMADO')
+            self.captura_error(str(e), msg_error='OBJETO_JSON_MALFORMADO')
 
     def DELETE(self):
 
-        trozos_URI = self.URI.split('?')
-
-        if len(trozos_URI) > 1:
-            self.devolver_estado(400)
-            return
-
-        trozos_URI = trozos_URI[0].split("/")
-        # El 1º indice es '', puede que existan otros si se introduce en la URL AAAA//BBBB en vez de AAAA/BBBB (repeticiones de / sin nada en medio) o similares
-        trozos_URI = [
-            elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
+        trozos_URI = self.trocear_URI()
 
         if not len(trozos_URI) == 2:
             self.devolver_estado(400)
