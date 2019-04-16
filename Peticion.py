@@ -128,23 +128,29 @@ class Peticion:
         else:
             self.devolver_estado(cod_error, msg_error)
 
+    def indexar_json(self):
+        try:
+            datos_almacenados = almacenamiento.indexar_json(
+                self.CONFIGURACION)
+            self.devolver_estado(200, datos_almacenados)
+        except Exception:
+            self.devolver_estado(
+                500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
+
     def GET(self):
 
         if self.URI == '/':
             # TODO Configuracion: nombre es index
             # TODO Configuracion: si se carga index o no
-            try:
-                with open('public/index.html', 'r') as pagina_bienvenida:
-                    self.devolver_estado(200, pagina_bienvenida.read())
-            except Exception as e:
-                print(e)
+            if self.CONFIGURACION['PAGINA_BIENVENIDA_SERVIR']:
                 try:
-                    datos_almacenados = almacenamiento.indexar_json(
-                        self.CONFIGURACION)
-                    self.devolver_estado(200, datos_almacenados)
-                except Exception:
-                    self.devolver_estado(
-                        500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
+                    with open(self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']+'/'+self.CONFIGURACION['PAGINA_BIENVENIDA_ARCHIVO'], 'r') as pagina_bienvenida:
+                        self.devolver_estado(200, pagina_bienvenida.read())
+                except Exception as e:
+                    print(e)
+                    self.indexar_json()
+            else:
+                self.indexar_json()
         else:
             trozos_URI, parametros = self.trocear_URI(parametros=True)
             try:
