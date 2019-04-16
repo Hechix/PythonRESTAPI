@@ -2,6 +2,7 @@ from socket import socket, AF_INET, SOCK_STREAM, SOL_SOCKET, SO_REUSEADDR
 from threading import Thread
 import logging
 from Peticion import Peticion
+from webbrowser import open_new_tab as abrir_en_navegador
 
 
 def main():
@@ -12,6 +13,10 @@ def main():
     servidor_escucha.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     servidor_escucha.bind(CONFIGURACION['SERVIDOR_ENLACE'])
     servidor_escucha.listen(10)
+    # TODO Configuracion / linea comandos si se abre automaticamnte o no
+    if CONFIGURACION['PAGINA_BIENVENIDA_ABRIR_AUTOMATICAMENTE_AL_INICIO']:
+        abrir_en_navegador('http://localhost:' +
+                           str(CONFIGURACION['SERVIDOR_ENLACE'][1]))
     logging.info("Bienvenido a...\n\
  _   _           _     _      _               \n\
 | | | |         | |   (_)    ( )              \n\
@@ -135,6 +140,10 @@ if __name__ == '__main__':
         'ACEPTAR_GET': True,
         'ACEPTAR_POST':  True,
         'ACEPTAR_PUT': True,
-        'ACEPTAR_DELETE': True
+        'ACEPTAR_DELETE': True,
+        'PAGINA_BIENVENIDA_SERVIR': True,
+        'PAGINA_BIENVENIDA_ABRIR_AUTOMATICAMENTE_AL_INICIO': True,
+        'PAGINA_BIENVENIDA_ARCHIVO': 'index.html',
+        'PAGINA_BIENVENIDA_DIRECTORIO': 'public'
     }
     main()
