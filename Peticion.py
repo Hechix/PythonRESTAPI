@@ -56,10 +56,9 @@ class Peticion:
             else:
                 self.devolver_estado(403, 'METODO_NO_ADMITIDO')
         except Exception as e:
-            print(e)
             self.devolver_estado()
 
-    def devolver_estado(self, codigo_estado=500, contenido=False):
+    def devolver_estado(self, codigo_estado=500, contenido=False,nombre_archivo = None):
         codigos_estado = {
             200: 'OK',
             400: 'PETICION_INCORRECTA',
@@ -73,20 +72,30 @@ class Peticion:
 
         if codigo_estado in codigos_estado.keys() and not contenido:
             contenido = codigos_estado[codigo_estado]
+            
+        if isinstance(contenido,str):
 
-        html = 'HTTP/1.0 '+str(codigo_estado) + '\r\r\n\r\n' + contenido
+            html = 'HTTP/1.0 '+str(codigo_estado) + '\r\r\n\r\n' + contenido
 
-        try:
-            html = html.encode('cp1252')
-        except:
             try:
-                html = html.encode('utf-8')
-                self.logging.info('Aviso: Codificada la respuesta con UTF-8')
+                html = html.encode('cp1252')
             except:
-                pass
+                try:
+                    html = html.encode('utf-8')
+                    self.logging.info('Aviso: Codificada la respuesta con UTF-8')
+                except:
+                    pass # TODO ver que hago en este caso
 
-        self.logging.info(self.cliente_direccion + '\t-> ' + str(codigo_estado) +
+        else: 
+            html = contenido
+            
+        if nombre_archivo:
+            self.logging.info(self.cliente_direccion + '\t-> ' + str(codigo_estado) +' '+nombre_archivo)
+
+        else:
+            self.logging.info(self.cliente_direccion + '\t-> ' + str(codigo_estado) +
                           ' ' + (contenido[1:500] + " ..." if len(contenido) > 500 else contenido))
+
         self.cliente_conexion.sendall(html)
         self.cliente_conexion.close()
         self.logging.debug(self.cliente_direccion +
@@ -138,21 +147,45 @@ class Peticion:
                 500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
 
     def GET(self):
+        trozos_URI, parametros = self.trocear_URI(parametros=True)
 
-        if self.URI == '/':
+        if len(trozos_URI) == 0:
             # TODO Configuracion: nombre es index
             # TODO Configuracion: si se carga index o no
             if self.CONFIGURACION['PAGINA_BIENVENIDA_SERVIR']:
                 try:
                     with open(self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']+'/'+self.CONFIGURACION['PAGINA_BIENVENIDA_ARCHIVO'], 'r') as pagina_bienvenida:
-                        self.devolver_estado(200, pagina_bienvenida.read())
+                        self.devolver_estado(200, pagina_bienvenida.read(),nombre_archivo=self.CONFIGURACION['PAGINA_BIENVENIDA_ARCHIVO'])
                 except Exception as e:
-                    print(e)
                     self.indexar_json()
             else:
                 self.indexar_json()
+        elif trozos_URI[0] == self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']:
+            directorio = ""
+            
+            for x in range(1, len(trozos_URI)):
+                directorio += "/" + trozos_URI[x]
+
+            try:
+                archivos_binarios = [
+                    'jpg',
+                    'png',
+                    'gif'
+                ]
+
+                if trozos_URI[-1].split(".")[-1] in archivos_binarios:
+                    with open(self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO'] + directorio, 'rb') as pagina_bienvenida:
+                        self.devolver_estado(200, pagina_bienvenida.read(),nombre_archivo=trozos_URI[-1])
+                        
+                else:
+                    with open(self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO'] + directorio, 'r') as pagina_bienvenida:
+                        self.devolver_estado(200, pagina_bienvenida.read(),nombre_archivo=trozos_URI[-1])
+
+            except Exception as e:
+                # Diferenciar no leido o error
+                if 1:  # Archivo no encontrado
+                    self.devolver_estado(404)
         else:
-            trozos_URI, parametros = self.trocear_URI(parametros=True)
             try:
                 datos_almacenados = almacenamiento.leer_json(
                     self.CONFIGURACION, trozos_URI)
