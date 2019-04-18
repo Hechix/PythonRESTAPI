@@ -16,7 +16,7 @@ class Peticion:
         self.datos_recibidos = self.cliente_conexion.recv(8192)
         trozos_peticion = self.datos_recibidos.decode('utf-8').split(' ')
         tipo_peticion = trozos_peticion[0]
-        self.URI = trozos_peticion[1]
+        self.URI = trozos_peticion[1] # TODO esto a veces da error por alguna razon
         self.logging.info(self.cliente_direccion + "\t<- " +
                           trozos_peticion[0] + " " + self.URI)
 
