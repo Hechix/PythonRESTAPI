@@ -34,7 +34,7 @@ html, body {
     height: 80vh;
     z-index: 1;
     width: 80vw;
-    margin: 5% 10%;
+    margin: 5vh 10vw;
 }
 
 .titulo {
@@ -114,7 +114,7 @@ html, body {
     background: rgba(0, 225, 255, 0.75);
 }
 
-.boton__github:link, .boton__github:visited {
+.boton--enlace:link, .boton--enlace:visited {
     color: black;
     text-decoration: none
 }

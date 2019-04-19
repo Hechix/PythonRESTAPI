@@ -17,5 +17,5 @@ function alternar_modo_fondo() {
     }
 }
 
-boton_alternar_modo_fondo = document.getElementById("boton__alternar-modo-fondo")
-boton_alternar_modo_fondo.onclick = alternar_modo_fondo
+
+cargar_vista_bienvenida()
