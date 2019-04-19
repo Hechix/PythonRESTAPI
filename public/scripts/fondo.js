@@ -46,6 +46,4 @@ function fondo_animado() {
     }
 }
 
-setInterval(fondo_animado, 120);
-
-Math.floor((Math.random() * 255));
+setInterval(fondo_animado, 240);

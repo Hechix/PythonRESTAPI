@@ -43,13 +43,15 @@ def leer_json(CONFIGURACION, indices):
                 raise Exception('NO_EXISTEN_DATOS')
 
             indice_actual += 1
-
     return puntero
 
 
 def indexar_json(CONFIGURACION):
     puntero = cargar_json(CONFIGURACION)
-    return str(list(puntero.keys()))
+    listado = []
+    for indice in puntero.keys():
+        listado.append({'nombre': indice})
+    return listado
 
 
 def guardar_objeto(CONFIGURACION, objeto, indices):

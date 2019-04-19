@@ -86,6 +86,10 @@ html, body {
     text-align: center;
 }
 
+.botones-horizontales {
+    margin-bottom: 15px;
+}
+
 .botones__superiores {
     margin-bottom: 20%;
 }
@@ -110,11 +114,23 @@ html, body {
     font-size: 12px;
 }
 
+.boton--no-estirado {
+    width: auto;
+    margin: 0;
+}
+
 .boton:hover {
-    background: rgba(0, 225, 255, 0.75);
+    background: rgba(0, 225, 255, 1);
 }
 
 .boton--enlace:link, .boton--enlace:visited {
     color: black;
-    text-decoration: none
+    text-decoration: none;
+}
+
+.raiz {
+    background: white;
+    padding: 5px;
+    border: 1px solid blue;
+    margin-bottom: 10px;
 }
