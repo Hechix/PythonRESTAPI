@@ -1,5 +1,5 @@
 html =
-`<div id="js-titulo" class="titulo titulo--oscuro">
+    `<div id="js-titulo" class="titulo titulo--oscuro">
     <div class="titulo titulo__superior">
         <span class="hechix">
             HECHIX'S
@@ -16,7 +16,7 @@ html =
 <div class="cuerpo">
     <div class="botones">
         <div class="botones__superiores">
-            <boton id="boton__empezar" class="boton boton--enlace boton__empezar">Empezar</boton>
+            <button id="boton__empezar" class="boton boton--enlace boton__empezar">Empezar</button>
         </div>
         <div class="botones__inferiores">
             <a class="boton boton--pequeño boton--enlace"
@@ -27,10 +27,12 @@ html =
     </div>
 </div>`
 
-function cargar_vista_bienvenida(){
+function cargar_vista_bienvenida() {
     principal = document.getElementById("js-principal")
     principal.innerHTML = html
-    
-boton_alternar_modo_fondo = document.getElementById("boton__alternar-modo-fondo")
-boton_alternar_modo_fondo.onclick = alternar_modo_fondo
+
+    boton_empezar = document.getElementById("boton__empezar")
+    boton_alternar_modo_fondo = document.getElementById("boton__alternar-modo-fondo")
+    boton_empezar.onclick = cargar_vista_panel_de_control
+    boton_alternar_modo_fondo.onclick = alternar_modo_fondo
 }
