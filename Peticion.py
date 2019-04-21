@@ -171,12 +171,14 @@ class Peticion:
     def GET(self):
         URIs_especiales = {
             '_indices': 'self.indexar_json()'
+            # '_configuracion' : TODO: que devuelva la configuracion
         }
 
         # 0 Si el valor es menor que 0
         acciones_parametros_especiales = {
             '_limite': ' datos_almacenados[ 0: 0 if int(valor_parametro_especial) < 0 else int(valor_parametro_especial) ] ',
             '_desde': ' datos_almacenados[ 0 if int(valor_parametro_especial) - 1 < 0 else int(valor_parametro_especial) - 1 : ]'
+            # '_total' : TODO: que devuelva el total de registros: /posts/_total
         }
 
         trozos_URI, parametros, parametros_especiales = self.trocear_URI(
