@@ -86,7 +86,12 @@ class Peticion:
 
         if isinstance(contenido, str):
 
-            html = 'HTTP/1.0 '+str(codigo_estado) + '\r\r\n\r\n' + contenido
+            html = 'HTTP/1.0 '+str(codigo_estado) 
+            
+            if es_json: 
+                html += '\r\nContent-Type: application/json'
+
+            html += '\r\n\r\n' + contenido
 
             try:
                 html = html.encode('cp1252')
@@ -168,10 +173,30 @@ class Peticion:
             self.devolver_estado(
                 500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
 
+    def indexar_configuracion(self):
+        campos_a_enviar = [
+            'JSON_ATRIBUTO_PRIMARIO',
+            'ACEPTAR_GET',
+            'ACEPTAR_POST',
+            'ACEPTAR_PUT',
+            'ACEPTAR_DELETE'
+        ]
+        listado_campos = []
+
+        for campo_configuracion in self.CONFIGURACION.keys():
+            if campo_configuracion in campos_a_enviar:
+                listado_campos.append({
+                    'nombre_campo':campo_configuracion,
+                    'valor':self.CONFIGURACION[campo_configuracion]
+                })
+                print(campo_configuracion)
+
+        self.devolver_estado(200, listado_campos, es_json=True)
+
     def GET(self):
         URIs_especiales = {
-            '_indices': 'self.indexar_json()'
-            # '_configuracion' : TODO: que devuelva la configuracion
+            '_indices': 'self.indexar_json()',
+            '_configuracion': 'self.indexar_configuracion()'
         }
 
         # 0 Si el valor es menor que 0
