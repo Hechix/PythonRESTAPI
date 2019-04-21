@@ -86,9 +86,9 @@ class Peticion:
 
         if isinstance(contenido, str):
 
-            html = 'HTTP/1.0 '+str(codigo_estado) 
-            
-            if es_json: 
+            html = 'HTTP/1.0 '+str(codigo_estado)
+
+            if es_json:
                 html += '\r\nContent-Type: application/json'
 
             html += '\r\n\r\n' + contenido
@@ -186,8 +186,8 @@ class Peticion:
         for campo_configuracion in self.CONFIGURACION.keys():
             if campo_configuracion in campos_a_enviar:
                 listado_campos.append({
-                    'nombre_campo':campo_configuracion,
-                    'valor':self.CONFIGURACION[campo_configuracion]
+                    'nombre_campo': campo_configuracion,
+                    'valor': self.CONFIGURACION[campo_configuracion]
                 })
                 print(campo_configuracion)
 
@@ -202,8 +202,8 @@ class Peticion:
         # 0 Si el valor es menor que 0
         acciones_parametros_especiales = {
             '_limite': ' datos_almacenados[ 0: 0 if int(valor_parametro_especial) < 0 else int(valor_parametro_especial) ] ',
-            '_desde': ' datos_almacenados[ 0 if int(valor_parametro_especial) - 1 < 0 else int(valor_parametro_especial) - 1 : ]'
-            # '_total' : TODO: que devuelva el total de registros: /posts/_total
+            '_desde': ' datos_almacenados[ 0 if int(valor_parametro_especial) - 1 < 0 else int(valor_parametro_especial) - 1 : ]',
+            '_total': ' {"total objetos":len(datos_almacenados)}'
         }
 
         trozos_URI, parametros, parametros_especiales = self.trocear_URI(
@@ -296,7 +296,10 @@ class Peticion:
 
                     for parametro in parametros_especiales:
                         parametro_especial = parametro.split("=")[0]
-                        valor_parametro_especial = parametro.split("=")[1]
+                        try:
+                            valor_parametro_especial = parametro.split("=")[1]
+                        except:
+                            valor_parametro_especial = None  # Para casos como ?_total
 
                         if parametro_especial in acciones_parametros_especiales.keys():
                             datos_almacenados = eval(
