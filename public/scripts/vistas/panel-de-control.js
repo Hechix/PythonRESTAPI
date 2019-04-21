@@ -39,3 +39,13 @@ function cargar_vista_panel_de_control() {
     peticion.open("GET", "_indices", true)
     peticion.send();
 }
+
+function expandir_raiz(raiz){
+    div = document.getElementById(raiz)
+    html = 
+    `<p class="registro">
+        <span class="registro__id" >1</span>
+        <span class="resumen">fecha: 1/1/1, contenido: ASBABASBS</span>
+    </p>`
+    div.innerHTML += html + html + html
+}

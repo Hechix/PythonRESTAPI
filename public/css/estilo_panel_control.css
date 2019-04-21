@@ -1,0 +1,14 @@
+.raiz {
+    background: white;
+    padding: 5px;
+    border: 1px solid blue;
+    margin-bottom: 10px;
+}
+
+.registro{
+    margin-left: 5%;
+}
+
+.registro__id{
+    color: red;
+}
