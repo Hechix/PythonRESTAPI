@@ -20,7 +20,7 @@ function cargar_vista_bienvenida() {
                 <button id="js-boton__empezar" class="boton boton--enlace">Empezar</button>
             </div>
             <div class="botones__inferiores">
-                <a class="boton boton--pequeño boton--enlace"
+                <a target="_blank" class="boton boton--pequeño boton--enlace"
                     href="https://github.com/Hechix/PythonRESTAPI">Github</a>
                 <button id="js-boton__alternar-modo-fondo" class="boton boton--pequeño">Modo
                     claro</button>
