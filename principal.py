@@ -136,7 +136,7 @@ if __name__ == '__main__':
         'REGISTRO_ALMACENAR': False,
         'TIPO_SERVER': 'JSON',
         'FICHERO_JSON': 'db.json',  # TODO :  Cargar esto desde parametro de terminal
-        'JSON_ATRIBUTO_PRIMARIO': 'id',
+        'JSON_ATRIBUTO_PRIMARIO': 'id',  # Renombrar esto a solo atributo primario
         'ACEPTAR_GET': True,
         'ACEPTAR_POST':  True,
         'ACEPTAR_PUT': True,
@@ -144,6 +144,9 @@ if __name__ == '__main__':
         'PAGINA_BIENVENIDA_SERVIR': True,
         'PAGINA_BIENVENIDA_ABRIR_AUTOMATICAMENTE_AL_INICIO': True,
         'PAGINA_BIENVENIDA_ARCHIVO': 'index.html',
-        'PAGINA_BIENVENIDA_DIRECTORIO': 'public'
+        'PAGINA_BIENVENIDA_DIRECTORIO': 'public',
+        'URI_ESPECIALES': True,
+        'PARAMETROS_ESPECIALES': True,
+        'URI_ESPECIAL_CONFIGURACION': True
     }
     main()
