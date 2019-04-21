@@ -174,6 +174,10 @@ class Peticion:
                 500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
 
     def indexar_configuracion(self):
+        if not self.CONFIGURACION['URI_ESPECIAL_CONFIGURACION']:
+            self.devolver_estado(403)
+            return
+
         campos_a_enviar = [
             'JSON_ATRIBUTO_PRIMARIO',
             'ACEPTAR_GET',
@@ -226,6 +230,10 @@ class Peticion:
                 self.indexar_json()
 
         elif trozos_URI[0] in URIs_especiales.keys():
+            if not self.CONFIGURACION['URI_ESPECIALES']:
+                self.devolver_estado(403)
+                return
+
             eval(URIs_especiales[trozos_URI[0]])
 
         elif trozos_URI[0] == self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']:
@@ -288,8 +296,13 @@ class Peticion:
                             else:
                                 indice += 1
 
-                # Si existen parametros especiales, se recorren y ejecutan
+                # Si existen parametros especiales y estan permitidos, se recorren y ejecutan
                 if len(parametros_especiales) > 0:
+                    if not self.CONFIGURACION['PARAMETROS_ESPECIALES']:
+                        self.devolver_estado(
+                            403, 'PARAMETROS_ESPECIALES_DESACTIVADOS')
+                        return True
+
                     if not isinstance(datos_almacenados, list):
                         self.devolver_estado(400)
                         return True

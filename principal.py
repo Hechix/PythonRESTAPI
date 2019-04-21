@@ -50,7 +50,6 @@ ______ _____ _____ _____    ___  ______ _____ \n\
             hilo.start()
         except Exception as e:
             logging.error("/!\\ ERROR - " + str(e))
-        break
 
 
 def cargar_configuracion():
@@ -137,7 +136,7 @@ if __name__ == '__main__':
         'REGISTRO_ALMACENAR': False,
         'TIPO_SERVER': 'JSON',
         'FICHERO_JSON': 'db.json',  # TODO :  Cargar esto desde parametro de terminal
-        'JSON_ATRIBUTO_PRIMARIO': 'id', # Renombrar esto a solo atributo primario
+        'JSON_ATRIBUTO_PRIMARIO': 'id',  # Renombrar esto a solo atributo primario
         'ACEPTAR_GET': True,
         'ACEPTAR_POST':  True,
         'ACEPTAR_PUT': True,
