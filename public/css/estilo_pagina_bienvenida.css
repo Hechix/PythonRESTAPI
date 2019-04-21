@@ -31,10 +31,12 @@ html, body {
 
 .principal {
     position: absolute;
-    height: 80vh;
+    height: 100vw;
     z-index: 1;
     width: 80vw;
-    margin: 5vh 10vw;
+    margin: 0vh 10vw;
+    overflow: auto;
+    padding-top: 5vh;
 }
 
 .titulo {
@@ -126,11 +128,4 @@ html, body {
 .boton--enlace:link, .boton--enlace:visited {
     color: black;
     text-decoration: none;
-}
-
-.raiz {
-    background: white;
-    padding: 5px;
-    border: 1px solid blue;
-    margin-bottom: 10px;
 }
