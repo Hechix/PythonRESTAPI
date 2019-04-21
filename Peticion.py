@@ -12,9 +12,6 @@ class Peticion:
         self.URI = '/'
         self.logging.debug('Inicializada Peticion para ' +
                            self.cliente_direccion)
-        self.URIs_especiales = {
-            '_indices': 'self.indexar_json()'
-        }
 
     def procesar(self):
         self.datos_recibidos = self.cliente_conexion.recv(8192)
@@ -169,9 +166,14 @@ class Peticion:
                 500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
 
     def GET(self):
+        URIs_especiales = {
+            '_indices': 'self.indexar_json()'
+        }
+
+        # 0 Si el valor es menor que 0
         acciones_parametros_especiales = {
-            '_limite': ' datos_almacenados[0:int(valor_parametro_especial)]',
-            '_desde': ' datos_almacenados[int(valor_parametro_especial):]'
+            '_limite': ' datos_almacenados[ 0: 0 if int(valor_parametro_especial) < 0 else int(valor_parametro_especial) ] ',
+            '_desde': ' datos_almacenados[ 0 if int(valor_parametro_especial) - 1 < 0 else int(valor_parametro_especial) - 1 : ]'
         }
 
         trozos_URI, parametros, parametros_especiales = self.trocear_URI(
@@ -193,8 +195,8 @@ class Peticion:
             else:
                 self.indexar_json()
 
-        elif trozos_URI[0] in self.URIs_especiales.keys():
-            eval(self.URIs_especiales[trozos_URI[0]])
+        elif trozos_URI[0] in URIs_especiales.keys():
+            eval(URIs_especiales[trozos_URI[0]])
 
         elif trozos_URI[0] == self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']:
 
