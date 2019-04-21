@@ -86,7 +86,12 @@ class Peticion:
 
         if isinstance(contenido, str):
 
-            html = 'HTTP/1.0 '+str(codigo_estado) + '\r\r\n\r\n' + contenido
+            html = 'HTTP/1.0 '+str(codigo_estado)
+
+            if es_json:
+                html += '\r\nContent-Type: application/json'
+
+            html += '\r\n\r\n' + contenido
 
             try:
                 html = html.encode('cp1252')
@@ -168,15 +173,41 @@ class Peticion:
             self.devolver_estado(
                 500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
 
+    def indexar_configuracion(self):
+        if not self.CONFIGURACION['URI_ESPECIAL_CONFIGURACION']:
+            self.devolver_estado(403)
+            return
+
+        campos_a_enviar = [
+            'JSON_ATRIBUTO_PRIMARIO',
+            'ACEPTAR_GET',
+            'ACEPTAR_POST',
+            'ACEPTAR_PUT',
+            'ACEPTAR_DELETE'
+        ]
+        listado_campos = []
+
+        for campo_configuracion in self.CONFIGURACION.keys():
+            if campo_configuracion in campos_a_enviar:
+                listado_campos.append({
+                    'nombre_campo': campo_configuracion,
+                    'valor': self.CONFIGURACION[campo_configuracion]
+                })
+                print(campo_configuracion)
+
+        self.devolver_estado(200, listado_campos, es_json=True)
+
     def GET(self):
         URIs_especiales = {
-            '_indices': 'self.indexar_json()'
+            '_indices': 'self.indexar_json()',
+            '_configuracion': 'self.indexar_configuracion()'
         }
 
         # 0 Si el valor es menor que 0
         acciones_parametros_especiales = {
             '_limite': ' datos_almacenados[ 0: 0 if int(valor_parametro_especial) < 0 else int(valor_parametro_especial) ] ',
-            '_desde': ' datos_almacenados[ 0 if int(valor_parametro_especial) - 1 < 0 else int(valor_parametro_especial) - 1 : ]'
+            '_desde': ' datos_almacenados[ 0 if int(valor_parametro_especial) - 1 < 0 else int(valor_parametro_especial) - 1 : ]',
+            '_total': ' {"total objetos":len(datos_almacenados)}'
         }
 
         trozos_URI, parametros, parametros_especiales = self.trocear_URI(
@@ -199,6 +230,10 @@ class Peticion:
                 self.indexar_json()
 
         elif trozos_URI[0] in URIs_especiales.keys():
+            if not self.CONFIGURACION['URI_ESPECIALES']:
+                self.devolver_estado(403)
+                return
+
             eval(URIs_especiales[trozos_URI[0]])
 
         elif trozos_URI[0] == self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']:
@@ -261,15 +296,23 @@ class Peticion:
                             else:
                                 indice += 1
 
-                # Si existen parametros especiales, se recorren y ejecutan
+                # Si existen parametros especiales y estan permitidos, se recorren y ejecutan
                 if len(parametros_especiales) > 0:
+                    if not self.CONFIGURACION['PARAMETROS_ESPECIALES']:
+                        self.devolver_estado(
+                            403, 'PARAMETROS_ESPECIALES_DESACTIVADOS')
+                        return True
+
                     if not isinstance(datos_almacenados, list):
                         self.devolver_estado(400)
                         return True
 
                     for parametro in parametros_especiales:
                         parametro_especial = parametro.split("=")[0]
-                        valor_parametro_especial = parametro.split("=")[1]
+                        try:
+                            valor_parametro_especial = parametro.split("=")[1]
+                        except:
+                            valor_parametro_especial = None  # Para casos como ?_total
 
                         if parametro_especial in acciones_parametros_especiales.keys():
                             datos_almacenados = eval(
