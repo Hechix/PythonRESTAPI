@@ -11,6 +11,9 @@ class Peticion:
         self.URI = '/'
         self.logging.debug('Inicializada Peticion para ' +
                            self.cliente_direccion)
+        self.URIs_especiales = {
+            '_indices': 'self.indexar_json()'
+        }
 
     def procesar(self):
         self.datos_recibidos = self.cliente_conexion.recv(8192)
@@ -107,9 +110,15 @@ class Peticion:
         separacion_URI_de_parametros = self.URI.split('?')
 
         try:
-            parametros_URI = separacion_URI_de_parametros[1].split("&")
-        except:
             parametros_URI = []
+            parametros_especiales = []
+            for parametro in separacion_URI_de_parametros[1].split("&"):
+                if parametro.startswith("_"):
+                    parametros_especiales.append(parametro)
+                else:
+                    parametros_URI.append(parametro)
+        except:
+            parametros_URI = parametros_especiales = []
 
         trozos_URI = separacion_URI_de_parametros[0].split('/')
 
@@ -117,12 +126,15 @@ class Peticion:
         trozos_URI = [
             elemento_en_URI for elemento_en_URI in trozos_URI if elemento_en_URI != '']
 
-        # Tambien se eliminan los posibles argumentos en blanco
+        # Tambien se eliminan los posibles parametros en blanco
         parametros_URI = [
             parametro_en_URI for parametro_en_URI in parametros_URI if parametro_en_URI != '']
 
+        parametros_especiales = [
+            parametro_especial for parametro_especial in parametros_especiales if parametro_especial != '']
+
         if parametros:
-            return trozos_URI, parametros_URI
+            return trozos_URI, parametros_URI, parametros_especiales
         return trozos_URI
 
     def captura_error(self, error, cod_error=400, msg_error=False):
@@ -149,7 +161,13 @@ class Peticion:
                 500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
 
     def GET(self):
-        trozos_URI, parametros = self.trocear_URI(parametros=True)
+        acciones_parametros_especiales = {
+            '_limite': ' datos_almacenados[0:int(valor_parametro_especial)]',
+            '_desde': ' datos_almacenados[int(valor_parametro_especial):]'
+        }
+
+        trozos_URI, parametros, parametros_especiales = self.trocear_URI(
+            parametros=True)
 
         if len(trozos_URI) == 0:
 
@@ -166,6 +184,9 @@ class Peticion:
 
             else:
                 self.indexar_json()
+
+        elif trozos_URI[0] in self.URIs_especiales.keys():
+            eval(self.URIs_especiales[trozos_URI[0]])
 
         elif trozos_URI[0] == self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']:
 
@@ -193,7 +214,7 @@ class Peticion:
 
             except Exception as e:
                 if type(e).__name__ == 'UnicodeDecodeError':
-                    self.devolver_estado(500,'NO_SE_PUEDE_DECODIFICAR')
+                    self.devolver_estado(500, 'NO_SE_PUEDE_DECODIFICAR')
 
                 elif type(e).__name__ == 'FileNotFoundError':
                     self.devolver_estado(404)
@@ -227,9 +248,24 @@ class Peticion:
                             else:
                                 indice += 1
 
+                # Si existen parametros especiales, se recorren y ejecutan
+                if len(parametros_especiales) > 0:
+                    if not isinstance(datos_almacenados, list):
+                        self.devolver_estado(400)
+                        return True
+
+                    for parametro in parametros_especiales:
+                        parametro_especial = parametro.split("=")[0]
+                        valor_parametro_especial = parametro.split("=")[1]
+
+                        if parametro_especial in acciones_parametros_especiales.keys():
+                            datos_almacenados = eval(
+                                acciones_parametros_especiales[parametro_especial])
+
                 self.devolver_estado(200, str(datos_almacenados))
 
             except Exception as e:
+                print("ROTO")
                 self.captura_error(str(e), cod_error=404)
 
     def POST(self):
