@@ -1,0 +1,136 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+}
+
+.body-oscuro {
+    background: black
+}
+
+.fondo {
+    position: absolute;
+    width: 93%;
+    height: 99%;
+    z-index: 0;
+    filter: blur(1px);
+    overflow: hidden;
+    transform: skewY(10deg)rotate(-18deg);
+    top: -13%;
+    left: 2%;
+    font-family: Ubuntu, "times new roman", times, roman, serif;
+    border-bottom: 1px solid;
+    border-left: 1px solid;
+    padding-left: 2%;
+}
+
+.fondo--oscuro {
+    color: lime;
+}
+
+.principal {
+    position: absolute;
+    height: 80vh;
+    z-index: 1;
+    width: 80vw;
+    margin: 5vh 10vw;
+}
+
+.titulo {
+    height: 20vh;
+}
+
+.titulo--oscuro {
+    color: white
+}
+
+.titulo__superior {
+    display: flex;
+    height: 10vh;
+}
+
+.titulo__inferior {
+    height: 10vh;
+}
+
+.hechix {
+    text-align: center;
+    font-family: 'Gochi Hand', monospace;
+    font-size: 70px;
+    margin-left: auto;
+    margin-right: 3%;
+}
+
+.python {
+    text-align: center;
+    font-family: 'Montserrat', monospace;
+    font-size: 70px;
+    margin-right: auto;
+}
+
+.rest-api {
+    text-align: center;
+    font-family: 'Share Tech Mono', monospace;
+    font-style: italic;
+    font-size: 70px;
+}
+
+.cuerpo {
+    height: 60vh;
+    display: flex;
+}
+
+.botones {
+    margin: auto;
+    text-align: center;
+}
+
+.botones-horizontales {
+    margin-bottom: 15px;
+}
+
+.botones__superiores {
+    margin-bottom: 20%;
+}
+
+.botones__inferiores {
+    margin-top: 20%;
+}
+
+.boton {
+    border-radius: 10px;
+    line-height: 2;
+    display: inline-block;
+    background: white;
+    margin-bottom: 10%;
+    border: 1px solid;
+    box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
+    font-size: 25px;
+    width: 100%;
+}
+
+.boton--pequeño {
+    font-size: 12px;
+}
+
+.boton--no-estirado {
+    width: auto;
+    margin: 0;
+}
+
+.boton:hover {
+    background: rgba(0, 225, 255, 1);
+}
+
+.boton--enlace:link, .boton--enlace:visited {
+    color: black;
+    text-decoration: none;
+}
+
+.raiz {
+    background: white;
+    padding: 5px;
+    border: 1px solid blue;
+    margin-bottom: 10px;
+}

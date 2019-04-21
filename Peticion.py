@@ -1,4 +1,5 @@
 import almacenamiento
+from json import dumps as json_dump
 
 
 class Peticion:
@@ -19,6 +20,7 @@ class Peticion:
         self.datos_recibidos = self.cliente_conexion.recv(8192)
         trozos_peticion = self.datos_recibidos.decode('utf-8').split(' ')
         tipo_peticion = trozos_peticion[0]
+        # TODO esto a veces da error por alguna razon
         self.URI = trozos_peticion[1]
         self.logging.info(self.cliente_direccion + "\t<- " +
                           trozos_peticion[0] + " " + self.URI)
@@ -61,7 +63,7 @@ class Peticion:
         except Exception as e:
             self.devolver_estado()
 
-    def devolver_estado(self, codigo_estado=500, contenido=False, nombre_archivo=None):
+    def devolver_estado(self, codigo_estado=500, contenido=False, nombre_archivo=None, es_json=False):
         codigos_estado = {
             200: 'OK',
             400: 'PETICION_INCORRECTA',
@@ -73,8 +75,14 @@ class Peticion:
         if not isinstance(codigo_estado, int) or codigo_estado < 1:
             codigo_estado = 500
 
+        # TODO : Evitar que se sobreescriba el contenido de un archivo vacio
+        # cuadno cargas por ejemplo un html vacio, devuelve OK en vez de nada
+
         if codigo_estado in codigos_estado.keys() and not contenido:
             contenido = codigos_estado[codigo_estado]
+
+        if es_json:
+            contenido = json_dump(contenido)
 
         if isinstance(contenido, str):
 
@@ -155,15 +163,20 @@ class Peticion:
         try:
             datos_almacenados = almacenamiento.indexar_json(
                 self.CONFIGURACION)
-            self.devolver_estado(200, datos_almacenados)
+            self.devolver_estado(200, datos_almacenados, es_json=True)
         except Exception:
             self.devolver_estado(
                 500, 'ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO')
 
     def GET(self):
+        URIs_especiales = {
+            '_indices': 'self.indexar_json()'
+        }
+
+        # 0 Si el valor es menor que 0
         acciones_parametros_especiales = {
-            '_limite': ' datos_almacenados[0:int(valor_parametro_especial)]',
-            '_desde': ' datos_almacenados[int(valor_parametro_especial):]'
+            '_limite': ' datos_almacenados[ 0: 0 if int(valor_parametro_especial) < 0 else int(valor_parametro_especial) ] ',
+            '_desde': ' datos_almacenados[ 0 if int(valor_parametro_especial) - 1 < 0 else int(valor_parametro_especial) - 1 : ]'
         }
 
         trozos_URI, parametros, parametros_especiales = self.trocear_URI(
@@ -185,8 +198,8 @@ class Peticion:
             else:
                 self.indexar_json()
 
-        elif trozos_URI[0] in self.URIs_especiales.keys():
-            eval(self.URIs_especiales[trozos_URI[0]])
+        elif trozos_URI[0] in URIs_especiales.keys():
+            eval(URIs_especiales[trozos_URI[0]])
 
         elif trozos_URI[0] == self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']:
 
@@ -262,11 +275,10 @@ class Peticion:
                             datos_almacenados = eval(
                                 acciones_parametros_especiales[parametro_especial])
 
-                self.devolver_estado(200, str(datos_almacenados))
+                self.devolver_estado(200, datos_almacenados, es_json=True)
 
             except Exception as e:
-                print("ROTO")
-                self.captura_error(str(e), cod_error=404)
+                self.captura_error(str(e), cod_error=404, msg_error=str(e))
 
     def POST(self):
         trozos_URI = self.trocear_URI()
