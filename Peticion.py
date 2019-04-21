@@ -12,6 +12,9 @@ class Peticion:
         self.URI = '/'
         self.logging.debug('Inicializada Peticion para ' +
                            self.cliente_direccion)
+        self.URIs_especiales = {
+            '_indices': 'self.indexar_json()'
+        }
 
     def procesar(self):
         self.datos_recibidos = self.cliente_conexion.recv(8192)
