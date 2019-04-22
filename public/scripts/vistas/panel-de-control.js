@@ -13,6 +13,8 @@ function cargar_vista_panel_de_control() {
         html = html.replace("@@@@@", "Modo claro")
     }
 
+    principal.innerHTML = html
+
     principal = document.getElementById("js-principal")
     peticion = new XMLHttpRequest()
 
@@ -21,10 +23,17 @@ function cargar_vista_panel_de_control() {
             json = JSON.parse(peticion.responseText)
 
             json.forEach(indice => {
-                html += "<div id='" + indice.nombre + "'class='raiz'>" + indice.nombre + "</div>"
+                principal.innerHTML +=
+                    `<div id='` + indice.nombre + `' class='raiz'>
+                        <div class='raiz__titulo' 
+                            onclick='expandir_raiz(\"` + indice.nombre + `\")'>
+                            <span class="raiz__texto">` + indice.nombre + `</span>
+                            <span class="raiz__equis">X</span>
+                        </div>
+                        <div class='raiz__contenido'>
+                        </div>
+                    </div>`
             })
-
-            principal.innerHTML = html
 
             boton__volver = document.getElementById("js-boton__volver")
             boton__recargar = document.getElementById("js-boton__recargar")
@@ -40,10 +49,10 @@ function cargar_vista_panel_de_control() {
     peticion.send();
 }
 
-function expandir_raiz(raiz){
-    div = document.getElementById(raiz)
-    html = 
-    `<p class="registro">
+function expandir_raiz(raiz) {
+    div = document.getElementById(raiz).getElementsByClassName('raiz__contenido')[0]
+    html =
+        `<p class="registro">
         <span class="registro__id" >1</span>
         <span class="resumen">fecha: 1/1/1, contenido: ASBABASBS</span>
     </p>`
