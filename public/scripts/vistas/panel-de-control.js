@@ -1,4 +1,3 @@
-
 function cargar_vista_panel_de_control() {
     html =
         `<div class="botones-horizontales">
@@ -13,26 +12,26 @@ function cargar_vista_panel_de_control() {
         html = html.replace("@@@@@", "Modo claro")
     }
 
+    principal = document.getElementById("js-principal")
     principal.innerHTML = html
 
-    principal = document.getElementById("js-principal")
-    peticion = new XMLHttpRequest()
+    peticion_indices = new XMLHttpRequest()
+    peticion_configuracion = new XMLHttpRequest()
 
-    peticion.onreadystatechange = function () {
-        if (peticion.readyState == 4 && peticion.status == 200) {
-            json = JSON.parse(peticion.responseText)
-
+    peticion_indices.onreadystatechange = function () {
+        if (peticion_indices.readyState == 4 && peticion_indices.status == 200) {
+            json = JSON.parse(peticion_indices.responseText)
             json.forEach(indice => {
                 principal.innerHTML +=
                     `<div id='` + indice.nombre + `' class='raiz'>
-                        <div class='raiz__titulo' 
-                            onclick='expandir_raiz(\"` + indice.nombre + `\")'>
-                            <span class="raiz__texto">` + indice.nombre + `</span>
-                            <span class="raiz__equis">X</span>
-                        </div>
-                        <div class='raiz__contenido'>
-                        </div>
-                    </div>`
+                    <div class='raiz__titulo' 
+                        onclick='expandir_raiz(\"` + indice.nombre + `\")'>
+                        <span class="raiz__texto">` + indice.nombre + `</span>
+                        <span class="raiz__equis">X</span>
+                    </div>
+                    <div class='raiz__contenido'>
+                    </div>
+                </div>`
             })
 
             boton__volver = document.getElementById("js-boton__volver")
@@ -45,16 +44,64 @@ function cargar_vista_panel_de_control() {
         }
     }
 
-    peticion.open("GET", "_indices", true)
-    peticion.send();
+    peticion_configuracion.onreadystatechange = function () {
+        if (peticion_configuracion.readyState == 4 && peticion_configuracion.status == 200) {
+            CONFIGURACION = JSON.parse(peticion_configuracion.responseText)
+        }
+    }
+
+    peticion_indices.open("GET", "_indices", true)
+    peticion_configuracion.open("GET", "_configuracion", true)
+
+    peticion_indices.send();
+    peticion_configuracion.send();
+
+}
+
+function valor_de_configuracion(parametro) {
+    encontrado = null
+    CONFIGURACION.forEach(parametro_en_config => {
+        if (parametro == parametro_en_config.nombre_campo) {
+            encontrado = parametro_en_config.valor
+        }
+    })
+    return encontrado
 }
 
 function expandir_raiz(raiz) {
     div = document.getElementById(raiz).getElementsByClassName('raiz__contenido')[0]
-    html =
-        `<p class="registro">
-        <span class="registro__id" >1</span>
-        <span class="resumen">fecha: 1/1/1, contenido: ASBABASBS</span>
-    </p>`
-    div.innerHTML += html + html + html
+    html = ""
+
+    peticion_contenido = new XMLHttpRequest()
+
+    peticion_contenido.onreadystatechange = function () {
+        if (peticion_contenido.readyState == 4 && peticion_contenido.status == 200) {
+            json = JSON.parse(peticion_contenido.responseText)
+            json.forEach(registro => {
+                html += '<p class="registro">'
+
+                if (valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO') in registro) {
+                    html += ' <span class="registro__id" >' + registro[valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')] + '</span>'
+                }
+
+                html += '<span class="resumen">'
+
+                Object.keys(registro).forEach(clave => {
+
+                    if (clave != valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')){
+                        html += clave + ': '+registro[clave]
+                    }
+
+                })
+
+                html += '</span></p>'
+            })
+            div.innerHTML = html
+        }
+    }
+
+    peticion_contenido.open("GET", raiz, true)
+    peticion_contenido.send();
 }
+
+CONFIGURACION = null
