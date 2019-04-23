@@ -32,3 +32,10 @@
 .registro__id {
     color: red;
 }
+
+.atributo{
+    margin: 0 5px;
+}
+.atributo__titulo{
+    color: blue;
+}

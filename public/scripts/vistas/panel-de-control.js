@@ -78,30 +78,41 @@ function expandir_raiz(raiz) {
         if (peticion_contenido.readyState == 4 && peticion_contenido.status == 200) {
             json = JSON.parse(peticion_contenido.responseText)
             json.forEach(registro => {
-                html += '<p class="registro">'
+                html += '<div class="registro">'
 
                 if (valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO') in registro) {
-                    html += ' <span class="registro__id" >' + registro[valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')] + '</span>'
+                    html += ' <span class="registro__id" >' + HtmlEncode(valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) + " : " + HtmlEncode(registro[valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')]) + '</span>'
                 }
 
-                html += '<span class="resumen">'
 
                 Object.keys(registro).forEach(clave => {
 
-                    if (clave != valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')){
-                        html += clave + ': '+registro[clave]
+                    if (clave != valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
+                        html += '<p class="atributo"><span class="atributo__titulo">'
+                        html += HtmlEncode(clave) + ': </span><span class="atributo__valor">' + HtmlEncode(registro[clave])
+                        html += "</span></p>"
                     }
 
                 })
 
-                html += '</span></p>'
+                html += '</div>'
             })
+            console.log(html)
             div.innerHTML = html
         }
     }
 
     peticion_contenido.open("GET", raiz, true)
     peticion_contenido.send();
+}
+
+function HtmlEncode(s) {
+    // https://stackoverflow.com/questions/784586/convert-special-characters-to-html-in-javascript
+    // Basicamente crea un div, le inserta la string a codificar, y la recupera, y el propio html la devuelve codificada
+    var el = document.createElement("div");
+    el.innerText = el.textContent = s;
+    s = el.innerHTML;
+    return s;
 }
 
 CONFIGURACION = null
