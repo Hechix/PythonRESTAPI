@@ -9,26 +9,6 @@ html, body {
     background: black
 }
 
-.fondo {
-    position: absolute;
-    width: 93%;
-    height: 99%;
-    z-index: 0;
-    filter: blur(1px);
-    overflow: hidden;
-    transform: skewY(10deg)rotate(-18deg);
-    top: -13%;
-    left: 2%;
-    font-family: Ubuntu, "times new roman", times, roman, serif;
-    border-bottom: 1px solid;
-    border-left: 1px solid;
-    padding-left: 2%;
-}
-
-.fondo--oscuro {
-    color: lime;
-}
-
 .principal {
     position: absolute;
     height: 100%;
@@ -49,6 +29,7 @@ html, body {
 .titulo__superior {
     display: flex;
     height: 10vh;
+    line-height: 70px;
 }
 
 .titulo__inferior {

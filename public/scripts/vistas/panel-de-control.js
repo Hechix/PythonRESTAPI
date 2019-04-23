@@ -27,7 +27,7 @@ function cargar_vista_panel_de_control() {
                     <div class='raiz__titulo' 
                         onclick='expandir_raiz(\"` + indice.nombre + `\")'>
                         <span class="raiz__texto">` + indice.nombre + `</span>
-                        <span class="raiz__equis">X</span>
+                        <span class="raiz__equis raiz__equis--oculta"onclick='event.stopPropagation();cerrar_raiz(\"` + indice.nombre + `\")'>X</span>
                     </div>
                     <div class='raiz__contenido'>
                     </div>
@@ -69,7 +69,10 @@ function valor_de_configuracion(parametro) {
 }
 
 function expandir_raiz(raiz) {
-    div = document.getElementById(raiz).getElementsByClassName('raiz__contenido')[0]
+    raiz_div = document.getElementById(raiz)
+    equis = raiz_div.getElementsByClassName('raiz__equis')[0]
+    equis.className = "raiz__equis"
+    contenido = raiz_div.getElementsByClassName('raiz__contenido')[0]
     html = ""
 
     peticion_contenido = new XMLHttpRequest()
@@ -78,32 +81,42 @@ function expandir_raiz(raiz) {
         if (peticion_contenido.readyState == 4 && peticion_contenido.status == 200) {
             json = JSON.parse(peticion_contenido.responseText)
             json.forEach(registro => {
-                html += '<div class="registro">'
+
+                html += '<div class="registro"><div class="registro__cabecera">'
 
                 if (valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO') in registro) {
-                    html += ' <span class="registro__id" >' + HtmlEncode(valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) + " : " + HtmlEncode(registro[valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')]) + '</span>'
+                    html += '<span class="registro__id" >' + HtmlEncode(valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) + " : " + HtmlEncode(registro[valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')]) + '</span>'
                 }
 
+                html += '<span class="registro__editar" onclick="abrir_modal(this)">Editar</span></div><table class="registro__atributos">'
 
                 Object.keys(registro).forEach(clave => {
 
                     if (clave != valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
-                        html += '<p class="atributo"><span class="atributo__titulo">'
-                        html += HtmlEncode(clave) + ': </span><span class="atributo__valor">' + HtmlEncode(registro[clave])
-                        html += "</span></p>"
+                        html += '<tr class="atributo"><td class="atributo__titulo">'
+                        html += HtmlEncode(clave) + '</td> <td class="atributo__valor">' + HtmlEncode(registro[clave])
+                        html += "</td></tr>"
                     }
 
                 })
 
-                html += '</div>'
+                html += '</table></div>'
             })
-            console.log(html)
-            div.innerHTML = html
+
+            contenido.innerHTML = html
         }
     }
 
     peticion_contenido.open("GET", raiz, true)
     peticion_contenido.send();
+}
+
+function cerrar_raiz(raiz) {
+    raiz_div = document.getElementById(raiz)
+    equis = raiz_div.getElementsByClassName('raiz__equis')[0]
+    equis.className = "raiz__equis raiz__equis--oculta"
+    contenido = raiz_div.getElementsByClassName('raiz__contenido')[0]
+    contenido.innerHTML = ""
 }
 
 function HtmlEncode(s) {
@@ -113,6 +126,10 @@ function HtmlEncode(s) {
     el.innerText = el.textContent = s;
     s = el.innerHTML;
     return s;
+}
+
+function abrir_modal(evento) {
+    console.log("Modal abierto", evento)
 }
 
 CONFIGURACION = null

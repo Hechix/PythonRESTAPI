@@ -20,6 +20,10 @@
     color: red;
 }
 
+.raiz__equis--oculta {
+    opacity: 0;
+}
+
 .raiz__contenido {
     padding-left: 10px;
 }
@@ -27,15 +31,41 @@
 .registro {
     line-height: 30px;
     font-size: 15px;
+    margin: 15px 0;
+}
+
+.registro__cabecera {
+    display: flex;
+    line-height: 25px;
 }
 
 .registro__id {
-    color: red;
+    color: white;
+    background: red;
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-family: Ubuntu, "times new roman", times, roman, serif;
 }
 
-.atributo{
-    margin: 0 5px;
+.registro__editar {
+    margin: 0 10px 0 auto;
+    color: white;
+    background: green;
+    padding: 0 5px;
+    border-radius: 5px;
 }
-.atributo__titulo{
-    color: blue;
+
+.registro__atributos {
+    margin: 0 0 0 10px;
+}
+
+.atributo__titulo {
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-family: Ubuntu, "times new roman", times, roman, serif;
+    border-left: 2px solid blue;
+}
+
+.atributo__valor {
+    padding-left: 10px;
 }
