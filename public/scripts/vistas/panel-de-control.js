@@ -129,7 +129,21 @@ function HtmlEncode(s) {
 }
 
 function abrir_modal(evento) {
-    console.log("Modal abierto", evento)
+    body = document.getElementsByTagName("body")[0]
+    body.innerHTML += 
+    `<div id="modal" class="modal" onclick="cerrar_modal()">
+        <div class="modal__contenido" onclick="event.stopPropagation()">
+            <div class="modal__equis">X</div>
+            <div class="modal__boton-guardar">Guardar</div>
+            // TODO CONTENIDO DEL MODAL
+        </div>
+    </div>`
+}
+
+function cerrar_modal(){
+    modal = document.getElementById("modal")
+    console.log(modal)
+    modal.remove();
 }
 
 CONFIGURACION = null
