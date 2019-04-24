@@ -22,6 +22,9 @@ function cargar_vista_panel_de_control() {
         if (peticion_indices.readyState == 4 && peticion_indices.status == 200) {
             json = JSON.parse(peticion_indices.responseText)
             json.forEach(indice => {
+                indice.registros = []
+                indice.expandido = false
+                RAICES.push(indice)
                 principal.innerHTML +=
                     `<div id='` + indice.nombre + `' class='raiz'>
                     <div class='raiz__titulo' 
@@ -59,7 +62,7 @@ function cargar_vista_panel_de_control() {
 }
 
 function valor_de_configuracion(parametro) {
-    encontrado = null
+    encontrado = undefined
     CONFIGURACION.forEach(parametro_en_config => {
         if (parametro == parametro_en_config.nombre_campo) {
             encontrado = parametro_en_config.valor
@@ -80,6 +83,12 @@ function expandir_raiz(raiz) {
     peticion_contenido.onreadystatechange = function () {
         if (peticion_contenido.readyState == 4 && peticion_contenido.status == 200) {
             json = JSON.parse(peticion_contenido.responseText)
+            RAICES.forEach(raiz_almacenada => {
+                if (raiz_almacenada.nombre == raiz) {
+                    raiz_almacenada.registros = json
+                    raiz_almacenada.expandido = true
+                }
+            })
             json.forEach(registro => {
 
                 html += '<div class="registro"><div class="registro__cabecera">'
@@ -117,6 +126,12 @@ function cerrar_raiz(raiz) {
     equis.className = "raiz__equis raiz__equis--oculta"
     contenido = raiz_div.getElementsByClassName('raiz__contenido')[0]
     contenido.innerHTML = ""
+    RAICES.forEach(raiz_almacenada => {
+        if (raiz_almacenada.nombre == raiz) {
+            raiz_almacenada.registros = []
+            raiz_almacenada.expandido = false
+        }
+    })
 }
 
 function HtmlEncode(s) {
@@ -129,21 +144,55 @@ function HtmlEncode(s) {
 }
 
 function abrir_modal(evento) {
+    registro = evento.parentNode.parentNode
+    raiz = registro.parentNode.parentNode
+    id_registro = parseInt(registro.childNodes[0].childNodes[0].innerHTML.split(" : ")[1])
+
+    num_raiz = undefined
+    num_registro = undefined
+
+    for (x = 0; x < RAICES.length; x++) {
+
+        if (RAICES[x].nombre == raiz.id) {
+            num_raiz = x
+
+            for (y = 0; y < RAICES[x].registros.length; y++) {
+
+                if (RAICES[x].registros[y].id == id_registro) {
+                    num_registro = y
+                    break
+                }
+
+            }
+            break
+        }
+    }
+
+    html = ""
+
+    Object.keys(RAICES[num_raiz].registros[num_registro]).forEach(clave=>{
+        html += clave + " -> " + RAICES[num_raiz].registros[num_registro][clave] +"<br>"
+    })
+
     body = document.getElementsByTagName("body")[0]
-    body.innerHTML += 
-    `<div id="modal" class="modal" onclick="cerrar_modal()">
-        <div class="modal__contenido" onclick="event.stopPropagation()">
-            <div class="modal__equis">X</div>
-            <div class="modal__boton-guardar">Guardar</div>
-            // TODO CONTENIDO DEL MODAL
-        </div>
-    </div>`
+    body.innerHTML +=
+        `<div id="modal" class="modal" >
+            <div class="modal__contenido">
+                <div class="modal__equis" onclick="cerrar_modal()">X</div>
+                <div class="modal__boton-guardar" onclick="guardar_modal()">Guardar</div>
+                `+ html + `
+            </div>
+        </div>`
 }
 
-function cerrar_modal(){
+function cerrar_modal() {
     modal = document.getElementById("modal")
-    console.log(modal)
     modal.remove();
 }
+function guardar_modal() {
+    // Todo notificacion en vez de cerrar?
+    cerrar_modal()
+}
 
-CONFIGURACION = null
+CONFIGURACION = undefined
+RAICES = []
