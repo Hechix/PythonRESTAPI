@@ -104,12 +104,12 @@
 }
 
 .modal__boton-guardar {
-	background: #00c0ff;
-	position: absolute;
-	padding: 5px 10px;
-	border-radius: 10px;
-	color: white;
-	bottom: -50px;
-	left: 50%;
-	transform: translateX(-50%);
+    background: #00c0ff;
+    position: absolute;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: white;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
 }

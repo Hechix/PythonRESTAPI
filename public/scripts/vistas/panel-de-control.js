@@ -170,8 +170,8 @@ function abrir_modal(evento) {
 
     html = ""
 
-    Object.keys(RAICES[num_raiz].registros[num_registro]).forEach(clave=>{
-        html += clave + " -> " + RAICES[num_raiz].registros[num_registro][clave] +"<br>"
+    Object.keys(RAICES[num_raiz].registros[num_registro]).forEach(clave => {
+        html += clave + " -> " + RAICES[num_raiz].registros[num_registro][clave] + "<br>"
     })
 
     body = document.getElementsByTagName("body")[0]
