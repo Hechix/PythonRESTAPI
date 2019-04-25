@@ -193,7 +193,6 @@ class Peticion:
                     'nombre_campo': campo_configuracion,
                     'valor': self.CONFIGURACION[campo_configuracion]
                 })
-                print(campo_configuracion)
 
         self.devolver_estado(200, listado_campos, es_json=True)
 

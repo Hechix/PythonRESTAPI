@@ -1,0 +1,115 @@
+.raiz {
+    background: white;
+    border: 1px solid black;
+    margin-bottom: 5vh;
+    border-radius: 10px;
+}
+
+.raiz__titulo {
+    line-height: 30px;
+    border-bottom: 1px solid;
+    padding: 0 10px;
+    display: flex;
+}
+
+.raiz__texto {
+    margin-right: auto;
+}
+
+.raiz__equis {
+    color: red;
+}
+
+.raiz__equis--oculta {
+    opacity: 0;
+}
+
+.raiz__contenido {
+    padding-left: 10px;
+}
+
+.registro {
+    line-height: 30px;
+    font-size: 15px;
+    margin: 15px 0;
+}
+
+.registro__cabecera {
+    display: flex;
+    line-height: 25px;
+}
+
+.registro__id {
+    color: white;
+    background: red;
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-family: Ubuntu, "times new roman", times, roman, serif;
+}
+
+.registro__editar {
+    margin: 0 10px 0 auto;
+    color: white;
+    background: green;
+    padding: 0 5px;
+    border-radius: 5px;
+}
+
+.registro__atributos {
+    margin: 0 0 0 10px;
+}
+
+.atributo__titulo {
+    padding: 1px 5px;
+    border-radius: 5px;
+    font-family: Ubuntu, "times new roman", times, roman, serif;
+    border-left: 2px solid blue;
+}
+
+.atributo__valor {
+    padding-left: 10px;
+}
+
+.modal {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    display: flex;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.modal__contenido {
+    background: white;
+    margin: auto;
+    padding: 15px;
+    border-radius: 10px;
+    position: relative;
+}
+
+.modal__equis {
+    color: white;
+    background: red;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    font-family: Ubuntu, "times new roman", times, roman, serif;
+    border-radius: 30px;
+    font-size: 25px;
+    position: absolute;
+    top: -40px;
+    right: -40px;
+}
+
+.modal__boton-guardar {
+	background: #00c0ff;
+	position: absolute;
+	padding: 5px 10px;
+	border-radius: 10px;
+	color: white;
+	bottom: -50px;
+	left: 50%;
+	transform: translateX(-50%);
+}

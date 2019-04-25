@@ -36,3 +36,4 @@ function cargar_vista_bienvenida() {
     boton_empezar.onclick = cargar_vista_panel_de_control
     boton_alternar_modo_fondo.onclick = alternar_modo_fondo
 }
+cargar_vista_bienvenida()

@@ -9,32 +9,13 @@ html, body {
     background: black
 }
 
-.fondo {
-    position: absolute;
-    width: 93%;
-    height: 99%;
-    z-index: 0;
-    filter: blur(1px);
-    overflow: hidden;
-    transform: skewY(10deg)rotate(-18deg);
-    top: -13%;
-    left: 2%;
-    font-family: Ubuntu, "times new roman", times, roman, serif;
-    border-bottom: 1px solid;
-    border-left: 1px solid;
-    padding-left: 2%;
-}
-
-.fondo--oscuro {
-    color: lime;
-}
-
 .principal {
     position: absolute;
-    height: 80vh;
+    height: 100%;
     z-index: 1;
     width: 80vw;
-    margin: 5vh 10vw;
+    overflow-x: scroll;
+    padding: 5vh 10vw 0 10vw;
 }
 
 .titulo {
@@ -48,6 +29,7 @@ html, body {
 .titulo__superior {
     display: flex;
     height: 10vh;
+    line-height: 70px;
 }
 
 .titulo__inferior {
@@ -126,11 +108,4 @@ html, body {
 .boton--enlace:link, .boton--enlace:visited {
     color: black;
     text-decoration: none;
-}
-
-.raiz {
-    background: white;
-    padding: 5px;
-    border: 1px solid blue;
-    margin-bottom: 10px;
 }
