@@ -15,22 +15,22 @@ function cargar_vista_panel_de_control() {
     principal = document.getElementById("js-principal")
     principal.innerHTML = html
 
-    peticion_indices = new XMLHttpRequest()
+    peticion_raices = new XMLHttpRequest()
     peticion_configuracion = new XMLHttpRequest()
 
-    peticion_indices.onreadystatechange = function () {
-        if (peticion_indices.readyState == 4 && peticion_indices.status == 200) {
-            json = JSON.parse(peticion_indices.responseText)
-            json.forEach(indice => {
-                indice.registros = []
-                indice.expandido = false
-                RAICES.push(indice)
+    peticion_raices.onreadystatechange = function () {
+        if (peticion_raices.readyState == 4 && peticion_raices.status == 200) {
+            json = JSON.parse(peticion_raices.responseText)
+            json.forEach(raiz => {
+                raiz.registros = []
+                raiz.expandido = false
+                RAICES.push(raiz)
                 principal.innerHTML +=
-                    `<div id='` + indice.nombre + `' class='raiz'>
+                    `<div id='` + raiz.nombre + `' class='raiz'>
                     <div class='raiz__titulo' 
-                        onclick='expandir_raiz(\"` + indice.nombre + `\")'>
-                        <span class="raiz__texto">` + indice.nombre + `</span>
-                        <span class="raiz__equis raiz__equis--oculta"onclick='event.stopPropagation();cerrar_raiz(\"` + indice.nombre + `\")'>X</span>
+                        onclick='expandir_raiz(\"` + raiz.nombre + `\")'>
+                        <span class="raiz__texto">` + raiz.nombre + `</span>
+                        <span class="raiz__equis raiz__equis--oculta"onclick='event.stopPropagation();cerrar_raiz(\"` + raiz.nombre + `\")'>X</span>
                     </div>
                     <div class='raiz__contenido'>
                     </div>
@@ -53,10 +53,10 @@ function cargar_vista_panel_de_control() {
         }
     }
 
-    peticion_indices.open("GET", "_indices", true)
+    peticion_raices.open("GET", "_raices", true)
     peticion_configuracion.open("GET", "_configuracion", true)
 
-    peticion_indices.send();
+    peticion_raices.send();
     peticion_configuracion.send();
 
 }
@@ -170,8 +170,8 @@ function abrir_modal(evento) {
 
     html = ""
 
-    Object.keys(RAICES[num_raiz].registros[num_registro]).forEach(clave=>{
-        html += clave + " -> " + RAICES[num_raiz].registros[num_registro][clave] +"<br>"
+    Object.keys(RAICES[num_raiz].registros[num_registro]).forEach(clave => {
+        html += clave + " -> " + RAICES[num_raiz].registros[num_registro][clave] + "<br>"
     })
 
     body = document.getElementsByTagName("body")[0]

@@ -198,7 +198,7 @@ class Peticion:
 
     def GET(self):
         URIs_especiales = {
-            '_indices': 'self.indexar_json()',
+            '_raices': 'self.indexar_json()',
             '_configuracion': 'self.indexar_configuracion()'
         }
 
