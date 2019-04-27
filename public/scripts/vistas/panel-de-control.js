@@ -103,7 +103,7 @@ function expandir_raiz(raiz) {
 
                     if (clave != valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
                         html += '<tr class="atributo"><td class="atributo__titulo">'
-                        html += HtmlEncode(clave) + '</td> <td class="atributo__valor">' + HtmlEncode(registro[clave])
+                        html += HtmlEncode(clave) + '</td><td class="atributo__valor">' + HtmlEncode(registro[clave])
                         html += "</td></tr>"
                     }
 
@@ -168,19 +168,38 @@ function abrir_modal(evento) {
         }
     }
 
-    html = ""
+    html = "<table>"
 
     Object.keys(RAICES[num_raiz].registros[num_registro]).forEach(clave => {
-        html += clave + " -> " + RAICES[num_raiz].registros[num_registro][clave] + "<br>"
+        html +=
+            `<tr class="atributo">
+                <td class="atributo__titulo">
+                ` + clave + `
+                </td>
+                <td class="atributo__valor">
+                    <textarea rows="1"class="atributo__edicion">`+ RAICES[num_raiz].registros[num_registro][clave] + `</textarea>
+                </td>
+                <td class="atributo__eliminacion">
+                <i class="fas fa-trash"></i>
+                </td>
+            </tr>`
     })
+
+    html += 
+    `   <tr>
+            <td colspan="3" class="atributo__agregar">
+                <i class="fas fa-plus-circle"></i>
+            </td>
+        </tr>
+    </table>`
 
     body = document.getElementsByTagName("body")[0]
     body.innerHTML +=
         `<div id="modal" class="modal" >
-            <div class="modal__contenido">
-                <div class="modal__equis" onclick="cerrar_modal()">X</div>
+            <div class="modal__contenedor">
+                <div class="modal__equis" onclick="cerrar_modal()"><i class="fas fa-times"></i></div>
                 <div class="modal__boton-guardar" onclick="guardar_modal()">Guardar</div>
-                `+ html + `
+                <div class="modal__contenido">`+ html + `</div>
             </div>
         </div>`
 }
