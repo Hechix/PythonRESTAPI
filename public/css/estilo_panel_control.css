@@ -70,6 +70,24 @@
     padding-left: 10px;
 }
 
+.atributo__edicion {
+    width: 40vw;
+    resize: vertical;
+    height: 1em;
+    max-height: 60vh;
+}
+
+.atributo__agregar {
+    font-size: 30px;
+    color: green;
+    padding-top: 15px;
+}
+
+.atributo__eliminacion {
+    font-size: 30px;
+    color: red;
+}
+
 .modal {
     position: absolute;
     width: 100vw;
@@ -81,12 +99,19 @@
     text-align: center;
 }
 
+.modal__contenedor {
+    position: relative;
+    margin: auto;
+}
+
 .modal__contenido {
     background: white;
-    margin: auto;
     padding: 15px;
     border-radius: 10px;
-    position: relative;
+    overflow: auto;
+    max-width: 90vw;
+    max-height: 70vh;
+    scrollbar-width: thin;
 }
 
 .modal__equis {
@@ -104,12 +129,24 @@
 }
 
 .modal__boton-guardar {
-	background: #00c0ff;
-	position: absolute;
-	padding: 5px 10px;
-	border-radius: 10px;
-	color: white;
-	bottom: -50px;
-	left: 50%;
-	transform: translateX(-50%);
+    background: #00c0ff;
+    position: absolute;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: white;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.modal__contenido .atributo__titulo {
+    padding: 25px;
+    border-bottom: 2px solid blue;
+    border-left: 0px;
+}
+
+.modal__contenido .atributo__valor {
+    padding: 25px;
+    border-bottom: 2px solid red;
+    border-radius: 5px;
 }
