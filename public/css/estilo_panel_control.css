@@ -70,6 +70,13 @@
     padding-left: 10px;
 }
 
+.atributo__titulo_edicion {
+    width: 15vw;
+    resize: vertical;
+    height: 1em;
+    max-height: 60vh;
+}
+
 .atributo__edicion {
     width: 40vw;
     resize: vertical;

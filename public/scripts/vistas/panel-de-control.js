@@ -62,7 +62,7 @@ function cargar_vista_panel_de_control() {
 }
 
 function valor_de_configuracion(parametro) {
-    if (JSON_ATRIBUTO_PRIMARIO){
+    if (JSON_ATRIBUTO_PRIMARIO) {
         return JSON_ATRIBUTO_PRIMARIO
     }
     CONFIGURACION.forEach(parametro_en_config => {
@@ -136,15 +136,6 @@ function cerrar_raiz(raiz) {
     })
 }
 
-function HtmlEncode(s) {
-    // https://stackoverflow.com/questions/784586/convert-special-characters-to-html-in-javascript
-    // Basicamente crea un div, le inserta la string a codificar, y la recupera, y el propio html la devuelve codificada
-    var el = document.createElement("div");
-    el.innerText = el.textContent = s;
-    s = el.innerHTML;
-    return s;
-}
-
 function abrir_modal(evento) {
     registro = evento.parentNode.parentNode
     raiz = registro.parentNode.parentNode
@@ -173,14 +164,24 @@ function abrir_modal(evento) {
     html = "<table>"
 
     Object.keys(RAICES[num_raiz].registros[num_registro]).forEach(clave => {
-        html +=
-            `<tr class="atributo">
-                <td class="atributo__titulo">
-                ` + clave + `
-                </td>
-                <td class="atributo__valor">
+        if (clave == valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
+            html +=
+                `<tr class="atributo">
+                    <td class="atributo__titulo">
+                        ` + clave + `
+                    </td>`
+        } else {
+            html +=
+                `<tr class="atributo">
+                    <td class="atributo__titulo">
+                        <input type="text" value="` + clave + `">
+                    </td>`
+        }
+
+        html += `<td class="atributo__valor">
                     <textarea rows="1"class="atributo__edicion">`+ RAICES[num_raiz].registros[num_registro][clave] + `</textarea>
                 </td>`
+
         if (clave == valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
             html += `<td class="atributo__clave">
                         <i  title="Clave Primaria" class="fas fa-key"></i>
@@ -190,13 +191,14 @@ function abrir_modal(evento) {
                         <i class="fas fa-trash"></i>
                     </td>`
         }
+
         html += `</tr>`
     })
 
     html +=
         `   <tr>
             <td colspan="3" class="atributo__agregar">
-                <i class="fas fa-plus-circle"></i>
+                <i onclick="añadir_campo_modal(this)" class="fas fa-plus-circle"></i>
             </td>
         </tr>
     </table>`
@@ -216,9 +218,51 @@ function cerrar_modal() {
     modal = document.getElementById("modal")
     modal.remove();
 }
+
 function guardar_modal() {
     // Todo notificacion en vez de cerrar?
     cerrar_modal()
+}
+
+function añadir_campo_modal(evento) {
+    tr_añadir = evento.parentElement.parentElement
+    nuevo_campo = document.createElement("tr")
+    campo_insertado = tr_añadir.parentElement.insertBefore(nuevo_campo, tr_añadir)
+
+    clave_aleatoria = string_aleatoria(5);
+
+    campo_insertado.innerHTML =
+        `<tr class="atributo">
+            <td class="atributo__titulo">
+                <input type="text" value="Titulo_` + clave_aleatoria + `">
+            </td>
+            <td class="atributo__valor">
+                <textarea rows="1"class="atributo__edicion"></textarea>
+            </td>
+            <td class="atributo__eliminacion">
+                <i class="fas fa-trash"></i>
+            </td>
+        </tr>`
+}
+
+function HtmlEncode(s) {
+    // https://stackoverflow.com/questions/784586/convert-special-characters-to-html-in-javascript
+    // Basicamente crea un div, le inserta la string a codificar, y la recupera, y el propio html la devuelve codificada
+    var el = document.createElement("div");
+    el.innerText = el.textContent = s;
+    s = el.innerHTML;
+    return s;
+}
+
+function string_aleatoria(length) {
+    // https://stackoverflow.com/questions/1349404/generate-random-string-characters-in-javascript
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var charactersLength = characters.length;
+    for (var i = 0; i < length; i++) {
+        result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
 }
 
 CONFIGURACION = undefined
