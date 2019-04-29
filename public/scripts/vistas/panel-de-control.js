@@ -62,13 +62,15 @@ function cargar_vista_panel_de_control() {
 }
 
 function valor_de_configuracion(parametro) {
-    encontrado = undefined
+    if (JSON_ATRIBUTO_PRIMARIO){
+        return JSON_ATRIBUTO_PRIMARIO
+    }
     CONFIGURACION.forEach(parametro_en_config => {
         if (parametro == parametro_en_config.nombre_campo) {
-            encontrado = parametro_en_config.valor
+            JSON_ATRIBUTO_PRIMARIO = parametro_en_config.valor
         }
     })
-    return encontrado
+    return JSON_ATRIBUTO_PRIMARIO
 }
 
 function expandir_raiz(raiz) {
@@ -178,15 +180,21 @@ function abrir_modal(evento) {
                 </td>
                 <td class="atributo__valor">
                     <textarea rows="1"class="atributo__edicion">`+ RAICES[num_raiz].registros[num_registro][clave] + `</textarea>
-                </td>
-                <td class="atributo__eliminacion">
-                <i class="fas fa-trash"></i>
-                </td>
-            </tr>`
+                </td>`
+        if (clave == valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
+            html += `<td class="atributo__clave">
+                        <i  title="Clave Primaria" class="fas fa-key"></i>
+                    </td>`
+        } else {
+            html += `<td class="atributo__eliminacion">
+                        <i class="fas fa-trash"></i>
+                    </td>`
+        }
+        html += `</tr>`
     })
 
-    html += 
-    `   <tr>
+    html +=
+        `   <tr>
             <td colspan="3" class="atributo__agregar">
                 <i class="fas fa-plus-circle"></i>
             </td>
@@ -214,4 +222,5 @@ function guardar_modal() {
 }
 
 CONFIGURACION = undefined
+JSON_ATRIBUTO_PRIMARIO = undefined
 RAICES = []
