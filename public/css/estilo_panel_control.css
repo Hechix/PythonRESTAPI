@@ -167,6 +167,7 @@
     border-radius: 10px 0 0 10px;
     border: 1px solid white;
     border-right: none;
+    animation: notificacion_aparecer 6s both ease-in-out;
 }
 
 .notificacion--conseguido {
@@ -195,6 +196,21 @@
     border-radius: 0 30px 30px 30px;
     width: 105%;
     animation: barra_cd 5s both linear;
+}
+
+@keyframes notificacion_aparecer {
+    0% {
+        transform: translate(100%);
+    }
+    10% {
+        transform: translate(0);
+    }
+    90% {
+        transform: translate(0);
+    }
+    100% {
+        transform: translate(100%);
+    }
 }
 
 @keyframes barra_cd {

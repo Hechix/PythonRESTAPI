@@ -23,7 +23,6 @@ function cargar_vista_panel_de_control() {
             json = JSON.parse(peticion_raices.responseText)
             json.forEach(raiz => {
                 raiz.registros = []
-                raiz.expandido = false
                 RAICES.push(raiz)
                 principal.innerHTML +=
                     `<div id='` + raiz.nombre + `' class='raiz'>
@@ -88,7 +87,6 @@ function expandir_raiz(raiz) {
             RAICES.forEach(raiz_almacenada => {
                 if (raiz_almacenada.nombre == raiz) {
                     raiz_almacenada.registros = json
-                    raiz_almacenada.expandido = true
                 }
             })
             json.forEach(registro => {
@@ -131,7 +129,6 @@ function cerrar_raiz(raiz) {
     RAICES.forEach(raiz_almacenada => {
         if (raiz_almacenada.nombre == raiz) {
             raiz_almacenada.registros = []
-            raiz_almacenada.expandido = false
         }
     })
 }
@@ -167,30 +164,26 @@ function abrir_modal(evento) {
         if (clave == valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
             html +=
                 `<tr class="atributo">
-                    <td class="atributo__titulo js-clave">` + clave + `</td>`
+                    <td class="atributo__titulo js-clave">` + clave + `</td>
+                    <td class="atributo__valor js-valor">`+ RAICES[num_raiz].registros[num_registro][clave] + `</td>
+                    <td class="atributo__clave">
+                        <i title="Clave Primaria" class="fas fa-key"></i>
+                    </td>
+                </tr>`
         } else {
             html +=
                 `<tr class="atributo">
                     <td class="atributo__titulo">
                         <input class="js-titulo" type="text" value="` + clave + `">
-                    </td>`
-        }
-
-        html += `<td class="atributo__valor">
-                    <textarea rows="1"class="atributo__edicion js-valor">`+ RAICES[num_raiz].registros[num_registro][clave] + `</textarea>
-                </td>`
-
-        if (clave == valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
-            html += `<td class="atributo__clave">
-                        <i  title="Clave Primaria" class="fas fa-key"></i>
-                    </td>`
-        } else {
-            html += `<td class="atributo__eliminacion">
+                    </td>
+                    <td class="atributo__valor">
+                        <textarea rows="1"class="atributo__edicion js-valor">`+ RAICES[num_raiz].registros[num_registro][clave] + `</textarea>
+                    </td>
+                    <td class="atributo__eliminacion">
                         <i class="fas fa-trash"></i>
-                    </td>`
+                    </td>
+                </tr>`
         }
-
-        html += `</tr>`
     })
 
     html +=
@@ -221,20 +214,21 @@ function cerrar_modal() {
 }
 
 function guardar_modal(evento) {
-    // Todo notificacion en vez de cerrar?
+
     atributos = evento.parentElement.getElementsByClassName("modal__contenido")[0].getElementsByClassName("atributo")
     registro = {}
     id_registro = undefined
 
     for (atributo of atributos) {
-        valor = atributo.getElementsByClassName("js-valor")[0].value
         titulo = atributo.getElementsByClassName("atributo__titulo")[0]
 
         if (titulo.classList.contains('js-clave')) {
             titulo = titulo.innerHTML
+            valor = atributo.getElementsByClassName("js-valor")[0].innerHTML
             id_registro = valor
         } else {
             titulo = titulo.getElementsByClassName("js-titulo")[0].value
+            valor = atributo.getElementsByClassName("js-valor")[0].value
         }
 
         registro[titulo] = valor
@@ -246,7 +240,10 @@ function guardar_modal(evento) {
             switch (peticion_put.status) {
                 case 200:
                     notificacion(contenido = "Registro actualizado correctamente!", tipo = "conseguido")
+                    expandir_raiz(RAIZ_DEL_MODAL)
+                    cerrar_modal()
                     break;
+
                 case 404:
                     notificacion(contenido = "El registro no existe (404)", tipo = "error")
                     break;
@@ -259,9 +256,6 @@ function guardar_modal(evento) {
     peticion_put.open("PUT", RAIZ_DEL_MODAL + "/" + id_registro, true)
     peticion_put.send(JSON.stringify(registro));
 
-    // TODO actualizar vista con los datos nuevos
-    // TODO notificacion
-    // cerrar_modal()
 }
 
 function añadir_campo_modal(evento) {
@@ -287,12 +281,18 @@ function añadir_campo_modal(evento) {
 
 function notificacion(contenido = undefined, tipo = "info") {
     if (contenido) {
+        noti_actual = document.getElementById("notificacion")
+
+        if (noti_actual) {
+            noti_actual.remove()
+        }
+
         body = document.getElementsByTagName("body")[0]
         body.innerHTML +=
-            `<div class="notificacion notificacion--`+tipo+`">
+            `<div id="notificacion" class="notificacion notificacion--` + tipo + `">
                 <div class="notificacion__contenido">
                     <div class="notificacion__barra"></div>
-                    Registro actualizado correctamente!
+                    `+ contenido + `
                 </div>
             </div>`
     }
