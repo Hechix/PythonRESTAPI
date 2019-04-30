@@ -1,15 +1,3 @@
-TEXTO = `<- GET /
--> 200 index.html
-<- GET /public/css/estilo.css
--> 200 estilo.css
-<- GET /public/scripts/fondo.js
--> 200 fondo.js
-<- GET /public/scripts/principal.js
--> 200 principal.js`
-
-LINEA_ACTUAL = 0
-IP_ALEATORIA = ""
-
 function fondo_animado() {
 
     fondo = document.getElementById("js-fondo")
@@ -69,5 +57,3 @@ function alternar_modo_fondo() {
         }
     }
 }
-
-setInterval(fondo_animado, 240);

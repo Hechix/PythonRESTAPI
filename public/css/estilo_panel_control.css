@@ -224,12 +224,15 @@
     0% {
         transform: translate(100%);
     }
+
     10% {
         transform: translate(0);
     }
+
     90% {
         transform: translate(0);
     }
+
     100% {
         transform: translate(100%);
     }
@@ -240,10 +243,12 @@
         width: 105%;
         height: 3px;
     }
+
     99% {
         width: 0%;
         height: 3px;
     }
+
     100% {
         width: 0;
         height: 0;
