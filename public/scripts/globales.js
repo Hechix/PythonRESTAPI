@@ -15,6 +15,10 @@ JSON_ATRIBUTO_PRIMARIO = undefined
 RAICES = []
 RAIZ_DEL_MODAL = undefined
 
-setInterval(fondo_animado, 240);
+function inicializacion(){
+    setInterval(fondo_animado, 240);
+    cargar_vista_panel_de_control()
+}
 
-cargar_vista_panel_de_control()
+
+window.onload = inicializacion;
