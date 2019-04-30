@@ -48,15 +48,37 @@
 }
 
 .registro__editar {
-    margin: 0 10px 0 auto;
+    margin-left: auto;
     color: white;
     background: green;
     padding: 0 5px;
     border-radius: 5px;
 }
 
+.registro__eliminar {
+    margin: 0 5px;
+    color: white;
+    background: red;
+    padding: 0 15px;
+    border-radius: 5px;
+}
+
 .registro__atributos {
     margin: 0 0 0 10px;
+}
+
+.registro__centrar-externo {
+    height: 3em;
+    display: flex;
+}
+
+.registro__centrar-interno {
+    margin: auto;
+    font-size: 20px;
+}
+
+.registro__agregar {
+    color: green;
 }
 
 .atributo__titulo {

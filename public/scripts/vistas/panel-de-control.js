@@ -89,6 +89,11 @@ function expandir_raiz(raiz) {
                     raiz_almacenada.registros = json
                 }
             })
+            if (json.length < 1) {
+                html = `<div class="registro__centrar-externo">
+                            <div class="registro__centrar-interno">Sin datos</div>
+                        </div>`
+            }
             json.forEach(registro => {
 
                 html += '<div class="registro"><div class="registro__cabecera">'
@@ -97,7 +102,10 @@ function expandir_raiz(raiz) {
                     html += '<span class="registro__id" >' + HtmlEncode(valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) + " : " + HtmlEncode(registro[valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')]) + '</span>'
                 }
 
-                html += '<span class="registro__editar" onclick="abrir_modal(this)">Editar</span></div><table class="registro__atributos">'
+                html += `<span class="registro__editar" onclick="abrir_modal_edicion_registro(this)">Editar</span>
+                        <span class="registro__eliminar" onclick="eliminar_registro(this)"><i class="fas fa-trash"></i></span>
+                        </div>
+                        <table class="registro__atributos">`
 
                 Object.keys(registro).forEach(clave => {
 
@@ -111,6 +119,10 @@ function expandir_raiz(raiz) {
 
                 html += '</table></div>'
             })
+
+            html += `<div class="registro__centrar-externo">
+                        <i onclick="añadir_registro(this)" class="fas fa-plus-circle registro__centrar-interno registro__agregar"></i>
+                    </div>`
 
             contenido.innerHTML = html
         }
@@ -133,7 +145,56 @@ function cerrar_raiz(raiz) {
     })
 }
 
-function abrir_modal(evento) {
+function eliminar_registro(evento) {
+
+    registro = evento.parentNode.parentNode
+    raiz = registro.parentNode.parentNode
+    // TODO CONFIRMACION
+    id_registro = parseInt(registro.childNodes[0].childNodes[0].innerHTML.split(" : ")[1])
+
+    peticion_delete = new XMLHttpRequest()
+    peticion_delete.onreadystatechange = function () {
+        if (peticion_delete.readyState == 4) {
+            switch (peticion_delete.status) {
+                case 200:
+                    notificacion(contenido = "Registro eliminado correctamente!", tipo = "conseguido")
+                    expandir_raiz(raiz.id)
+                    break;
+
+                case 404:
+                    notificacion(contenido = "El registro no existe (404)", tipo = "error")
+                    break;
+                default:
+                    notificacion(contenido = "Error eliminando (" + peticion_delete.status + ")", tipo = "error")
+            }
+        }
+    }
+
+    peticion_delete.open("DELETE", raiz.id + "/" + id_registro, true)
+    peticion_delete.send();
+}
+
+function añadir_registro(evento) {
+
+}
+
+function abrir_modal(contenido, callback = false) {
+
+    body = document.getElementsByTagName("body")[0]
+    html =
+        `<div id="modal" class="modal" >
+            <div class="modal__contenedor">
+                <div class="modal__equis" onclick="cerrar_modal()"><i class="fas fa-times"></i></div>`
+    if (callback) {
+        html += '<div class="modal__boton-guardar" onclick = "' + callback + '"> Guardar</div>'
+    }
+    html += `<div class="modal__contenido">` + contenido + `</div>
+            </div>
+        </div>`
+    body.innerHTML += html
+}
+
+function abrir_modal_edicion_registro(evento) {
     registro = evento.parentNode.parentNode
     raiz = registro.parentNode.parentNode
     id_registro = parseInt(registro.childNodes[0].childNodes[0].innerHTML.split(" : ")[1])
@@ -194,15 +255,7 @@ function abrir_modal(evento) {
         </tr>
     </table>`
 
-    body = document.getElementsByTagName("body")[0]
-    body.innerHTML +=
-        `<div id="modal" class="modal" >
-            <div class="modal__contenedor">
-                <div class="modal__equis" onclick="cerrar_modal()"><i class="fas fa-times"></i></div>
-                <div class="modal__boton-guardar" onclick="guardar_modal(this)">Guardar</div>
-                <div class="modal__contenido">`+ html + `</div>
-            </div>
-        </div>`
+    abrir_modal(html,'guardar_modal(this)')
 
     RAIZ_DEL_MODAL = raiz.id
 }
