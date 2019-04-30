@@ -124,10 +124,10 @@ def modificar_objeto(CONFIGURACION, objeto, indices):
     if not encontrado:
         raise Exception('NO_EXISTE_EL_DESTINO')
 
-    if indice_objeto_almacenado:
-        json[indices[0]][indice_objeto_almacenado] = objeto
-    else:
+    if indice_objeto_almacenado == None:
         json[indices[0]] = objeto
+    else:
+        json[indices[0]][indice_objeto_almacenado] = objeto
 
     with open(CONFIGURACION['FICHERO_JSON'], 'w')as archivo:
         json_dump(json, archivo)
