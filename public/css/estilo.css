@@ -1,0 +1,21 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    overflow: hidden;
+    background: rgb(200, 255, 255);
+}
+
+.body-oscuro {
+    background: black;
+}
+
+.principal {
+    position: absolute;
+    height: 100%;
+    z-index: 1;
+    width: 80vw;
+    overflow-x: scroll;
+    padding: 5vh 10vw 0 10vw;
+}
