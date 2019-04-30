@@ -60,3 +60,11 @@
     border-bottom: 2px solid red;
     border-radius: 5px;
 }
+
+.modal__titulo {
+    font-size: 30px;
+}
+
+.modal__subtitulo {
+    font-size: 20px;
+}

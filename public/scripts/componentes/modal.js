@@ -12,6 +12,7 @@ function abrir_modal(contenido, callback = false) {
             </div>
         </div>`
     body.innerHTML += html
+    reasignar_botones()
 }
 
 function abrir_modal_edicion_registro(evento) {
@@ -76,7 +77,6 @@ function abrir_modal_edicion_registro(evento) {
     </table>`
 
     abrir_modal(html, 'guardar_modal(this)')
-
     RAIZ_DEL_MODAL = raiz.id
 }
 

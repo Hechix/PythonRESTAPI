@@ -35,14 +35,7 @@ function cargar_vista_panel_de_control() {
                     </div>
                 </div>`
             })
-
-            boton__volver = document.getElementById("js-boton__volver")
-            boton__recargar = document.getElementById("js-boton__recargar")
-            boton_alternar_modo_fondo = document.getElementById("js-boton__alternar-modo-fondo")
-
-            boton__volver.onclick = cargar_vista_bienvenida
-            boton__recargar.onclick = cargar_vista_panel_de_control
-            boton_alternar_modo_fondo.onclick = alternar_modo_fondo
+            reasignar_botones()
         }
     }
 
@@ -58,6 +51,18 @@ function cargar_vista_panel_de_control() {
     peticion_raices.send();
     peticion_configuracion.send();
 
+}
+
+function reasignar_botones(){
+    boton__volver = document.getElementById("js-boton__volver")
+    boton__recargar = document.getElementById("js-boton__recargar")
+    boton_alternar_modo_fondo = document.getElementById("js-boton__alternar-modo-fondo")
+
+    if (boton__volver){
+        boton__volver.onclick = cargar_vista_bienvenida
+    }
+    boton__recargar.onclick = cargar_vista_panel_de_control
+    boton_alternar_modo_fondo.onclick = alternar_modo_fondo
 }
 
 function valor_de_configuracion(parametro) {
@@ -175,5 +180,20 @@ function eliminar_registro(evento) {
 }
 
 function añadir_registro(evento) {
+    
+    raiz = evento.parentNode.parentNode.parentNode
+    html =
+    `<p class="modal__titulo">
+        Crear nuevo registro en `+raiz.id+`
+    </p>
+    <p class="modal__subtitulo">
+        Nuevo id:
+    </p>
+    <input type="text">`
+    abrir_modal(html,"confirmar_nuevo_registro()")
 
+}
+
+function confirmar_nuevo_registro(){
+    console.log("a")
 }
