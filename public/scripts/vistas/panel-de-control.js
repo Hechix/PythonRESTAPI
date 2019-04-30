@@ -167,19 +167,17 @@ function abrir_modal(evento) {
         if (clave == valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
             html +=
                 `<tr class="atributo">
-                    <td class="atributo__titulo">
-                        ` + clave + `
-                    </td>`
+                    <td class="atributo__titulo js-clave">` + clave + `</td>`
         } else {
             html +=
                 `<tr class="atributo">
                     <td class="atributo__titulo">
-                        <input type="text" value="` + clave + `">
+                        <input class="js-titulo" type="text" value="` + clave + `">
                     </td>`
         }
 
         html += `<td class="atributo__valor">
-                    <textarea rows="1"class="atributo__edicion">`+ RAICES[num_raiz].registros[num_registro][clave] + `</textarea>
+                    <textarea rows="1"class="atributo__edicion js-valor">`+ RAICES[num_raiz].registros[num_registro][clave] + `</textarea>
                 </td>`
 
         if (clave == valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
@@ -208,20 +206,53 @@ function abrir_modal(evento) {
         `<div id="modal" class="modal" >
             <div class="modal__contenedor">
                 <div class="modal__equis" onclick="cerrar_modal()"><i class="fas fa-times"></i></div>
-                <div class="modal__boton-guardar" onclick="guardar_modal()">Guardar</div>
+                <div class="modal__boton-guardar" onclick="guardar_modal(this)">Guardar</div>
                 <div class="modal__contenido">`+ html + `</div>
             </div>
         </div>`
+
+    RAIZ_DEL_MODAL = raiz.id
 }
 
 function cerrar_modal() {
     modal = document.getElementById("modal")
     modal.remove();
+    RAIZ_DEL_MODAL = undefined
 }
 
-function guardar_modal() {
+function guardar_modal(evento) {
     // Todo notificacion en vez de cerrar?
-    cerrar_modal()
+    atributos = evento.parentElement.getElementsByClassName("modal__contenido")[0].getElementsByClassName("atributo")
+    registro = {}
+    id_registro = undefined
+
+    for (atributo of atributos) {
+        valor  = atributo.getElementsByClassName("js-valor")[0].value
+        titulo = atributo.getElementsByClassName("atributo__titulo")[0]
+
+        if (titulo.classList.contains('js-clave')){
+            titulo = titulo.innerHTML
+            id_registro = valor
+        }else{
+            titulo = titulo.getElementsByClassName("js-titulo")[0].value
+        }
+
+        registro[titulo]  = valor
+    }
+    console.log(registro)
+    peticion_put = new XMLHttpRequest()
+
+    peticion_put.onreadystatechange = function () {
+        if (peticion_put.readyState == 4 && peticion_put.status == 200) {
+            json = JSON.parse(peticion_put.responseText)
+            console.log(json)
+        }
+    }
+
+    peticion_contenido.open("PUT",RAIZ_DEL_MODAL+"/"+id_registro, true)
+    peticion_contenido.send( JSON.stringify(registro));
+
+    // cerrar_modal()
 }
 
 function añadir_campo_modal(evento) {
@@ -232,17 +263,17 @@ function añadir_campo_modal(evento) {
     clave_aleatoria = string_aleatoria(5);
 
     campo_insertado.innerHTML =
-        `<tr class="atributo">
-            <td class="atributo__titulo">
-                <input type="text" value="Titulo_` + clave_aleatoria + `">
-            </td>
-            <td class="atributo__valor">
-                <textarea rows="1"class="atributo__edicion"></textarea>
-            </td>
-            <td class="atributo__eliminacion">
-                <i class="fas fa-trash"></i>
-            </td>
-        </tr>`
+        `<td class="atributo__titulo">
+            <input class="js-titulo" type="text" value="nuevo_` + clave_aleatoria + `">
+        </td>
+        <td class="atributo__valor">
+            <textarea rows="1"class="atributo__edicion js-valor"></textarea>
+        </td>
+        <td class="atributo__eliminacion">
+            <i class="fas fa-trash"></i>
+        </td>`
+
+    campo_insertado.className = "atributo"
 }
 
 function HtmlEncode(s) {
@@ -268,3 +299,4 @@ function string_aleatoria(length) {
 CONFIGURACION = undefined
 JSON_ATRIBUTO_PRIMARIO = undefined
 RAICES = []
+RAIZ_DEL_MODAL = undefined

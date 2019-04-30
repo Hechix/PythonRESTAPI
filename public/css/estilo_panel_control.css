@@ -80,7 +80,7 @@
 .atributo__edicion {
     width: 40vw;
     resize: vertical;
-    height: 1em;
+    height: 2em;
     max-height: 60vh;
 }
 
