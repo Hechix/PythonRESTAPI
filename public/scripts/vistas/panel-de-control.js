@@ -227,31 +227,40 @@ function guardar_modal(evento) {
     id_registro = undefined
 
     for (atributo of atributos) {
-        valor  = atributo.getElementsByClassName("js-valor")[0].value
+        valor = atributo.getElementsByClassName("js-valor")[0].value
         titulo = atributo.getElementsByClassName("atributo__titulo")[0]
 
-        if (titulo.classList.contains('js-clave')){
+        if (titulo.classList.contains('js-clave')) {
             titulo = titulo.innerHTML
             id_registro = valor
-        }else{
+        } else {
             titulo = titulo.getElementsByClassName("js-titulo")[0].value
         }
 
-        registro[titulo]  = valor
+        registro[titulo] = valor
     }
-    console.log(registro)
     peticion_put = new XMLHttpRequest()
 
     peticion_put.onreadystatechange = function () {
-        if (peticion_put.readyState == 4 && peticion_put.status == 200) {
-            json = JSON.parse(peticion_put.responseText)
-            console.log(json)
+        if (peticion_put.readyState == 4) {
+            switch (peticion_put.status) {
+                case 200:
+                    notificacion(contenido = "Registro actualizado correctamente!", tipo = "conseguido")
+                    break;
+                case 404:
+                    notificacion(contenido = "El registro no existe (404)", tipo = "error")
+                    break;
+                default:
+                    notificacion(contenido = "Error actualizando (" + peticion_put.status + ")", tipo = "error")
+            }
         }
     }
 
-    peticion_contenido.open("PUT",RAIZ_DEL_MODAL+"/"+id_registro, true)
-    peticion_contenido.send( JSON.stringify(registro));
+    peticion_put.open("PUT", RAIZ_DEL_MODAL + "/" + id_registro, true)
+    peticion_put.send(JSON.stringify(registro));
 
+    // TODO actualizar vista con los datos nuevos
+    // TODO notificacion
     // cerrar_modal()
 }
 
@@ -274,6 +283,22 @@ function añadir_campo_modal(evento) {
         </td>`
 
     campo_insertado.className = "atributo"
+}
+
+function notificacion(contenido = undefined, tipo = "info") {
+    if (contenido) {
+        body = document.getElementsByTagName("body")[0]
+        body.innerHTML +=
+            `<div class="notificacion notificacion--`+tipo+`">
+                <div class="notificacion__contenido">
+                    <div class="notificacion__barra"></div>
+                    Registro actualizado correctamente!
+                </div>
+            </div>`
+    }
+    else {
+        console.error("Se ha intentado invocar una notificacion sin contenido")
+    }
 }
 
 function HtmlEncode(s) {
