@@ -53,12 +53,12 @@ function cargar_vista_panel_de_control() {
 
 }
 
-function reasignar_botones(){
+function reasignar_botones() {
     boton__volver = document.getElementById("js-boton__volver")
     boton__recargar = document.getElementById("js-boton__recargar")
     boton_alternar_modo_fondo = document.getElementById("js-boton__alternar-modo-fondo")
 
-    if (boton__volver){
+    if (boton__volver) {
         boton__volver.onclick = cargar_vista_bienvenida
     }
     boton__recargar.onclick = cargar_vista_panel_de_control
@@ -77,7 +77,7 @@ function valor_de_configuracion(parametro) {
     return JSON_ATRIBUTO_PRIMARIO
 }
 
-function expandir_raiz(raiz) {
+function expandir_raiz(raiz, callback = false, callback_parametro = undefined) {
     raiz_div = document.getElementById(raiz)
     equis = raiz_div.getElementsByClassName('raiz__equis')[0]
     equis.className = "raiz__equis"
@@ -130,6 +130,10 @@ function expandir_raiz(raiz) {
                     </div>`
 
             contenido.innerHTML = html
+
+            if (callback) {
+                callback(callback_parametro)
+            }
         }
     }
 
@@ -180,20 +184,54 @@ function eliminar_registro(evento) {
 }
 
 function añadir_registro(evento) {
-    
+
     raiz = evento.parentNode.parentNode.parentNode
     html =
-    `<p class="modal__titulo">
-        Crear nuevo registro en `+raiz.id+`
+        `<p class="modal__titulo">
+        Creando nuevo registro en ` + raiz.id + `
     </p>
     <p class="modal__subtitulo">
         Nuevo id:
     </p>
-    <input type="text">`
-    abrir_modal(html,"confirmar_nuevo_registro()")
+    <input id="js-nuevo-id" type="text">`
+    RAIZ_DEL_MODAL = raiz.id
+    abrir_modal(html, "confirmar_nuevo_registro()")
 
 }
 
-function confirmar_nuevo_registro(){
-    console.log("a")
+function confirmar_nuevo_registro() {
+    id = document.getElementById("js-nuevo-id").value
+    if (id.length == 0) {
+        notificacion(contenido = "El id está vacio", tipo = "error")
+        return
+    }
+
+    peticion_post = new XMLHttpRequest()
+    peticion_post.onreadystatechange = function () {
+        if (peticion_post.readyState == 4) {
+            switch (peticion_post.status) {
+                case 200:
+                    notificacion(contenido = "Registro creado correctamente!", tipo = "conseguido")
+                    expandir_raiz(RAIZ_DEL_MODAL, callback = auto_editar_nuevo_registro, callback_parametro = id)
+                    break;
+
+                default:
+                    notificacion(contenido = "Error creando (" + peticion_post.status + ")", tipo = "error")
+            }
+        }
+    }
+
+    peticion_post.open("POST", RAIZ_DEL_MODAL, true)
+    peticion_post.send('{"id":' + id + '}');
+}
+
+function auto_editar_nuevo_registro(id) {
+    raiz = document.getElementById(RAIZ_DEL_MODAL)
+    cerrar_modal()
+    modal_preparar_edicion(raiz, id)
+
+    añadir_nuevo = document.getElementById("js-añadir-atributo")
+    añadir_nuevo.click()
+    añadir_nuevo.click()
+    añadir_nuevo.click()
 }

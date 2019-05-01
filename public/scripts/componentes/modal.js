@@ -19,7 +19,10 @@ function abrir_modal_edicion_registro(evento) {
     registro = evento.parentNode.parentNode
     raiz = registro.parentNode.parentNode
     id_registro = parseInt(registro.childNodes[0].childNodes[0].innerHTML.split(" : ")[1])
+    modal_preparar_edicion(raiz, id_registro)
+}
 
+function modal_preparar_edicion(raiz, id_registro) {
     num_raiz = undefined
     num_registro = undefined
 
@@ -71,7 +74,7 @@ function abrir_modal_edicion_registro(evento) {
     html +=
         `   <tr>
             <td colspan="3" class="atributo__agregar">
-                <i onclick="añadir_campo_modal(this)" class="fas fa-plus-circle"></i>
+                <i id="js-añadir-atributo" onclick="añadir_campo_modal(this)" class="fas fa-plus-circle"></i>
             </td>
         </tr>
     </table>`
@@ -151,3 +154,5 @@ function cerrar_modal() {
     modal.remove();
     RAIZ_DEL_MODAL = undefined
 }
+
+// TODO eliminar atributos
