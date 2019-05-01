@@ -23,21 +23,27 @@ function abrir_modal_edicion_registro(evento) {
     registro = evento.parentNode.parentNode
     raiz = registro.parentNode.parentNode
     id_registro = parseInt(registro.childNodes[0].childNodes[0].innerHTML.split(" : ")[1])
-    modal_preparar_edicion(raiz, id_registro)
+    
+    EDICION = {
+        raiz_id : raiz.id,
+        registro_id : id_registro
+    }
+
+    modal_preparar_edicion()
 }
 
-function modal_preparar_edicion(raiz, id_registro) {
+function modal_preparar_edicion() {
     num_raiz = undefined
     num_registro = undefined
 
     for (x = 0; x < RAICES.length; x++) {
 
-        if (RAICES[x].nombre == raiz.id) {
+        if (RAICES[x].nombre ==EDICION.raiz_id) {
             num_raiz = x
 
             for (y = 0; y < RAICES[x].registros.length; y++) {
 
-                if (RAICES[x].registros[y].id == id_registro) {
+                if (RAICES[x].registros[y].id == EDICION.registro_id) {
                     num_registro = y
                     break
                 }
@@ -46,6 +52,8 @@ function modal_preparar_edicion(raiz, id_registro) {
             break
         }
     }
+
+    console.log(EDICION,num_raiz,num_registro)
 
     html = "<table>"
 
@@ -91,7 +99,6 @@ function modal_preparar_edicion(raiz, id_registro) {
     }
 
     abrir_modal(modal)
-    RAIZ_DEL_MODAL = raiz.id
 }
 
 function añadir_campo_modal(evento) {
@@ -116,7 +123,27 @@ function añadir_campo_modal(evento) {
 }
 
 function eliminar_campo_modal(evento) {
-    evento.parentElement.parentElement.remove()
+    atributo = evento.parentElement.parentElement
+    atributo.id = "js-atributo-a-borrar"
+    titulo = atributo.getElementsByClassName("js-titulo")[0].value
+
+    modal = {
+        contenido: "¿Eliminar " + EDICION.raiz_id + " / " + EDICION.registro_id + " / "+titulo+"?",
+        callback: 'cerrar_modal()',
+        callback_texto: 'Cancelar',
+        callback_tipo: 'verde',
+        callback_secundario: "confirmar_eliminar_campo_modal()",
+        callback_secundario_texto: 'Eliminar',
+        callback_secundario_tipo: 'rojo'
+    }
+
+    abrir_modal(modal)
+}
+
+function confirmar_eliminar_campo_modal() {
+    document.getElementById("js-atributo-a-borrar").remove()
+    // TODO QUE SE CIERRE EL MODAL CORRESPONDIENTE
+    cerrar_modal()
 }
 
 function guardar_modal(evento) {
@@ -146,7 +173,7 @@ function guardar_modal(evento) {
             switch (peticion_put.status) {
                 case 200:
                     notificacion(contenido = "Registro actualizado correctamente!", tipo = "conseguido")
-                    expandir_raiz(RAIZ_DEL_MODAL)
+                    expandir_raiz(EDICION.raiz_id)
                     cerrar_modal()
                     break;
 
@@ -159,7 +186,7 @@ function guardar_modal(evento) {
         }
     }
 
-    peticion_put.open("PUT", RAIZ_DEL_MODAL + "/" + id_registro, true)
+    peticion_put.open("PUT", EDICION.raiz_id + "/" + id_registro, true)
     peticion_put.send(JSON.stringify(registro));
 
 }
@@ -167,5 +194,5 @@ function guardar_modal(evento) {
 function cerrar_modal() {
     modal = document.getElementById("modal")
     modal.remove();
-    RAIZ_DEL_MODAL = undefined
+    EDICION = undefined
 }

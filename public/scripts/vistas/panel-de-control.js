@@ -156,14 +156,13 @@ function eliminar_registro(evento) {
     raiz = registro.parentNode.parentNode
     id_registro = parseInt(registro.childNodes[0].childNodes[0].innerHTML.split(" : ")[1])
 
-    raiz = raiz.id.trim()
 
     modal = {
-        contenido: "¿Eliminar " + raiz + " / " + id_registro + "?",
+        contenido: "¿Eliminar " + raiz.id + " / " + id_registro + "?",
         callback: 'cerrar_modal()',
         callback_texto: 'Cancelar',
         callback_tipo: 'verde',
-        callback_secundario: "confirmar_eliminar_registro('" + raiz + "'," + id_registro + ")",
+        callback_secundario: "confirmar_eliminar_registro()",
         callback_secundario_texto: 'Eliminar',
         callback_secundario_tipo: 'rojo'
     }
@@ -171,7 +170,7 @@ function eliminar_registro(evento) {
     abrir_modal(modal)
 }
 
-function confirmar_eliminar_registro(raiz, id) {
+function confirmar_eliminar_registro() {
 
     peticion_delete = new XMLHttpRequest()
     peticion_delete.onreadystatechange = function () {
@@ -192,7 +191,7 @@ function confirmar_eliminar_registro(raiz, id) {
         }
     }
 
-    peticion_delete.open("DELETE", raiz + "/" + id, true)
+    peticion_delete.open("DELETE", EDICION.raiz_id + "/" + EDICION.registro_id, true)
     peticion_delete.send();
 
 }
@@ -208,7 +207,10 @@ function añadir_registro(evento) {
             Nuevo identificador (` + JSON_ATRIBUTO_PRIMARIO + `):
         </p>
         <input id="js-nuevo-id" type="text">`
-    RAIZ_DEL_MODAL = raiz.id
+
+    EDICION = {
+        raiz_id: raiz.id
+    }
 
     modal = {
         contenido: html,
@@ -233,7 +235,7 @@ function confirmar_nuevo_registro() {
             switch (peticion_post.status) {
                 case 200:
                     notificacion(contenido = "Registro creado correctamente!", tipo = "conseguido")
-                    expandir_raiz(RAIZ_DEL_MODAL, callback = auto_editar_nuevo_registro, callback_parametro = id)
+                    expandir_raiz(EDICION.raiz_id, callback = auto_editar_nuevo_registro, callback_parametro = id)
                     break;
 
                 default:
@@ -242,12 +244,12 @@ function confirmar_nuevo_registro() {
         }
     }
 
-    peticion_post.open("POST", RAIZ_DEL_MODAL, true)
+    peticion_post.open("POST", EDICION.raiz_id, true)
     peticion_post.send('{"' + JSON_ATRIBUTO_PRIMARIO + '":"' + id + '"}');
 }
 
 function auto_editar_nuevo_registro(id) {
-    raiz = document.getElementById(RAIZ_DEL_MODAL)
+    raiz = document.getElementById(EDICION.raiz_id)
     cerrar_modal()
     modal_preparar_edicion(raiz, id)
 

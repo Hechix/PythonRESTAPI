@@ -15,11 +15,11 @@ IP_ALEATORIA = ""
 CONFIGURACION = undefined
 JSON_ATRIBUTO_PRIMARIO = undefined
 RAICES = []
-RAIZ_DEL_MODAL = undefined
+EDICION = undefined
 
 function inicializacion(){
     setInterval(fondo_animado, 240);
-    cargar_vista_admin_raices()
+    cargar_vista_panel_de_control()
 }
 
 
