@@ -24,6 +24,10 @@
     opacity: 0;
 }
 
+.raiz_desplegable--oculto {
+    opacity: 0;
+}
+
 .raiz__contenido {
     padding-left: 10px;
 }

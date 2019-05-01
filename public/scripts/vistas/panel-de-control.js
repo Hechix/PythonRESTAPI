@@ -33,6 +33,7 @@ function cargar_vista_panel_de_control() {
                     <div class='raiz__titulo' 
                         onclick='expandir_raiz(\"` + raiz.nombre + `\")'>
                         <span class="raiz__texto">` + raiz.nombre + `</span>
+                        <span class="raiz_desplegable"><i class="fas fa-caret-down"></i></span>
                         <span class="raiz__equis raiz__equis--oculta"onclick='event.stopPropagation();cerrar_raiz(\"` + raiz.nombre + `\")'><i class="fas fa-times"></i></span>
                     </div>
                     <div class='raiz__contenido'>
@@ -71,7 +72,9 @@ function valor_de_configuracion(parametro) {
 function expandir_raiz(raiz, callback = false, callback_parametro = undefined) {
     raiz_div = document.getElementById(raiz)
     equis = raiz_div.getElementsByClassName('raiz__equis')[0]
+    desplegable = raiz_div.getElementsByClassName('raiz_desplegable')[0]
     equis.className = "raiz__equis"
+    desplegable.className = "raiz_desplegable raiz_desplegable--oculto"
     contenido = raiz_div.getElementsByClassName('raiz__contenido')[0]
     html = ""
 
@@ -135,7 +138,9 @@ function expandir_raiz(raiz, callback = false, callback_parametro = undefined) {
 function cerrar_raiz(raiz) {
     raiz_div = document.getElementById(raiz)
     equis = raiz_div.getElementsByClassName('raiz__equis')[0]
+    desplegable = raiz_div.getElementsByClassName('raiz_desplegable')[0]
     equis.className = "raiz__equis raiz__equis--oculta"
+    desplegable.className = "raiz_desplegable"
     contenido = raiz_div.getElementsByClassName('raiz__contenido')[0]
     contenido.innerHTML = ""
     RAICES.forEach(raiz_almacenada => {
