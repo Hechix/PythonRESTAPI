@@ -169,18 +169,3 @@ function cerrar_modal() {
     modal.remove();
     RAIZ_DEL_MODAL = undefined
 }
-
-function test_modal() {
-
-    modal= {
-        contenido : "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-        callback : 'a()',
-        callback_texto : 'a',
-        callback_tipo : 'verde' ,
-        callback_secundario : 'a()',
-        callback_secundario_texto : 'a',
-        callback_secundario_tipo : 'rojo' 
-    }
-
-    abrir_modal(modal )
-}
