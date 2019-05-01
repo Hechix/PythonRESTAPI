@@ -1,3 +1,5 @@
+// TODO Cambiar flechas a font-awesome y darle colores o algo
+
 TEXTO = `<- GET /
 -> 200 index.html
 <- GET /public/css/estilo.css
