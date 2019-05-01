@@ -1,10 +1,10 @@
 function cargar_vista_panel_de_control() {
     html =
         `<div class="botones-horizontales">
-    <button id="js-boton__volver" class="boton boton--pequeño boton--no-estirado">Volver</button>
-    <button id="js-boton__recargar" class="boton boton--pequeño boton--no-estirado">Recargar</button>
-    <button id="js-boton__alternar-modo-fondo" class="boton boton--pequeño boton--no-estirado">@@@@@</button>
-    </div>`
+            <button id="js-boton__volver" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_bienvenida()">Volver</button>
+            <button id="js-boton__recargar" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_panel_de_control()">Recargar</button>
+            <button id="js-boton__alternar-modo-fondo" class="boton boton--pequeño boton--no-estirado" onclick="alternar_modo_fondo()">@@@@@</button>
+        </div>`
 
     if (document.getElementsByTagName("body")[0].className == "") {
         html = html.replace("@@@@@", "Modo oscuro")
@@ -29,13 +29,12 @@ function cargar_vista_panel_de_control() {
                     <div class='raiz__titulo' 
                         onclick='expandir_raiz(\"` + raiz.nombre + `\")'>
                         <span class="raiz__texto">` + raiz.nombre + `</span>
-                        <span class="raiz__equis raiz__equis--oculta"onclick='event.stopPropagation();cerrar_raiz(\"` + raiz.nombre + `\")'>X</span>
+                        <span class="raiz__equis raiz__equis--oculta"onclick='event.stopPropagation();cerrar_raiz(\"` + raiz.nombre + `\")'><i class="fas fa-times"></i></span>
                     </div>
                     <div class='raiz__contenido'>
                     </div>
                 </div>`
             })
-            reasignar_botones()
         }
     }
 
@@ -51,18 +50,6 @@ function cargar_vista_panel_de_control() {
     peticion_raices.send();
     peticion_configuracion.send();
 
-}
-
-function reasignar_botones() {
-    boton__volver = document.getElementById("js-boton__volver")
-    boton__recargar = document.getElementById("js-boton__recargar")
-    boton_alternar_modo_fondo = document.getElementById("js-boton__alternar-modo-fondo")
-
-    if (boton__volver) {
-        boton__volver.onclick = cargar_vista_bienvenida
-    }
-    boton__recargar.onclick = cargar_vista_panel_de_control
-    boton_alternar_modo_fondo.onclick = alternar_modo_fondo
 }
 
 function valor_de_configuracion(parametro) {

@@ -19,3 +19,7 @@ body {
     overflow-x: scroll;
     padding: 5vh 10vw 0 10vw;
 }
+
+*{
+    scrollbar-width: thin;
+}

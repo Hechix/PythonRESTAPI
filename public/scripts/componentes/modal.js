@@ -156,5 +156,4 @@ function cerrar_modal() {
     modal = document.getElementById("modal")
     modal.remove();
     RAIZ_DEL_MODAL = undefined
-    reasignar_botones()
 }
