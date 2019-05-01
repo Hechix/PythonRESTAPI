@@ -12,7 +12,6 @@ function abrir_modal(contenido, callback = false) {
             </div>
         </div>`
     body.innerHTML += html
-    reasignar_botones()
 }
 
 function abrir_modal_edicion_registro(evento) {
@@ -65,7 +64,7 @@ function modal_preparar_edicion(raiz, id_registro) {
                         <textarea rows="1"class="atributo__edicion js-valor">` + RAICES[num_raiz].registros[num_registro][clave] + `</textarea>
                     </td>
                     <td class="atributo__eliminacion">
-                        <i class="fas fa-trash"></i>
+                        <i  onclick="eliminar_campo_modal(this)" class="fas fa-trash"></i>
                     </td>
                 </tr>`
         }
@@ -98,10 +97,14 @@ function añadir_campo_modal(evento) {
             <textarea rows="1"class="atributo__edicion js-valor"></textarea>
         </td>
         <td class="atributo__eliminacion">
-            <i class="fas fa-trash"></i>
+            <i onclick="eliminar_campo_modal(this)" class="fas fa-trash"></i>
         </td>`
 
     campo_insertado.className = "atributo"
+}
+
+function eliminar_campo_modal(evento){
+    evento.parentElement.parentElement.remove()
 }
 
 function guardar_modal(evento) {
@@ -153,6 +156,5 @@ function cerrar_modal() {
     modal = document.getElementById("modal")
     modal.remove();
     RAIZ_DEL_MODAL = undefined
+    reasignar_botones()
 }
-
-// TODO eliminar atributos
