@@ -7,6 +7,7 @@ function cargar_vista_panel_de_control() {
             <button id="js-boton__recargar" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_panel_de_control()">Recargar</button>
             <button id="js-boton__admin_raices" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_admin_raices()">Administrar raices</button>
             <button id="js-boton__alternar-modo-fondo" class="boton boton--pequeño boton--no-estirado" onclick="alternar_modo_fondo()">@@@@@</button>
+            <span class="botones-horizontales__titulo">Admin. Registros</span>
         </div>`
 
     if (document.getElementsByTagName("body")[0].className == "") {
@@ -96,7 +97,7 @@ function expandir_raiz(raiz, callback = false, callback_parametro = undefined) {
                 if (valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO') in registro) {
                     html += '<span class="registro__id" >' + HtmlEncode(valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) + " : " + HtmlEncode(registro[valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')]) + '</span>'
                 }
-
+                // CAMBIAR A FONT AWESOME
                 html += `<span class="registro__editar" onclick="abrir_modal_edicion_registro(this)">Editar</span>
                         <span class="registro__eliminar" onclick="eliminar_registro(this)"><i class="fas fa-trash"></i></span>
                         </div>

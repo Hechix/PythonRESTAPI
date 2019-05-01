@@ -50,8 +50,14 @@
 
 .botones-horizontales {
     margin-bottom: 15px;
+    display: flex;
 }
-
+/* TODO ADAPTAR A MODO CLARO*/
+.botones-horizontales__titulo {
+	color: white;
+	font-size: 20px;
+	margin-left: auto;
+}
 .botones__superiores {
     margin-bottom: 20%;
 }
