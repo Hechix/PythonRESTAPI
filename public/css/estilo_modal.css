@@ -38,16 +38,38 @@
     right: -40px;
 }
 
-.modal__boton-guardar {
-    background: #00c0ff;
+.modal__botones {
     position: absolute;
+    bottom: -50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal__boton {
+    background: #00c0ff;
     padding: 5px 10px;
     border-radius: 10px;
     color: white;
-    bottom: -50px;
-    left: 50%;
-    transform: translateX(-50%);
+    margin: 0 5px;
 }
+
+.modal__boton-azul {
+    background: #00c0ff;
+    color: white;
+}
+
+.modal__boton-rojo {
+    background: red;
+    color: white;
+}
+
+.modal__boton-verde {
+    background: green;
+    color: white;
+}
+
 
 .modal__contenido .atributo__titulo {
     padding: 25px;

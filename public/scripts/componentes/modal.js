@@ -1,14 +1,19 @@
-function abrir_modal(contenido, callback = false) {
+function abrir_modal(modal) {
 
     body = document.getElementsByTagName("body")[0]
     html =
         `<div id="modal" class="modal" >
             <div class="modal__contenedor">
-                <div class="modal__equis" onclick="cerrar_modal()"><i class="fas fa-times"></i></div>`
-    if (callback) {
-        html += '<div class="modal__boton-guardar" onclick = "' + callback + '"> Guardar</div>'
+                <div class="modal__equis" onclick="cerrar_modal()"><i class="fas fa-times"></i></div>
+                <div class="modal__botones">`
+    if (modal.callback) {
+        html += '<div class="modal__boton modal__boton-' + modal.callback_tipo + '" onclick = "' + modal.callback + '">' + modal.callback_texto + '</div>'
     }
-    html += `<div class="modal__contenido">` + contenido + `</div>
+    if (modal.callback_secundario) {
+        html += '<div class="modal__boton modal__boton-' + modal.callback_secundario_tipo + '" onclick = "' + modal.callback_secundario + '">' + modal.callback_secundario_texto + '</div>'
+    }
+    html += `</div>
+            <div class="modal__contenido">` + modal.contenido + `</div>
             </div>
         </div>`
     body.innerHTML += html
@@ -78,7 +83,14 @@ function modal_preparar_edicion(raiz, id_registro) {
         </tr>
     </table>`
 
-    abrir_modal(html, 'guardar_modal(this)')
+    modal = {
+        contenido: html,
+        callback: 'guardar_modal(this)',
+        callback_texto: 'Guardar',
+        callback_tipo: 'azul'
+    }
+
+    abrir_modal(modal)
     RAIZ_DEL_MODAL = raiz.id
 }
 
@@ -103,13 +115,13 @@ function añadir_campo_modal(evento) {
     campo_insertado.className = "atributo"
 }
 
-function eliminar_campo_modal(evento){
+function eliminar_campo_modal(evento) {
     evento.parentElement.parentElement.remove()
 }
 
 function guardar_modal(evento) {
 
-    atributos = evento.parentElement.getElementsByClassName("modal__contenido")[0].getElementsByClassName("atributo")
+    atributos = evento.parentElement.parentElement.getElementsByClassName("modal__contenido")[0].getElementsByClassName("atributo")
     registro = {}
     id_registro = undefined
 
@@ -156,4 +168,19 @@ function cerrar_modal() {
     modal = document.getElementById("modal")
     modal.remove();
     RAIZ_DEL_MODAL = undefined
+}
+
+function test_modal() {
+
+    modal= {
+        contenido : "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        callback : 'a()',
+        callback_texto : 'a',
+        callback_tipo : 'verde' ,
+        callback_secundario : 'a()',
+        callback_secundario_texto : 'a',
+        callback_secundario_tipo : 'rojo' 
+    }
+
+    abrir_modal(modal )
 }
