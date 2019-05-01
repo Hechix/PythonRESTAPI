@@ -184,12 +184,12 @@ function añadir_registro(evento) {
     raiz = evento.parentNode.parentNode.parentNode
     html =
         `<p class="modal__titulo">
-        Creando nuevo registro en ` + raiz.id + `
-    </p>
-    <p class="modal__subtitulo">
-        Nuevo id:
-    </p>
-    <input id="js-nuevo-id" type="text">`
+            Creando nuevo registro en ` + raiz.id + `
+        </p>
+        <p class="modal__subtitulo">
+            Nuevo identificador (`+JSON_ATRIBUTO_PRIMARIO+`):
+        </p>
+        <input id="js-nuevo-id" type="text">`
     RAIZ_DEL_MODAL = raiz.id
     abrir_modal(html, "confirmar_nuevo_registro()")
 
@@ -218,7 +218,7 @@ function confirmar_nuevo_registro() {
     }
 
     peticion_post.open("POST", RAIZ_DEL_MODAL, true)
-    peticion_post.send('{"id":' + id + '}');
+    peticion_post.send('{"'+JSON_ATRIBUTO_PRIMARIO+'":' + id + '}');
 }
 
 function auto_editar_nuevo_registro(id) {
