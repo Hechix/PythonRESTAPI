@@ -55,6 +55,7 @@ def indexar_json(CONFIGURACION):
 
 
 def guardar_objeto(CONFIGURACION, objeto, indices):
+    # TODO eviar que en el id tenga espacios
     objeto = json_loads(objeto)
 
     if not CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'] in objeto.keys():

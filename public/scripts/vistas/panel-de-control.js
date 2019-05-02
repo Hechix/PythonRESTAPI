@@ -143,6 +143,7 @@ function cerrar_raiz(raiz) {
     desplegable.className = "raiz_desplegable"
     contenido = raiz_div.getElementsByClassName('raiz__contenido')[0]
     contenido.innerHTML = ""
+
     RAICES.forEach(raiz_almacenada => {
         if (raiz_almacenada.nombre == raiz) {
             raiz_almacenada.registros = []
@@ -154,8 +155,7 @@ function eliminar_registro(evento) {
 
     registro = evento.parentNode.parentNode
     raiz = registro.parentNode.parentNode
-    id_registro = parseInt(registro.childNodes[0].childNodes[0].innerHTML.split(" : ")[1])
-
+    id_registro = registro.getElementsByClassName("registro__id")[0].innerHTML.split(" : ")[1]
 
     modal = {
         contenido: "¿Eliminar " + raiz.id + " / " + id_registro + "?",
@@ -165,6 +165,11 @@ function eliminar_registro(evento) {
         callback_secundario: "confirmar_eliminar_registro()",
         callback_secundario_texto: 'Eliminar',
         callback_secundario_tipo: 'rojo'
+    }
+
+    EDICION = {
+        raiz_id: raiz.id,
+        registro_id: id_registro
     }
 
     abrir_modal(modal)
@@ -178,6 +183,8 @@ function confirmar_eliminar_registro() {
             switch (peticion_delete.status) {
                 case 200:
                     notificacion(contenido = "Registro eliminado correctamente!", tipo = "conseguido")
+                    expandir_raiz(EDICION.raiz_id)
+                    cerrar_modal()
                     break;
 
                 case 404:
@@ -186,10 +193,9 @@ function confirmar_eliminar_registro() {
                 default:
                     notificacion(contenido = "Error eliminando (" + peticion_delete.status + ")", tipo = "error")
             }
-            expandir_raiz(raiz)
-            cerrar_modal()
         }
     }
+
 
     peticion_delete.open("DELETE", EDICION.raiz_id + "/" + EDICION.registro_id, true)
     peticion_delete.send();
@@ -218,6 +224,7 @@ function añadir_registro(evento) {
         callback_tipo: "azul",
         callback_texto: "Guardar"
     }
+
     abrir_modal(modal)
 
 }
@@ -250,7 +257,14 @@ function confirmar_nuevo_registro() {
 
 function auto_editar_nuevo_registro(id) {
     raiz = document.getElementById(EDICION.raiz_id)
+
     cerrar_modal()
+
+    EDICION = {
+        raiz_id : raiz.id,
+        registro_id:id
+    }
+
     modal_preparar_edicion(raiz, id)
 
     añadir_nuevo = document.getElementById("js-añadir-atributo")

@@ -22,7 +22,7 @@ function abrir_modal(modal) {
 function abrir_modal_edicion_registro(evento) {
     registro = evento.parentNode.parentNode
     raiz = registro.parentNode.parentNode
-    id_registro = parseInt(registro.childNodes[0].childNodes[0].innerHTML.split(" : ")[1])
+    id_registro = registro.getElementsByClassName("registro__id")[0].innerHTML.split(" : ")[1]
     
     EDICION = {
         raiz_id : raiz.id,
@@ -35,7 +35,7 @@ function abrir_modal_edicion_registro(evento) {
 function modal_preparar_edicion() {
     num_raiz = undefined
     num_registro = undefined
-
+    
     for (x = 0; x < RAICES.length; x++) {
 
         if (RAICES[x].nombre ==EDICION.raiz_id) {
@@ -52,8 +52,6 @@ function modal_preparar_edicion() {
             break
         }
     }
-
-    console.log(EDICION,num_raiz,num_registro)
 
     html = "<table>"
 
