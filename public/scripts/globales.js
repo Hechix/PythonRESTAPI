@@ -19,7 +19,7 @@ EDICION = undefined
 
 function inicializacion() {
     setInterval(fondo_animado, 240);
-    cargar_vista_panel_de_control()
+    cargar_vista_bienvenida()
 }
 
 
