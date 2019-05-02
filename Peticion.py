@@ -75,7 +75,7 @@ class Peticion:
         # TODO : Evitar que se sobreescriba el contenido de un archivo vacio
         # cuadno cargas por ejemplo un html vacio, devuelve OK en vez de nada
 
-        if codigo_estado in codigos_estado.keys() and not contenido:
+        if codigo_estado in codigos_estado.keys() and contenido == False:
             contenido = codigos_estado[codigo_estado]
 
         if es_json:

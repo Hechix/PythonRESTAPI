@@ -50,11 +50,13 @@ def indexar_json(CONFIGURACION):
     puntero = cargar_json(CONFIGURACION)
     listado = []
     for indice in puntero.keys():
-        listado.append({'nombre': indice,'cantidad_registros':len(puntero[indice])})
+        listado.append(
+            {'nombre': indice, 'cantidad_registros': len(puntero[indice])})
     return listado
 
 
 def guardar_objeto(CONFIGURACION, objeto, indices):
+    # TODO eviar que en el id tenga espacios
     objeto = json_loads(objeto)
 
     if not CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'] in objeto.keys():

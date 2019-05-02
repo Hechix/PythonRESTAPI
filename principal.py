@@ -17,6 +17,7 @@ def main():
     if CONFIGURACION['PAGINA_BIENVENIDA_ABRIR_AUTOMATICAMENTE_AL_INICIO']:
         abrir_en_navegador('http://localhost:' +
                            str(CONFIGURACION['SERVIDOR_ENLACE'][1]))
+    # TODO: cambiar esto a raw strings
     logging.info("Bienvenido a...\n\
  _   _           _     _      _               \n\
 | | | |         | |   (_)    ( )              \n\

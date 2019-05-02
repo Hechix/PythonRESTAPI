@@ -24,6 +24,10 @@
     opacity: 0;
 }
 
+.raiz_desplegable--oculto {
+    opacity: 0;
+}
+
 .raiz__contenido {
     padding-left: 10px;
 }
@@ -48,15 +52,37 @@
 }
 
 .registro__editar {
-    margin: 0 10px 0 auto;
+    margin-left: auto;
     color: white;
     background: green;
     padding: 0 5px;
     border-radius: 5px;
 }
 
+.registro__eliminar {
+    margin: 0 5px;
+    color: white;
+    background: red;
+    padding: 0 15px;
+    border-radius: 5px;
+}
+
 .registro__atributos {
     margin: 0 0 0 10px;
+}
+
+.registro__centrar-externo {
+    height: 3em;
+    display: flex;
+}
+
+.registro__centrar-interno {
+    margin: auto;
+    font-size: 20px;
+}
+
+.registro__agregar {
+    color: green;
 }
 
 .atributo__titulo {
@@ -70,46 +96,27 @@
     padding-left: 10px;
 }
 
-.modal {
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.7);
-    z-index: 2;
-    display: flex;
-    vertical-align: middle;
-    text-align: center;
+.atributo__titulo_edicion {
+    width: 15vw;
+    resize: vertical;
+    height: 1em;
+    max-height: 60vh;
 }
 
-.modal__contenido {
-    background: white;
-    margin: auto;
-    padding: 15px;
-    border-radius: 10px;
-    position: relative;
+.atributo__edicion {
+    width: 40vw;
+    resize: vertical;
+    height: 2em;
+    max-height: 60vh;
 }
 
-.modal__equis {
-    color: white;
-    background: red;
-    height: 30px;
-    width: 30px;
-    line-height: 30px;
-    font-family: Ubuntu, "times new roman", times, roman, serif;
-    border-radius: 30px;
-    font-size: 25px;
-    position: absolute;
-    top: -40px;
-    right: -40px;
+.atributo__agregar {
+    font-size: 30px;
+    color: green;
+    padding-top: 15px;
 }
 
-.modal__boton-guardar {
-	background: #00c0ff;
-	position: absolute;
-	padding: 5px 10px;
-	border-radius: 10px;
-	color: white;
-	bottom: -50px;
-	left: 50%;
-	transform: translateX(-50%);
+.atributo__eliminacion {
+    font-size: 30px;
+    color: red;
 }

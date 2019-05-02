@@ -1,0 +1,92 @@
+.modal {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: 2;
+    display: flex;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.modal__contenedor {
+    position: relative;
+    margin: auto;
+}
+
+.modal__contenido {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    overflow: auto;
+    max-width: 90vw;
+    max-height: 70vh;
+    scrollbar-width: thin;
+}
+
+.modal__equis {
+    color: white;
+    background: red;
+    height: 30px;
+    width: 30px;
+    line-height: 30px;
+    font-family: Ubuntu, "times new roman", times, roman, serif;
+    border-radius: 30px;
+    font-size: 25px;
+    position: absolute;
+    top: -40px;
+    right: -40px;
+}
+
+.modal__botones {
+    position: absolute;
+    bottom: -50px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal__boton {
+    background: #00c0ff;
+    padding: 5px 10px;
+    border-radius: 10px;
+    color: white;
+    margin: 0 5px;
+}
+
+.modal__boton-azul {
+    background: #00c0ff;
+    color: white;
+}
+
+.modal__boton-rojo {
+    background: red;
+    color: white;
+}
+
+.modal__boton-verde {
+    background: green;
+    color: white;
+}
+
+
+.modal__contenido .atributo__titulo {
+    padding: 25px;
+    border-bottom: 2px solid blue;
+    border-left: 0px;
+}
+
+.modal__contenido .atributo__valor {
+    padding: 25px;
+    border-bottom: 2px solid red;
+    border-radius: 5px;
+}
+
+.modal__titulo {
+    font-size: 30px;
+}
+
+.modal__subtitulo {
+    font-size: 20px;
+}
