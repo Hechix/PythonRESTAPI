@@ -23,10 +23,10 @@ function abrir_modal_edicion_registro(evento) {
     registro = evento.parentNode.parentNode
     raiz = registro.parentNode.parentNode
     id_registro = registro.getElementsByClassName("registro__id")[0].innerHTML.split(" : ")[1]
-    
+
     EDICION = {
-        raiz_id : raiz.id,
-        registro_id : id_registro
+        raiz_id: raiz.id,
+        registro_id: id_registro
     }
 
     modal_preparar_edicion()
@@ -35,10 +35,10 @@ function abrir_modal_edicion_registro(evento) {
 function modal_preparar_edicion() {
     num_raiz = undefined
     num_registro = undefined
-    
+
     for (x = 0; x < RAICES.length; x++) {
 
-        if (RAICES[x].nombre ==EDICION.raiz_id) {
+        if (RAICES[x].nombre == EDICION.raiz_id) {
             num_raiz = x
 
             for (y = 0; y < RAICES[x].registros.length; y++) {
@@ -126,7 +126,7 @@ function eliminar_campo_modal(evento) {
     titulo = atributo.getElementsByClassName("js-titulo")[0].value
 
     modal = {
-        contenido: "¿Eliminar " + EDICION.raiz_id + " / " + EDICION.registro_id + " / "+titulo+"?",
+        contenido: "¿Eliminar " + EDICION.raiz_id + " / " + EDICION.registro_id + " / " + titulo + "?",
         callback: 'cerrar_modal()',
         callback_texto: 'Cancelar',
         callback_tipo: 'verde',
@@ -193,8 +193,8 @@ function cerrar_modal() {
     modales = document.getElementsByClassName("modal")
     modal = modales[modales.length - 1]
     modal.remove();
-    
-    if (modales.length == 0){
+
+    if (modales.length == 0) {
         EDICION = undefined
     }
 }

@@ -9,7 +9,7 @@ function notificacion(contenido = undefined, tipo = "info") {
                     ` + contenido + `
                 </div>
             </div>`
-            
+
     } else {
         console.error("Se ha intentado invocar una notificacion sin contenido")
     }

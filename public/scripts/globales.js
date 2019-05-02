@@ -17,7 +17,7 @@ JSON_ATRIBUTO_PRIMARIO = undefined
 RAICES = []
 EDICION = undefined
 
-function inicializacion(){
+function inicializacion() {
     setInterval(fondo_animado, 240);
     cargar_vista_panel_de_control()
 }

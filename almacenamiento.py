@@ -50,7 +50,8 @@ def indexar_json(CONFIGURACION):
     puntero = cargar_json(CONFIGURACION)
     listado = []
     for indice in puntero.keys():
-        listado.append({'nombre': indice,'cantidad_registros':len(puntero[indice])})
+        listado.append(
+            {'nombre': indice, 'cantidad_registros': len(puntero[indice])})
     return listado
 
 

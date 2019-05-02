@@ -261,8 +261,8 @@ function auto_editar_nuevo_registro(id) {
     cerrar_modal()
 
     EDICION = {
-        raiz_id : raiz.id,
-        registro_id:id
+        raiz_id: raiz.id,
+        registro_id: id
     }
 
     modal_preparar_edicion(raiz, id)
