@@ -1,0 +1,74 @@
+.notificacion {
+    z-index: 10;
+    position: absolute;
+    color: white;
+    right: 0;
+    bottom: 5vh;
+    border-radius: 10px 0 0 10px;
+    border: 1px solid white;
+    border-right: none;
+    animation: notificacion_aparecer 6s both ease-in-out;
+}
+
+.notificacion--conseguido {
+    background: green;
+}
+
+.notificacion--error {
+    background: red;
+}
+
+.notificacion--info {
+    background: #48d2ff;
+}
+
+.notificacion__contenido {
+    padding: 15px;
+    position: relative;
+}
+
+.notificacion__barra {
+    position: absolute;
+    bottom: 0;
+    left: 3px;
+    height: 3px;
+    background: white;
+    border-radius: 0 30px 30px 30px;
+    width: 105%;
+    animation: barra_cd 5s both linear;
+}
+
+@keyframes notificacion_aparecer {
+    0% {
+        transform: translate(100%);
+    }
+
+    10% {
+        transform: translate(0);
+    }
+
+    90% {
+        transform: translate(0);
+    }
+
+    100% {
+        transform: translate(100%);
+    }
+}
+
+@keyframes barra_cd {
+    0% {
+        width: 105%;
+        height: 3px;
+    }
+
+    99% {
+        width: 0%;
+        height: 3px;
+    }
+
+    100% {
+        width: 0;
+        height: 0;
+    }
+}

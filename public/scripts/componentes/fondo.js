@@ -1,26 +1,16 @@
-texto = `<- GET /
--> 200 index.html
-<- GET /public/css/estilo.css
--> 200 estilo.css
-<- GET /public/scripts/fondo.js
--> 200 fondo.js
-<- GET /public/scripts/principal.js
--> 200 principal.js`
-
-linea_actual = 0
-ip_aleatoria = ""
-fondo = document.getElementById("js-fondo")
-estilo_fondo = window.getComputedStyle(fondo, null);
-
 function fondo_animado() {
 
-    if (linea_actual == 0) {
-        ip_aleatoria =
+    fondo = document.getElementById("js-fondo")
+    estilo_fondo = window.getComputedStyle(fondo, null);
+
+    if (LINEA_ACTUAL == 0) {
+        IP_ALEATORIA =
             Math.floor((Math.random() * 255)) + "." +
             Math.floor((Math.random() * 255)) + "." +
             Math.floor((Math.random() * 255)) + "." +
             Math.floor((Math.random() * 255))
     }
+    // TODO DA LA FECHA MAL?
     ahora = new Date();
     fecha_y_hora = ahora.getFullYear() + "/" +
         ('0' + ahora.getMonth()).slice(-2) + "/" +
@@ -29,9 +19,8 @@ function fondo_animado() {
         ('0' + ahora.getMinutes()).slice(-2) + " : " +
         ('0' + ahora.getSeconds()).slice(-2)
 
-    texto_a_añadir = fecha_y_hora + "&ensp;" + ip_aleatoria + "&ensp;" + texto.split("\n")[linea_actual] + '<br>'
-
-    fondo.innerHTML += texto_a_añadir
+    TEXTO_a_añadir = fecha_y_hora + "&ensp;" + IP_ALEATORIA + "&ensp;" + TEXTO.split("\n")[LINEA_ACTUAL] + '<br>'
+    fondo.innerHTML += TEXTO_a_añadir
 
     altura_maxima_fondo = parseInt(estilo_fondo.getPropertyValue('height').replace("px", ""))
 
@@ -39,10 +28,10 @@ function fondo_animado() {
         fondo.innerHTML = fondo.innerHTML.split("<br>").slice(1).join("<br>")
     }
 
-    linea_actual++
+    LINEA_ACTUAL++
 
-    if (linea_actual >= texto.split("\n").length) {
-        linea_actual = 0
+    if (LINEA_ACTUAL >= TEXTO.split("\n").length) {
+        LINEA_ACTUAL = 0
     }
 }
 
@@ -69,5 +58,3 @@ function alternar_modo_fondo() {
         }
     }
 }
-
-setInterval(fondo_animado, 240);
