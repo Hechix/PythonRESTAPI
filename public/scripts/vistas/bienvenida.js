@@ -22,10 +22,16 @@ function cargar_vista_bienvenida() {
                 <div class="botones__inferiores">
                     <a class="boton boton--pequeño boton--enlace"
                         href="https://github.com/Hechix/PythonRESTAPI" target="_blank">Github</a>
-                    <button class="boton boton--pequeño" onclick="alternar_modo_fondo()">Modo claro</button>
+                    <button  id="js-boton__alternar-modo-fondo" class="boton boton--pequeño boton--no-estirado" onclick="alternar_modo_fondo()">@@@@@</button>
                 </div>
             </div>
         </div>`
+
+    if (document.getElementsByTagName("body")[0].className == "") {
+        html = html.replace("@@@@@", '<i class="fas fa-lightbulb"></i>')
+    } else {
+        html = html.replace("@@@@@", '<i class="far fa-lightbulb"></i>')
+    }
 
     principal = document.getElementById("js-principal")
     principal.innerHTML = html

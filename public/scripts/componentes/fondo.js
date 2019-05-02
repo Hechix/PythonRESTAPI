@@ -13,8 +13,8 @@ function fondo_animado() {
     // TODO DA LA FECHA MAL?
     ahora = new Date();
     fecha_y_hora = ahora.getFullYear() + "/" +
-        ('0' + ahora.getMonth()).slice(-2) + "/" +
-        ('0' + ahora.getDay()).slice(-2) + "&ensp;" +
+        ('0' + (ahora.getMonth() + 1)).slice(-2) + "/" +
+        ('0' + ahora.getDate()).slice(-2) + "&ensp;" +
         ('0' + ahora.getHours()).slice(-2) + " : " +
         ('0' + ahora.getMinutes()).slice(-2) + " : " +
         ('0' + ahora.getSeconds()).slice(-2)
@@ -44,17 +44,11 @@ function alternar_modo_fondo() {
     if (body.className == "") {
         body.className = "body-oscuro"
         fondo.className = "fondo fondo--oscuro"
-        boton_alternar_modo_fondo.innerHTML = "Modo claro"
-        if (titulo) {
-            titulo.className = "titulo titulo--oscuro"
-        }
+        boton_alternar_modo_fondo.innerHTML = '<i class="far fa-lightbulb"></i>'
 
     } else {
         body.className = ""
         fondo.className = "fondo"
-        boton_alternar_modo_fondo.innerHTML = "Modo oscuro"
-        if (titulo) {
-            titulo.className = "titulo"
-        }
+        boton_alternar_modo_fondo.innerHTML = '<i class="fas fa-lightbulb"></i>'
     }
 }
