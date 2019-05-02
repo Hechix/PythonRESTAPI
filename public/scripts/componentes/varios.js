@@ -1,21 +1,25 @@
 function notificacion(contenido = undefined, tipo = "info") {
     if (contenido) {
-        noti_actual = document.getElementById("notificacion")
-
-        if (noti_actual) {
-            noti_actual.remove()
-        }
-
+        borrar_notificacion()
         body = document.getElementsByTagName("body")[0]
         body.innerHTML +=
-            `<div id="notificacion" class="notificacion notificacion--` + tipo + `">
+            `<div id="notificacion" class="notificacion notificacion--` + tipo + `" onanimationend="borrar_notificacion()">
                 <div class="notificacion__contenido">
                     <div class="notificacion__barra"></div>
                     ` + contenido + `
                 </div>
             </div>`
+            
     } else {
         console.error("Se ha intentado invocar una notificacion sin contenido")
+    }
+}
+
+function borrar_notificacion() {
+    noti_actual = document.getElementById("notificacion")
+
+    if (noti_actual) {
+        noti_actual.remove()
     }
 }
 

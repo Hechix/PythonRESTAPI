@@ -2,7 +2,7 @@ function abrir_modal(modal) {
 
     body = document.getElementsByTagName("body")[0]
     html =
-        `<div id="modal" class="modal" >
+        `<div class="modal" >
             <div class="modal__contenedor">
                 <div class="modal__equis" onclick="cerrar_modal()"><i class="fas fa-times"></i></div>
                 <div class="modal__botones">`
@@ -179,7 +179,7 @@ function guardar_modal(evento) {
                     notificacion(contenido = "El registro no existe (404)", tipo = "error")
                     break;
                 default:
-                    notificacion(contenido = "Error actualizando (" + peticion_put.status + ")", tipo = "error")
+                    notificacion(contenido = "Error actualizando (" + peticion_put.responseText + ")", tipo = "error")
             }
         }
     }
@@ -190,7 +190,11 @@ function guardar_modal(evento) {
 }
 
 function cerrar_modal() {
-    modal = document.getElementById("modal")
+    modales = document.getElementsByClassName("modal")
+    modal = modales[modales.length - 1]
     modal.remove();
-    EDICION = undefined
+    
+    if (modales.length == 0){
+        EDICION = undefined
+    }
 }

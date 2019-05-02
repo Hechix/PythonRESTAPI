@@ -191,7 +191,7 @@ function confirmar_eliminar_registro() {
                     notificacion(contenido = "El registro no existe (404)", tipo = "error")
                     break;
                 default:
-                    notificacion(contenido = "Error eliminando (" + peticion_delete.status + ")", tipo = "error")
+                    notificacion(contenido = "Error eliminando (" + peticion_delete.responseText + ")", tipo = "error")
             }
         }
     }
@@ -246,7 +246,7 @@ function confirmar_nuevo_registro() {
                     break;
 
                 default:
-                    notificacion(contenido = "Error creando (" + peticion_post.status + ")", tipo = "error")
+                    notificacion(contenido = "Error creando (" + peticion_post.responseText + ")", tipo = "error")
             }
         }
     }

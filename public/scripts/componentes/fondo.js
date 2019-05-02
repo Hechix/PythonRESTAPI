@@ -10,6 +10,7 @@ function fondo_animado() {
             Math.floor((Math.random() * 255)) + "." +
             Math.floor((Math.random() * 255))
     }
+    // TODO DA LA FECHA MAL?
     ahora = new Date();
     fecha_y_hora = ahora.getFullYear() + "/" +
         ('0' + ahora.getMonth()).slice(-2) + "/" +
