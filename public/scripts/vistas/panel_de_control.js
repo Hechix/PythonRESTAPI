@@ -1,4 +1,3 @@
-// TODO CAMBIAR EL NOMBRE DEL ARCHIVO A BARRAS BAJAS
 function cargar_vista_panel_de_control() {
     // TOOD CAMBIAR A FONT-AWESOME
     html =

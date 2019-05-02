@@ -140,7 +140,6 @@ function eliminar_campo_modal(evento) {
 
 function confirmar_eliminar_campo_modal() {
     document.getElementById("js-atributo-a-borrar").remove()
-    // TODO QUE SE CIERRE EL MODAL CORRESPONDIENTE
     cerrar_modal()
 }
 
