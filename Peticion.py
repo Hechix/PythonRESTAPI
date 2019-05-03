@@ -17,8 +17,13 @@ class Peticion:
         self.datos_recibidos = self.cliente_conexion.recv(8192)
         trozos_peticion = self.datos_recibidos.decode('utf-8').split(' ')
         tipo_peticion = trozos_peticion[0]
-        # TODO esto a veces da error por alguna razon
-        self.URI = trozos_peticion[1]
+
+        try:
+            # A veces por alguna razon llega una peticion sin contenido (?)
+            self.URI = trozos_peticion[1]
+        except:
+            return
+
         self.logging.info(self.cliente_direccion + "\t<- " +
                           trozos_peticion[0] + " " + self.URI)
 
@@ -71,9 +76,6 @@ class Peticion:
 
         if not isinstance(codigo_estado, int) or codigo_estado < 1:
             codigo_estado = 500
-
-        # TODO : Evitar que se sobreescriba el contenido de un archivo vacio
-        # cuadno cargas por ejemplo un html vacio, devuelve OK en vez de nada
 
         if codigo_estado in codigos_estado.keys() and contenido == False:
             contenido = codigos_estado[codigo_estado]
@@ -176,7 +178,7 @@ class Peticion:
             return
 
         campos_a_enviar = [
-            'JSON_ATRIBUTO_PRIMARIO',
+            'ATRIBUTO_PRIMARIO',
             'ACEPTAR_GET',
             'ACEPTAR_POST',
             'ACEPTAR_PUT',

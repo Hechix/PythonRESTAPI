@@ -34,7 +34,7 @@ def leer_json(CONFIGURACION, indices):
                 if isinstance(puntero[indice_listado], list):
                     raise Exception('ALMACENAMIENTO_JSON_MALFORMADO')
 
-                if str(puntero[indice_listado][CONFIGURACION['JSON_ATRIBUTO_PRIMARIO']]) == str(indices[indice_actual]):
+                if str(puntero[indice_listado][CONFIGURACION['ATRIBUTO_PRIMARIO']]) == str(indices[indice_actual]):
                     puntero = puntero[indice_listado]
                     encontrado = True
                     break
@@ -56,16 +56,16 @@ def indexar_json(CONFIGURACION):
 
 
 def guardar_objeto(CONFIGURACION, objeto, indices):
-    # TODO eviar que en el id tenga espacios
     objeto = json_loads(objeto)
+    objeto[CONFIGURACION["ATRIBUTO_PRIMARIO"]] = objeto[CONFIGURACION["ATRIBUTO_PRIMARIO"]].strip()
 
-    if not CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'] in objeto.keys():
+    if not CONFIGURACION['ATRIBUTO_PRIMARIO'] in objeto.keys():
         raise Exception('OBJETO_SIN_ATRIBUTO_PRIMARIO')
 
     json = cargar_json(CONFIGURACION)
 
     encontrado, objeto_encontrado, indice_objeto_almacenado = buscar_objeto(
-        CONFIGURACION, indices, json, objeto[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]])
+        CONFIGURACION, indices, json, objeto[CONFIGURACION["ATRIBUTO_PRIMARIO"]])
 
     objeto_encontrado = indice_objeto_almacenado = None
 
@@ -94,8 +94,8 @@ def buscar_objeto(CONFIGURACION, indices, json, atributo_primario=None):
         for indice_objeto_almacenado in range(len(json[indices[0]])):
             objeto_almacenado = json[indices[0]][indice_objeto_almacenado]
 
-            if CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"] in objeto_almacenado \
-                    and atributo_primario == str(objeto_almacenado[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]]):
+            if CONFIGURACION["ATRIBUTO_PRIMARIO"] in objeto_almacenado \
+                    and atributo_primario == str(objeto_almacenado[CONFIGURACION["ATRIBUTO_PRIMARIO"]]):
                 return True, objeto_almacenado, indice_objeto_almacenado
 
     elif isinstance(json[indices[0]], dict):
@@ -114,13 +114,13 @@ def borrar_objeto(CONFIGURACION, indices, json, objeto):
 def modificar_objeto(CONFIGURACION, objeto, indices):
     objeto = json_loads(objeto)
 
-    if not CONFIGURACION['JSON_ATRIBUTO_PRIMARIO'] in objeto.keys():
+    if not CONFIGURACION['ATRIBUTO_PRIMARIO'] in objeto.keys():
         raise Exception('OBJETO_SIN_ATRIBUTO_PRIMARIO')
 
     json = cargar_json(CONFIGURACION)
 
     encontrado, objeto_encontrado, indice_objeto_almacenado = buscar_objeto(
-        CONFIGURACION, indices, json, objeto[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]])
+        CONFIGURACION, indices, json, objeto[CONFIGURACION["ATRIBUTO_PRIMARIO"]])
 
     objeto_encontrado = None
 

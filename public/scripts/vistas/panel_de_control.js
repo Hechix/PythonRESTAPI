@@ -55,15 +55,15 @@ function cargar_vista_panel_de_control() {
 }
 
 function valor_de_configuracion(parametro) {
-    if (JSON_ATRIBUTO_PRIMARIO) {
-        return JSON_ATRIBUTO_PRIMARIO
+    if (ATRIBUTO_PRIMARIO) {
+        return ATRIBUTO_PRIMARIO
     }
     CONFIGURACION.forEach(parametro_en_config => {
         if (parametro == parametro_en_config.nombre_campo) {
-            JSON_ATRIBUTO_PRIMARIO = parametro_en_config.valor
+            ATRIBUTO_PRIMARIO = parametro_en_config.valor
         }
     })
-    return JSON_ATRIBUTO_PRIMARIO
+    return ATRIBUTO_PRIMARIO
 }
 
 function expandir_raiz(raiz, callback = false, callback_parametro = undefined) {
@@ -94,8 +94,8 @@ function expandir_raiz(raiz, callback = false, callback_parametro = undefined) {
 
                 html += '<div class="registro"><div class="registro__cabecera">'
 
-                if (valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO') in registro) {
-                    html += '<span class="registro__id" >' + HtmlEncode(valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) + " : " + HtmlEncode(registro[valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')]) + '</span>'
+                if (valor_de_configuracion('ATRIBUTO_PRIMARIO') in registro) {
+                    html += '<span class="registro__id" >' + HtmlEncode(valor_de_configuracion('ATRIBUTO_PRIMARIO')) + " : " + HtmlEncode(registro[valor_de_configuracion('ATRIBUTO_PRIMARIO')]) + '</span>'
                 }
 
                 html += `<span class="registro__editar" onclick="abrir_modal_edicion_registro(this)"><i class="far fa-edit"></i></span>
@@ -105,7 +105,7 @@ function expandir_raiz(raiz, callback = false, callback_parametro = undefined) {
 
                 Object.keys(registro).forEach(clave => {
 
-                    if (clave != valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
+                    if (clave != valor_de_configuracion('ATRIBUTO_PRIMARIO')) {
                         html += '<tr class="atributo"><td class="atributo__titulo">'
                         html += HtmlEncode(clave) + '</td><td class="atributo__valor">' + HtmlEncode(registro[clave])
                         html += "</td></tr>"
@@ -207,7 +207,7 @@ function añadir_registro(evento) {
             Creando nuevo registro en ` + raiz.id + `
         </p>
         <p class="modal__subtitulo">
-            Nuevo identificador (` + JSON_ATRIBUTO_PRIMARIO + `):
+            Nuevo identificador (` + ATRIBUTO_PRIMARIO + `):
         </p>
         <input id="js-nuevo-id" type="text">`
 
@@ -227,7 +227,7 @@ function añadir_registro(evento) {
 }
 
 function confirmar_nuevo_registro() {
-    id = document.getElementById("js-nuevo-id").value
+    id = document.getElementById("js-nuevo-id").value.trim()
     if (id.length == 0) {
         notificacion(contenido = "El id está vacio", tipo = "error")
         return
@@ -249,7 +249,7 @@ function confirmar_nuevo_registro() {
     }
 
     peticion_post.open("POST", EDICION.raiz_id, true)
-    peticion_post.send('{"' + JSON_ATRIBUTO_PRIMARIO + '":"' + id + '"}');
+    peticion_post.send('{"' + ATRIBUTO_PRIMARIO + '":"' + id + '"}');
 }
 
 function auto_editar_nuevo_registro(id) {
