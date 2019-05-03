@@ -1,5 +1,5 @@
 function cargar_vista_bienvenida() {
-    html =
+    var html =
         `<div id="js-titulo" class="titulo titulo--oscuro">
             <div class="titulo titulo__superior">
                 <span class="hechix">
@@ -33,7 +33,7 @@ function cargar_vista_bienvenida() {
         html = html.replace("@@@@@", '<i class="far fa-lightbulb"></i>')
     }
 
-    principal = document.getElementById("js-principal")
+    var principal = document.getElementById("js-principal")
     principal.innerHTML = html
 
 }

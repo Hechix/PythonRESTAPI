@@ -1,7 +1,7 @@
 function abrir_modal(modal) {
 
-    body = document.getElementsByTagName("body")[0]
-    html =
+    var body = document.getElementsByTagName("body")[0]
+    var html =
         `<div class="modal" >
             <div class="modal__contenedor">
                 <div class="modal__equis" onclick="cerrar_modal()"><i class="fas fa-times"></i></div>
@@ -20,9 +20,9 @@ function abrir_modal(modal) {
 }
 
 function abrir_modal_edicion_registro(evento) {
-    registro = evento.parentNode.parentNode
-    raiz = registro.parentNode.parentNode
-    id_registro = registro.getElementsByClassName("registro__id")[0].innerHTML.split(" : ")[1]
+    var registro = evento.parentNode.parentNode
+    var raiz = registro.parentNode.parentNode
+    var id_registro = registro.getElementsByClassName("registro__id")[0].innerHTML.split(" : ")[1]
 
     EDICION = {
         raiz_id: raiz.id,
@@ -33,8 +33,8 @@ function abrir_modal_edicion_registro(evento) {
 }
 
 function modal_preparar_edicion() {
-    num_raiz = undefined
-    num_registro = undefined
+    var num_raiz = undefined
+    var num_registro = undefined
 
     for (x = 0; x < RAICES.length; x++) {
 
@@ -53,7 +53,7 @@ function modal_preparar_edicion() {
         }
     }
 
-    html = "<table>"
+    var html = "<table>"
 
     Object.keys(RAICES[num_raiz].registros[num_registro]).forEach(clave => {
         if (clave == valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
@@ -89,7 +89,7 @@ function modal_preparar_edicion() {
         </tr>
     </table>`
 
-    modal = {
+    var modal = {
         contenido: html,
         callback: 'guardar_modal(this)',
         callback_texto: 'Guardar',
@@ -100,11 +100,11 @@ function modal_preparar_edicion() {
 }
 
 function añadir_campo_modal(evento) {
-    tr_añadir = evento.parentElement.parentElement
-    nuevo_campo = document.createElement("tr")
-    campo_insertado = tr_añadir.parentElement.insertBefore(nuevo_campo, tr_añadir)
+    var tr_añadir = evento.parentElement.parentElement
+    var nuevo_campo = document.createElement("tr")
+    var campo_insertado = tr_añadir.parentElement.insertBefore(nuevo_campo, tr_añadir)
 
-    clave_aleatoria = string_aleatoria(5);
+    var clave_aleatoria = string_aleatoria(5);
 
     campo_insertado.innerHTML =
         `<td class="atributo__titulo">
@@ -121,11 +121,11 @@ function añadir_campo_modal(evento) {
 }
 
 function eliminar_campo_modal(evento) {
-    atributo = evento.parentElement.parentElement
+    var atributo = evento.parentElement.parentElement
     atributo.id = "js-atributo-a-borrar"
-    titulo = atributo.getElementsByClassName("js-titulo")[0].value
+    var titulo = atributo.getElementsByClassName("js-titulo")[0].value
 
-    modal = {
+    var modal = {
         contenido: "¿Eliminar " + EDICION.raiz_id + " / " + EDICION.registro_id + " / " + titulo + "?",
         callback: 'cerrar_modal()',
         callback_texto: 'Cancelar',
@@ -145,25 +145,25 @@ function confirmar_eliminar_campo_modal() {
 
 function guardar_modal(evento) {
 
-    atributos = evento.parentElement.parentElement.getElementsByClassName("modal__contenido")[0].getElementsByClassName("atributo")
-    registro = {}
-    id_registro = undefined
+    var atributos = evento.parentElement.parentElement.getElementsByClassName("modal__contenido")[0].getElementsByClassName("atributo")
+    var registro = {}
+    var id_registro = undefined
 
     for (atributo of atributos) {
-        titulo = atributo.getElementsByClassName("atributo__titulo")[0]
+        var titulo = atributo.getElementsByClassName("atributo__titulo")[0]
 
         if (titulo.classList.contains('js-clave')) {
             titulo = titulo.innerHTML
-            valor = atributo.getElementsByClassName("js-valor")[0].innerHTML
+            var valor = atributo.getElementsByClassName("js-valor")[0].innerHTML
             id_registro = valor
         } else {
             titulo = titulo.getElementsByClassName("js-titulo")[0].value
-            valor = atributo.getElementsByClassName("js-valor")[0].value
+            var valor = atributo.getElementsByClassName("js-valor")[0].value
         }
 
         registro[titulo] = valor
     }
-    peticion_put = new XMLHttpRequest()
+    var peticion_put = new XMLHttpRequest()
 
     peticion_put.onreadystatechange = function () {
         if (peticion_put.readyState == 4) {
@@ -189,8 +189,8 @@ function guardar_modal(evento) {
 }
 
 function cerrar_modal() {
-    modales = document.getElementsByClassName("modal")
-    modal = modales[modales.length - 1]
+    var modales = document.getElementsByClassName("modal")
+    var modal = modales[modales.length - 1]
     modal.remove();
 
     if (modales.length == 0) {
