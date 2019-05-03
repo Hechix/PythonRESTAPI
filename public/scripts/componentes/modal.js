@@ -26,7 +26,7 @@ function abrir_modal_edicion_registro(evento) {
     var raiz = registro.parentNode.parentNode
 
     if (registro.getElementsByClassName("registro__id").length == 0) {
-        notificacion(contenido = "No se puede editar porque no tiene identificador (" + valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO') + ")", tipo = "error")
+        notificacion(contenido = "No se puede editar porque no tiene identificador (" + valor_de_configuracion('ATRIBUTO_PRIMARIO') + ")", tipo = "error")
         return
     }
 
@@ -51,7 +51,7 @@ function modal_preparar_edicion() {
 
             for (y = 0; y < RAICES[x].registros.length; y++) {
 
-                if (RAICES[x].registros[y][valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')] == EDICION.registro_id) {
+                if (RAICES[x].registros[y][valor_de_configuracion('ATRIBUTO_PRIMARIO')] == EDICION.registro_id) {
                     num_registro = y
                     break
                 }
@@ -64,7 +64,7 @@ function modal_preparar_edicion() {
     var html = "<table>"
 
     Object.keys(RAICES[num_raiz].registros[num_registro]).forEach(clave => {
-        if (clave == valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) {
+        if (clave == valor_de_configuracion('ATRIBUTO_PRIMARIO')) {
             html +=
                 `<tr class="atributo">
                     <td class="atributo__titulo js-clave">` + clave + `</td>

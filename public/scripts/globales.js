@@ -34,7 +34,7 @@ LINEA_ACTUAL = 0
 IP_ALEATORIA = ""
 
 CONFIGURACION = undefined
-JSON_ATRIBUTO_PRIMARIO = undefined
+ATRIBUTO_PRIMARIO = undefined
 RAICES = []
 EDICION = undefined
 
