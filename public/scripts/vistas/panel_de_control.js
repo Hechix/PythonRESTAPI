@@ -4,7 +4,7 @@ function cargar_vista_panel_de_control() {
             <button id="js-boton__volver" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_bienvenida()"><i class="fas fa-arrow-circle-left"></i></button>
             <button id="js-boton__recargar" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_panel_de_control()"><i class="fas fa-sync"></i></button>
             <button id="js-boton__alternar-modo-fondo" class="boton boton--pequeño boton--no-estirado" onclick="alternar_modo_fondo()">@@@@@</button>
-            <button id="js-boton__admin_raices" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_admin_raices()">Administrar raices</button>
+            <button id="js-boton__admin_raices" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_demostracion()">Demostración</button>
             <span class="botones-horizontales__titulo">Admin. Registros</span>
         </div>`
 
