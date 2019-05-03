@@ -13,11 +13,11 @@ def main():
     servidor_escucha.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     servidor_escucha.bind(CONFIGURACION['SERVIDOR_ENLACE'])
     servidor_escucha.listen(10)
-    # TODO Configuracion / linea comandos si se abre automaticamnte o no
+    # TODO Configuracion / linea comandos si se abre automaticamnte o no V 1.0
     if CONFIGURACION['PAGINA_BIENVENIDA_ABRIR_AUTOMATICAMENTE_AL_INICIO']:
         abrir_en_navegador('http://localhost:' +
                            str(CONFIGURACION['SERVIDOR_ENLACE'][1]))
-    # TODO: cambiar esto a raw strings
+
     logging.info("Bienvenido a...\n\
  _   _           _     _      _               \n\
 | | | |         | |   (_)    ( )              \n\
@@ -39,9 +39,8 @@ ______ _____ _____ _____    ___  ______ _____ \n\
 | |_/ / |__ \ `--.  | |   / /_\ \| |_/ / | |  \n\
 |    /|  __| `--. \ | |   |  _  ||  __/  | |  \n\
 | |\ \| |___/\__/ / | |   | | | || |    _| |_ \n\
-\_| \_\____/\____/  \_/   \_| |_/\_|    \___/ \n\
-                                              \n\
-                                              ")
+\_| \_\____/\____/  \_/   \_| |_/\_|    \___/ \n\n\n")
+
     while CONFIGURACION['SERVIDOR_ENCENDIDO']:
         try:
             cliente_conexion, cliente_direccion = servidor_escucha.accept()
@@ -131,17 +130,16 @@ def cargar_configuracion():
 if __name__ == '__main__':
     CONFIGURACION = {
         'SERVIDOR_ENCENDIDO': True,
-        'SERVIDOR_ENLACE': ('', -1),
-        'REGISTRO_IGNORAR': False,
-        'REGISTRO_DEBUG': True,
-        'REGISTRO_ALMACENAR': False,
-        'TIPO_SERVER': 'JSON',
-        'FICHERO_JSON': 'db.json',  # TODO :  Cargar esto desde parametro de terminal
-        'JSON_ATRIBUTO_PRIMARIO': 'id',  # Renombrar esto a solo atributo primario
+        'SERVIDOR_ENLACE': ('0.0.0.0', -1),
+        'FICHERO_JSON': 'db.json',  # TODO :  Cargar esto desde parametro de terminal // V1.0
+        'ATRIBUTO_PRIMARIO': 'id',
         'ACEPTAR_GET': True,
         'ACEPTAR_POST':  True,
         'ACEPTAR_PUT': True,
         'ACEPTAR_DELETE': True,
+        'REGISTRO_DEBUG': True,
+        'REGISTRO_ALMACENAR': False,
+        'REGISTRO_IGNORAR': False,
         'PAGINA_BIENVENIDA_SERVIR': True,
         'PAGINA_BIENVENIDA_ABRIR_AUTOMATICAMENTE_AL_INICIO': True,
         'PAGINA_BIENVENIDA_ARCHIVO': 'index.html',
