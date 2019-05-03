@@ -16,12 +16,20 @@ function abrir_modal(modal) {
             <div class="modal__contenido">` + modal.contenido + `</div>
             </div>
         </div>`
+
+    borrar_notificacion()
     body.innerHTML += html
 }
 
 function abrir_modal_edicion_registro(evento) {
     var registro = evento.parentNode.parentNode
     var raiz = registro.parentNode.parentNode
+
+    if (registro.getElementsByClassName("registro__id").length == 0) {
+        notificacion(contenido = "No se puede editar porque no tiene identificador (" + valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO') + ")", tipo = "error")
+        return
+    }
+
     var id_registro = registro.getElementsByClassName("registro__id")[0].innerHTML.split(" : ")[1]
 
     EDICION = {
@@ -43,7 +51,7 @@ function modal_preparar_edicion() {
 
             for (y = 0; y < RAICES[x].registros.length; y++) {
 
-                if (RAICES[x].registros[y].id == EDICION.registro_id) {
+                if (RAICES[x].registros[y][valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')] == EDICION.registro_id) {
                     num_registro = y
                     break
                 }
@@ -149,19 +157,25 @@ function guardar_modal(evento) {
     var registro = {}
     var id_registro = undefined
 
-    for (atributo of atributos) {
+    for (var x = 0; x < atributos.length; x++) {
+        var atributo = atributos[x]
         var titulo = atributo.getElementsByClassName("atributo__titulo")[0]
 
         if (titulo.classList.contains('js-clave')) {
-            titulo = titulo.innerHTML
+            var val_titulo = titulo.innerHTML
             var valor = atributo.getElementsByClassName("js-valor")[0].innerHTML
             id_registro = valor
         } else {
-            titulo = titulo.getElementsByClassName("js-titulo")[0].value
+            var val_titulo = titulo.getElementsByClassName("js-titulo")[0].value
             var valor = atributo.getElementsByClassName("js-valor")[0].value
         }
 
-        registro[titulo] = valor
+        if (val_titulo in registro) {
+            titulo.className += " atributo__repetido"
+            return
+        }
+
+        registro[val_titulo] = valor
     }
     var peticion_put = new XMLHttpRequest()
 

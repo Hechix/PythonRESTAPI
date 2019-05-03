@@ -24,7 +24,7 @@ function fondo_animado() {
 
     var altura_maxima_fondo = parseInt(estilo_fondo.getPropertyValue('height').replace("px", ""))
 
-    if (fondo.scrollHeight > altura_maxima_fondo) {
+    if (fondo.scrollHeight > altura_maxima_fondo + 10) {
         fondo.innerHTML = fondo.innerHTML.split("<br>").slice(1).join("<br>")
     }
 
