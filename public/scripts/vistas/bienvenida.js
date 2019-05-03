@@ -30,6 +30,8 @@ function cargar_vista_bienvenida() {
 
     if (document.getElementsByTagName("body")[0].className == "") {
         html = html.replace("@@@@@", '<i class="fas fa-lightbulb"></i>')
+        html = html.replace('class="titulo titulo__superior"','class="titulo titulo__superior titulo--oscuro"')
+        html = html.replace('class="titulo titulo__inferior"','class="titulo titulo__inferior titulo--oscuro"')
     } else {
         html = html.replace("@@@@@", '<i class="far fa-lightbulb"></i>')
     }
