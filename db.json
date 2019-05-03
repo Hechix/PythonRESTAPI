@@ -1,33 +1,36 @@
 {
-    "posts": [
-        {
+    "posts": [{
+        "id": 1,
+        "fecha": "28/3/19",
+        "hora": "16:20",
+        "titulo": "Hechix's Python REST API",
+        "contenido": "Lorem ipsum dolor sit amet",
+        "autor": 1
+    }],
+    "comentarios": [{
             "id": 1,
             "fecha": "28/3/19",
-            "titulo": "Hechix's Python REST API",
-            "autor": "Hechix"
-        },
-        {
-            "id": 2,
-            "fecha": "1/4/19",
-            "titulo": "Lorem Ipsum",
-            "autor": "Hechix"
-        }
-    ],
-    "comentarios": [
-        {
-            "id": 1,
-            "fecha": "28/3/19",
+            "hora": "16:21",
             "contenido": "Este es el .json por defecto! :D",
-            "postId": 1
+            "postId": 1,
+            "autor": 1
         },
         {
             "id": 2,
             "fecha": "1/4/19",
+            "hora": "16:21",
             "contenido": "Audi famam illius.<br>Solus in hostes ruit et patriam servavit.",
-            "postId": 2
+            "postId": 1,
+            "autor": 2
         }
     ],
-    "usuarios":[
-        
-    ]
+    "usuarios": [{
+        "id": 1,
+        "nombre": "Hechix",
+        "foto": "hechix.png"
+    }, {
+        "id": 2,
+        "nombre": "Not Hechix",
+        "foto": "not-hechix.png"
+    }]
 }

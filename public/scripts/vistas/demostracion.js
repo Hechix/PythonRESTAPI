@@ -11,7 +11,7 @@ function cargar_vista_demostracion(){
     body.className = ""
     body.innerHTML = html
 
-    //recuperar_posts_demostracion()
+    recuperar_posts_demostracion()
 }
 
 function ver_informacion_demostracion(){
@@ -28,37 +28,23 @@ function recuperar_posts_demostracion(){
     
     var peticion_posts = new XMLHttpRequest()
 
-    peticion_raices.onreadystatechange = function () {
-        if (peticion_raices.readyState == 4 && peticion_raices.status == 200) {
-            var json = JSON.parse(peticion_raices.responseText)
-            json.forEach(raiz => {
-                raiz.registros = []
-                RAICES.push(raiz)
-                principal.innerHTML +=
-                    `<div id='` + raiz.nombre + `' class='raiz'>
-                    <div class='raiz__titulo' 
-                        onclick='expandir_raiz(\"` + raiz.nombre + `\")'>
-                        <span class="raiz__texto">` + raiz.nombre + `</span>
-                        <span class="raiz_desplegable"><i class="fas fa-caret-down"></i></span>
-                        <span class="raiz__equis raiz__equis--oculta"onclick='event.stopPropagation();cerrar_raiz(\"` + raiz.nombre + `\")'><i class="fas fa-times"></i></span>
-                    </div>
-                    <div class='raiz__contenido'>
+    peticion_posts.onreadystatechange = function () {
+        if (peticion_posts.readyState == 4 && peticion_posts.status == 200) {
+            var json = JSON.parse(peticion_posts.responseText)
+            json.forEach(post => {
+                var html =
+                `<div class="demo-post">
+                    <div class=">
                     </div>
                 </div>`
             })
         }
     }
 
-    peticion_configuracion.onreadystatechange = function () {
-        if (peticion_configuracion.readyState == 4 && peticion_configuracion.status == 200) {
-            CONFIGURACION = JSON.parse(peticion_configuracion.responseText)
-        }
-    }
+    // id="post-`+post.id+`"
 
-    peticion_raices.open("GET", "_raices", true)
-    peticion_configuracion.open("GET", "_configuracion", true)
+    peticion_posts.open("GET", "posts", true)
 
-    peticion_raices.send();
-    peticion_configuracion.send();
+    peticion_posts.send();  
 
 }
