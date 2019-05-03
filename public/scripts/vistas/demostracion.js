@@ -1,4 +1,4 @@
-function cargar_vista_demostración(){
+function cargar_vista_demostracion(){
     ANIMACION_FONDO = undefined
     var html = `// TODO DEMOSTRACION`
     var body = document.getElementsByTagName("body")[0]

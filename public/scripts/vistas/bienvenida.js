@@ -18,7 +18,7 @@ function cargar_vista_bienvenida() {
             <div class="botones">
                 <div class="botones__superiores">
                     <button class="boton boton--enlace" onclick="cargar_vista_panel_de_control()">Panel de control</button>
-                    <button class="boton boton--enlace" onclick="cargar_vista_panel_de_control()">Demostración</button>
+                    <button class="boton boton--enlace" onclick="cargar_vista_demostracion()">Demostración</button>
                 </div>
                 <div class="botones__inferiores">
                     <a class="boton boton--pequeño boton--enlace"
