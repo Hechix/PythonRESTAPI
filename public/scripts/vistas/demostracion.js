@@ -34,7 +34,7 @@ function recuperar_posts_demostracion(){
             json.forEach(post => {
                 var html =
                 `<div class="demo-post">
-                    <div class=">
+                    <div class="demo-post__">
                     </div>
                 </div>`
             })
