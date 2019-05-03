@@ -98,7 +98,7 @@ function expandir_raiz(raiz, callback = false, callback_parametro = undefined) {
                 if (valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO') in registro) {
                     html += '<span class="registro__id" >' + HtmlEncode(valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) + " : " + HtmlEncode(registro[valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')]) + '</span>'
                 }
-                // CAMBIAR A FONT AWESOME
+                
                 html += `<span class="registro__editar" onclick="abrir_modal_edicion_registro(this)"><i class="far fa-edit"></i></span>
                         <span class="registro__eliminar" onclick="eliminar_registro(this)"><i class="fas fa-trash"></i></span>
                         </div>
