@@ -1,7 +1,7 @@
 function notificacion(contenido = undefined, tipo = "info") {
     if (contenido) {
         borrar_notificacion()
-        body = document.getElementsByTagName("body")[0]
+        var body = document.getElementsByTagName("body")[0]
         body.innerHTML +=
             `<div id="notificacion" class="notificacion notificacion--` + tipo + `" onanimationend="borrar_notificacion()">
                 <div class="notificacion__contenido">
@@ -16,7 +16,7 @@ function notificacion(contenido = undefined, tipo = "info") {
 }
 
 function borrar_notificacion() {
-    noti_actual = document.getElementById("notificacion")
+    var noti_actual = document.getElementById("notificacion")
 
     if (noti_actual) {
         noti_actual.remove()

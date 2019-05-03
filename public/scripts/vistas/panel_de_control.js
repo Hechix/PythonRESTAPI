@@ -1,5 +1,5 @@
 function cargar_vista_panel_de_control() {
-    html =
+    var html =
         `<div class="botones-horizontales">
             <button id="js-boton__volver" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_bienvenida()"><i class="fas fa-arrow-circle-left"></i></button>
             <button id="js-boton__recargar" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_panel_de_control()"><i class="fas fa-sync"></i></button>
@@ -14,15 +14,15 @@ function cargar_vista_panel_de_control() {
         html = html.replace("@@@@@", '<i class="far fa-lightbulb"></i>')
     }
 
-    principal = document.getElementById("js-principal")
+    var principal = document.getElementById("js-principal")
     principal.innerHTML = html
 
-    peticion_raices = new XMLHttpRequest()
-    peticion_configuracion = new XMLHttpRequest()
+    var peticion_raices = new XMLHttpRequest()
+    var peticion_configuracion = new XMLHttpRequest()
 
     peticion_raices.onreadystatechange = function () {
         if (peticion_raices.readyState == 4 && peticion_raices.status == 200) {
-            json = JSON.parse(peticion_raices.responseText)
+            var json = JSON.parse(peticion_raices.responseText)
             json.forEach(raiz => {
                 raiz.registros = []
                 RAICES.push(raiz)
@@ -68,19 +68,19 @@ function valor_de_configuracion(parametro) {
 }
 
 function expandir_raiz(raiz, callback = false, callback_parametro = undefined) {
-    raiz_div = document.getElementById(raiz)
-    equis = raiz_div.getElementsByClassName('raiz__equis')[0]
-    desplegable = raiz_div.getElementsByClassName('raiz_desplegable')[0]
+    var raiz_div = document.getElementById(raiz)
+    var equis = raiz_div.getElementsByClassName('raiz__equis')[0]
+    var desplegable = raiz_div.getElementsByClassName('raiz_desplegable')[0]
     equis.className = "raiz__equis"
     desplegable.className = "raiz_desplegable raiz_desplegable--oculto"
     contenido = raiz_div.getElementsByClassName('raiz__contenido')[0]
-    html = ""
+    var html = ""
 
-    peticion_contenido = new XMLHttpRequest()
+    var peticion_contenido = new XMLHttpRequest()
 
     peticion_contenido.onreadystatechange = function () {
         if (peticion_contenido.readyState == 4 && peticion_contenido.status == 200) {
-            json = JSON.parse(peticion_contenido.responseText)
+            var json = JSON.parse(peticion_contenido.responseText)
             RAICES.forEach(raiz_almacenada => {
                 if (raiz_almacenada.nombre == raiz) {
                     raiz_almacenada.registros = json
@@ -98,7 +98,7 @@ function expandir_raiz(raiz, callback = false, callback_parametro = undefined) {
                 if (valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO') in registro) {
                     html += '<span class="registro__id" >' + HtmlEncode(valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) + " : " + HtmlEncode(registro[valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')]) + '</span>'
                 }
-                // CAMBIAR A FONT AWESOME
+                
                 html += `<span class="registro__editar" onclick="abrir_modal_edicion_registro(this)"><i class="far fa-edit"></i></span>
                         <span class="registro__eliminar" onclick="eliminar_registro(this)"><i class="fas fa-trash"></i></span>
                         </div>
