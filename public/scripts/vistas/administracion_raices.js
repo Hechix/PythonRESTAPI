@@ -2,17 +2,17 @@ function cargar_vista_admin_raices() {
     // TOOD CAMBIAR A FONT-AWESOME
     html =
         `<div class="botones-horizontales">
-            <button id="js-boton__volver" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_bienvenida()">Volver</button>
-            <button id="js-boton__recargar" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_admin_raices()">Recargar</button>
-            <button id="js-boton__admin_raices" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_panel_de_control()">Administrar registros</button>
-            <button id="js-boton__alternar-modo-fondo" class="boton boton--pequeño boton--no-estirado" onclick="alternar_modo_fondo()">@@@@@</button>
-            <span class="botones-horizontales__titulo">Admin. Raices</span>
-        </div>`
+        <button id="js-boton__volver" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_bienvenida()"><i class="fas fa-arrow-circle-left"></i></button>
+        <button id="js-boton__recargar" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_panel_de_control()"><i class="fas fa-sync"></i></button>
+        <button id="js-boton__alternar-modo-fondo" class="boton boton--pequeño boton--no-estirado" onclick="alternar_modo_fondo()">@@@@@</button>
+        <button id="js-boton__admin_raices" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_panel_de_control()">Administrar registros</button>
+        <span class="botones-horizontales__titulo">Admin. Raices</span>
+    </div>`
 
     if (document.getElementsByTagName("body")[0].className == "") {
-        html = html.replace("@@@@@", "Modo oscuro")
+        html = html.replace("@@@@@", '<i class="fas fa-lightbulb"></i>')
     } else {
-        html = html.replace("@@@@@", "Modo claro")
+        html = html.replace("@@@@@", '<i class="far fa-lightbulb"></i>')
     }
 
     principal = document.getElementById("js-principal")

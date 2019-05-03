@@ -1,18 +1,17 @@
 function cargar_vista_panel_de_control() {
-    // TOOD CAMBIAR A FONT-AWESOME
     html =
         `<div class="botones-horizontales">
-            <button id="js-boton__volver" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_bienvenida()">Volver</button>
-            <button id="js-boton__recargar" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_panel_de_control()">Recargar</button>
-            <button id="js-boton__admin_raices" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_admin_raices()">Administrar raices</button>
+            <button id="js-boton__volver" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_bienvenida()"><i class="fas fa-arrow-circle-left"></i></button>
+            <button id="js-boton__recargar" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_panel_de_control()"><i class="fas fa-sync"></i></button>
             <button id="js-boton__alternar-modo-fondo" class="boton boton--pequeño boton--no-estirado" onclick="alternar_modo_fondo()">@@@@@</button>
+            <button id="js-boton__admin_raices" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_admin_raices()">Administrar raices</button>
             <span class="botones-horizontales__titulo">Admin. Registros</span>
         </div>`
 
     if (document.getElementsByTagName("body")[0].className == "") {
-        html = html.replace("@@@@@", "Modo oscuro")
+        html = html.replace("@@@@@", '<i class="fas fa-lightbulb"></i>')
     } else {
-        html = html.replace("@@@@@", "Modo claro")
+        html = html.replace("@@@@@", '<i class="far fa-lightbulb"></i>')
     }
 
     principal = document.getElementById("js-principal")
@@ -100,7 +99,7 @@ function expandir_raiz(raiz, callback = false, callback_parametro = undefined) {
                     html += '<span class="registro__id" >' + HtmlEncode(valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')) + " : " + HtmlEncode(registro[valor_de_configuracion('JSON_ATRIBUTO_PRIMARIO')]) + '</span>'
                 }
                 // CAMBIAR A FONT AWESOME
-                html += `<span class="registro__editar" onclick="abrir_modal_edicion_registro(this)">Editar</span>
+                html += `<span class="registro__editar" onclick="abrir_modal_edicion_registro(this)"><i class="far fa-edit"></i></span>
                         <span class="registro__eliminar" onclick="eliminar_registro(this)"><i class="fas fa-trash"></i></span>
                         </div>
                         <table class="registro__atributos">`
