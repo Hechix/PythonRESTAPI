@@ -54,4 +54,5 @@ function inicializacion() {
 }
 
 
-window.onload = inicializacion;
+//window.onload = inicializacion;
+window.onload = cargar_vista_demostracion

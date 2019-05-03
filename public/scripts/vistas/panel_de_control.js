@@ -208,7 +208,7 @@ function añadir_registro(evento) {
             Creando nuevo registro en ` + raiz.id + `
         </p>
         <p class="modal__subtitulo">
-            Nuevo identificador (` + ATRIBUTO_PRIMARIO + `):
+            Nuevo identificador (` +  valor_de_configuracion('ATRIBUTO_PRIMARIO')+ `):
         </p>
         <input id="js-nuevo-id" type="text">`
 
