@@ -59,7 +59,9 @@
     font-size: 25px;
     margin-left: auto;
 }
-
+.botones-horizontales__titulo--oscuro{
+    color:black
+}
 .botones__superiores {
     margin-bottom: 5%;
 }

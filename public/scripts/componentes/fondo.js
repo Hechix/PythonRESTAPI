@@ -41,6 +41,7 @@ function alternar_modo_fondo() {
     var boton_alternar_modo_fondo = document.getElementById("js-boton__alternar-modo-fondo")
     var titulo_superior = document.getElementById("js-titulo-superior")
     var titulo_inferior = document.getElementById("js-titulo-inferior")
+    var titulo_administracion = document.getElementsByClassName("botones-horizontales__titulo")[0]
 
     if (body.className == "") {
         body.className = "body-oscuro"
@@ -50,6 +51,9 @@ function alternar_modo_fondo() {
             titulo_superior.className = "titulo titulo__superior"
             titulo_inferior.className = "titulo titulo__inferior"
         }
+        if (titulo_administracion) {
+            titulo_administracion.className = "botones-horizontales__titulo"
+        }
     } else {
         body.className = ""
         fondo.className = "fondo"
@@ -57,6 +61,9 @@ function alternar_modo_fondo() {
         if (titulo_superior) {
             titulo_superior.className = "titulo titulo__superior titulo--oscuro"
             titulo_inferior.className = "titulo titulo__inferior titulo--oscuro"
+        }
+        if (titulo_administracion) {
+            titulo_administracion.className = "botones-horizontales__titulo botones-horizontales__titulo--oscuro"
         }
     }
 }
