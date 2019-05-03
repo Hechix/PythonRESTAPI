@@ -94,7 +94,8 @@ def buscar_objeto(CONFIGURACION, indices, json, atributo_primario=None):
         for indice_objeto_almacenado in range(len(json[indices[0]])):
             objeto_almacenado = json[indices[0]][indice_objeto_almacenado]
 
-            if atributo_primario == str(objeto_almacenado[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]]):
+            if CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"] in objeto_almacenado \
+                    and atributo_primario == str(objeto_almacenado[CONFIGURACION["JSON_ATRIBUTO_PRIMARIO"]]):
                 return True, objeto_almacenado, indice_objeto_almacenado
 
     elif isinstance(json[indices[0]], dict):
