@@ -1,7 +1,7 @@
 function fondo_animado() {
 
-    fondo = document.getElementById("js-fondo")
-    estilo_fondo = window.getComputedStyle(fondo, null);
+    var fondo = document.getElementById("js-fondo")
+    var estilo_fondo = window.getComputedStyle(fondo, null);
 
     if (LINEA_ACTUAL == 0) {
         IP_ALEATORIA =
@@ -10,19 +10,19 @@ function fondo_animado() {
             Math.floor((Math.random() * 255)) + "." +
             Math.floor((Math.random() * 255))
     }
-    // TODO DA LA FECHA MAL?
-    ahora = new Date();
-    fecha_y_hora = ahora.getFullYear() + "/" +
+
+    var ahora = new Date();
+    var fecha_y_hora = ahora.getFullYear() + "/" +
         ('0' + (ahora.getMonth() + 1)).slice(-2) + "/" +
         ('0' + ahora.getDate()).slice(-2) + "&ensp;" +
         ('0' + ahora.getHours()).slice(-2) + " : " +
         ('0' + ahora.getMinutes()).slice(-2) + " : " +
         ('0' + ahora.getSeconds()).slice(-2)
 
-    TEXTO_a_añadir = fecha_y_hora + "&ensp;" + IP_ALEATORIA + "&ensp;" + TEXTO.split("\n")[LINEA_ACTUAL] + '<br>'
+    var TEXTO_a_añadir = fecha_y_hora + "&ensp;" + IP_ALEATORIA + "&ensp;" + TEXTO.split("\n")[LINEA_ACTUAL] + '<br>'
     fondo.innerHTML += TEXTO_a_añadir
 
-    altura_maxima_fondo = parseInt(estilo_fondo.getPropertyValue('height').replace("px", ""))
+    var altura_maxima_fondo = parseInt(estilo_fondo.getPropertyValue('height').replace("px", ""))
 
     if (fondo.scrollHeight > altura_maxima_fondo) {
         fondo.innerHTML = fondo.innerHTML.split("<br>").slice(1).join("<br>")
@@ -36,10 +36,9 @@ function fondo_animado() {
 }
 
 function alternar_modo_fondo() {
-    body = document.getElementsByTagName("body")[0]
-    titulo = document.getElementById("js-titulo")
-
-    boton_alternar_modo_fondo = document.getElementById("js-boton__alternar-modo-fondo")
+    var body = document.getElementsByTagName("body")[0]
+    var fondo = document.getElementById("js-fondo")
+    var boton_alternar_modo_fondo = document.getElementById("js-boton__alternar-modo-fondo")
 
     if (body.className == "") {
         body.className = "body-oscuro"

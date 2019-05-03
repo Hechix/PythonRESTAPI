@@ -1,6 +1,5 @@
 function cargar_vista_admin_raices() {
-    // TOOD CAMBIAR A FONT-AWESOME
-    html =
+    var html =
         `<div class="botones-horizontales">
         <button id="js-boton__volver" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_bienvenida()"><i class="fas fa-arrow-circle-left"></i></button>
         <button id="js-boton__recargar" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_panel_de_control()"><i class="fas fa-sync"></i></button>
@@ -15,16 +14,16 @@ function cargar_vista_admin_raices() {
         html = html.replace("@@@@@", '<i class="far fa-lightbulb"></i>')
     }
 
-    principal = document.getElementById("js-principal")
+    var principal = document.getElementById("js-principal")
     principal.innerHTML = html
 
 
-    peticion_raices = new XMLHttpRequest()
+    var peticion_raices = new XMLHttpRequest()
 
     peticion_raices.onreadystatechange = function () {
         if (peticion_raices.readyState == 4 && peticion_raices.status == 200) {
-            json = JSON.parse(peticion_raices.responseText)
-            html =
+            var json = JSON.parse(peticion_raices.responseText)
+            var html =
                 `<div class="raiz">
                     <table class="tabla-raices">
                                 <thead>
