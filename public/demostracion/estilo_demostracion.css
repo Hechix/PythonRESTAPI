@@ -1,0 +1,102 @@
+html,
+body {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    overflow: hidden;
+}
+
+.demo {
+    height: 100vh;
+    width: 90vw;
+    padding: 0 5vw;
+    background: white;
+}
+
+.demo-boton {
+    position: absolute;
+    border: 1px solid;
+    font-size: 20px;
+    padding: 5px;
+    border-radius: 20px;
+    width: 25px;
+    height: 25px;
+    text-align: center;
+}
+
+.demo-boton:hover {
+    background: rgb(0, 225, 255);
+}
+
+.demo-boton__salir {
+    top: 10px;
+    left: 10px;
+}
+
+.demo-boton__salir:visited,
+.demo-boton__salir:link {
+    color: black;
+}
+
+.demo-boton__info {
+    top: 50px;
+    left: 10px;
+}
+
+.demo-titulo-general {
+    height: 10vh;
+    font-size: 10vh;
+    text-align: center;
+    font-family: 'Gochi Hand', monospace;
+    border-bottom: 10px double red;
+    border-radius: 50px;
+}
+
+.demo-contenido-general {
+    height: 100%;
+    border-left: 5px double red;
+    border-right: 5px double red;
+    border-radius: 20px;
+    padding: 20px;
+    overflow: auto;
+}
+
+.demo-post {
+    margin: 10px 0 0 0;
+    padding: 5px 20px;
+    border-radius: 20px;
+    border: 1px solid black;
+}
+.demo-post__cabecera{
+    display: flex
+}
+.demo-cabecera__item{
+    height: 25px;
+    vertical-align: middle;
+    margin-top: auto;
+}
+.demo-cabecera__imagen-autor {
+    border-radius: 20px;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+}
+
+.demo-cabecera__imagen-autor-interno {
+    object-fit: cover;
+    width: 100%;
+}
+.demo-cabecera__autor {
+	margin-left: 20px;
+	font-style: italic;
+}
+.demo-cabecera__titulo {
+	margin-left: 20px;
+	font-size: 30px;
+	height: 40px;
+}
+
+.demo-cabecera__fecha {
+    margin-left: auto;
+	font-style: italic;
+}
