@@ -37,7 +37,7 @@ function fondo_animado() {
 
 function alternar_modo_fondo() {
     var body = document.getElementsByTagName("body")[0]
-
+    var fondo = document.getElementById("js-fondo")
     var boton_alternar_modo_fondo = document.getElementById("js-boton__alternar-modo-fondo")
 
     if (body.className == "") {
