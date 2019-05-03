@@ -1,14 +1,14 @@
 function cargar_vista_bienvenida() {
     var html =
-        `<div id="js-titulo" class="titulo titulo--oscuro">
-            <div class="titulo titulo__superior">
+        `<div>
+            <div id="js-titulo-superior" class="titulo titulo__superior">
                 <span class="hechix">
                     HECHIX'S
                 </span>
                 <span class="python">
                     Python
                 </span></div>
-            <div class="titulo titulo__inferior">
+            <div id="js-titulo-inferior" class="titulo titulo__inferior">
                 <div class="rest-api">
                     REST API
                 </div>
@@ -17,7 +17,8 @@ function cargar_vista_bienvenida() {
         <div class="cuerpo">
             <div class="botones">
                 <div class="botones__superiores">
-                    <button class="boton boton--enlace" onclick="cargar_vista_panel_de_control()">Empezar</button>
+                    <button class="boton boton--enlace" onclick="cargar_vista_panel_de_control()">Panel de control</button>
+                    <button class="boton boton--enlace" onclick="cargar_vista_panel_de_control()">Demostración</button>
                 </div>
                 <div class="botones__inferiores">
                     <a class="boton boton--pequeño boton--enlace"

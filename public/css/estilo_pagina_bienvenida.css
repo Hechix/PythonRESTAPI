@@ -3,6 +3,10 @@
     color: white
 }
 
+.titulo--oscuro {
+    color: black
+}
+
 .titulo__superior {
     display: flex;
     height: 10vh;
@@ -57,11 +61,11 @@
 }
 
 .botones__superiores {
-    margin-bottom: 20%;
+    margin-bottom: 5%;
 }
 
 .botones__inferiores {
-    margin-top: 20%;
+    margin-top: 5%;
 }
 
 .boton {
@@ -69,11 +73,11 @@
     line-height: 2;
     display: inline-block;
     background: white;
-    margin-bottom: 10%;
+    margin-bottom: 1%;
     border: 1px solid;
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
-    font-size: 30px;
-    width: 100%;
+    font-size: 20px;
+    width: 80%;
 }
 
 .boton--pequeño {

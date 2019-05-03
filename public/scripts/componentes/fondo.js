@@ -39,15 +39,24 @@ function alternar_modo_fondo() {
     var body = document.getElementsByTagName("body")[0]
     var fondo = document.getElementById("js-fondo")
     var boton_alternar_modo_fondo = document.getElementById("js-boton__alternar-modo-fondo")
+    var titulo_superior = document.getElementById("js-titulo-superior")
+    var titulo_inferior = document.getElementById("js-titulo-inferior")
 
     if (body.className == "") {
         body.className = "body-oscuro"
         fondo.className = "fondo fondo--oscuro"
         boton_alternar_modo_fondo.innerHTML = '<i class="far fa-lightbulb"></i>'
-
+        if (titulo_superior) {
+            titulo_superior.className = "titulo titulo__superior"
+            titulo_inferior.className = "titulo titulo__inferior"
+        }
     } else {
         body.className = ""
         fondo.className = "fondo"
         boton_alternar_modo_fondo.innerHTML = '<i class="fas fa-lightbulb"></i>'
+        if (titulo_superior) {
+            titulo_superior.className = "titulo titulo__superior titulo--oscuro"
+            titulo_inferior.className = "titulo titulo__inferior titulo--oscuro"
+        }
     }
 }
