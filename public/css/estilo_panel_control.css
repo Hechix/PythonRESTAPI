@@ -14,8 +14,8 @@
 }
 
 .raiz__texto {
-	margin-right: auto;
-	font-size: 20px;
+    margin-right: auto;
+    font-size: 20px;
 }
 
 .raiz__equis {
@@ -95,6 +95,7 @@
 .atributo:nth-child(2n) {
     background: rgba(0, 0, 0, 0.1);
 }
+
 .modal .atributo:nth-child(2n) {
     background: white;
 }

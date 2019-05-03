@@ -80,7 +80,8 @@
     font-size: 20px;
 }
 
-.boton--no-estirado {    width: auto;
+.boton--no-estirado {
+    width: auto;
     margin: 0 15px 0 0;
     min-width: 45px;
 }

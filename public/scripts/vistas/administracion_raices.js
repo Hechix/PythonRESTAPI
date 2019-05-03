@@ -8,7 +8,7 @@ function cargar_vista_admin_raices() {
         <button id="js-boton__admin_raices" class="boton boton--pequeño boton--no-estirado" onclick="cargar_vista_panel_de_control()">Administrar registros</button>
         <span class="botones-horizontales__titulo">Admin. Raices</span>
     </div>`
-   
+
     if (document.getElementsByTagName("body")[0].className == "") {
         html = html.replace("@@@@@", '<i class="fas fa-lightbulb"></i>')
     } else {
