@@ -39,7 +39,17 @@ RAICES = []
 EDICION = undefined
 
 function inicializacion() {
-    setInterval(fondo_animado, 240);
+    html =
+        `<div id="js-fondo" class="fondo fondo--oscuro">
+        </div>
+        <div id="js-principal" class="principal">
+        </div>`
+
+    var body = document.getElementsByTagName("body")[0]
+    body.className = "body-oscuro"
+    body.innerHTML = html
+    
+    ANIMACION_FONDO = setInterval(fondo_animado, 240);
     cargar_vista_bienvenida()
 }
 
