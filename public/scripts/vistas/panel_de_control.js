@@ -9,6 +9,7 @@ function cargar_vista_panel_de_control() {
 
     if (document.getElementsByTagName("body")[0].className == "") {
         html = html.replace("@@@@@", '<i class="fas fa-lightbulb"></i>')
+        html = html.replace('class="botones-horizontales__titulo"','class="botones-horizontales__titulo botones-horizontales__titulo--oscuro"')
     } else {
         html = html.replace("@@@@@", '<i class="far fa-lightbulb"></i>')
     }
