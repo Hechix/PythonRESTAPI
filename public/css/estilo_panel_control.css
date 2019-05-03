@@ -3,6 +3,7 @@
     border: 1px solid black;
     margin-bottom: 5vh;
     border-radius: 10px;
+    overflow: hidden;
 }
 
 .raiz__titulo {
@@ -14,6 +15,7 @@
 
 .raiz__texto {
     margin-right: auto;
+    font-size: 20px;
 }
 
 .raiz__equis {
@@ -55,7 +57,7 @@
     margin-left: auto;
     color: white;
     background: green;
-    padding: 0 5px;
+    padding: 0 15px;
     border-radius: 5px;
 }
 
@@ -69,6 +71,7 @@
 
 .registro__atributos {
     margin: 0 0 0 10px;
+    width: 78vw;
 }
 
 .registro__centrar-externo {
@@ -85,11 +88,26 @@
     color: green;
 }
 
+.atributo {
+    width: 80vw;
+}
+
+.atributo:nth-child(2n) {
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.modal .atributo:nth-child(2n) {
+    background: white;
+}
+
 .atributo__titulo {
     padding: 1px 5px;
     border-radius: 5px;
     font-family: Ubuntu, "times new roman", times, roman, serif;
     border-left: 2px solid blue;
+    width: 15vw;
+    max-width: 15vw;
+    overflow: hidden;
 }
 
 .atributo__valor {

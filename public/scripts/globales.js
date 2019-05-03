@@ -1,13 +1,34 @@
-// TODO Cambiar flechas a font-awesome y darle colores o algo
-
-TEXTO = `<- GET /
--> 200 index.html
-<- GET /public/css/estilo.css
--> 200 estilo.css
-<- GET /public/scripts/fondo.js
--> 200 fondo.js
-<- GET /public/scripts/principal.js
--> 200 principal.js`
+TEXTO =
+    `<i class="fas fa-arrow-left"></i> GET /
+<i class="fas fa-arrow-right"></i> 200 index.html
+<i class="fas fa-arrow-left"></i> GET /public/css/estilo_fondo.css
+<i class="fas fa-arrow-left"></i> GET /public/css/estilo.css
+<i class="fas fa-arrow-right"></i> 200 estilo_fondo.css
+<i class="fas fa-arrow-right"></i> 200 estilo.css
+<i class="fas fa-arrow-left"></i> GET /public/css/estilo_panel_control.css
+<i class="fas fa-arrow-left"></i> GET /public/css/estilo_pagina_bienvenida.css
+<i class="fas fa-arrow-left"></i> GET /public/css/estilo_modal.css
+<i class="fas fa-arrow-left"></i> GET /public/css/estilo_notificacion.css
+<i class="fas fa-arrow-right"></i> 200 estilo_panel_control.css
+<i class="fas fa-arrow-right"></i> 200 estilo_pagina_bienvenida.css
+<i class="fas fa-arrow-right"></i> 200 estilo_modal.css
+<i class="fas fa-arrow-right"></i> 200 estilo_notificacion.css
+<i class="fas fa-arrow-left"></i> GET /public/css/estilo_admin_raices.css
+<i class="fas fa-arrow-right"></i> 200 estilo_admin_raices.css
+<i class="fas fa-arrow-left"></i> GET /public/scripts/componentes/fondo.js
+<i class="fas fa-arrow-left"></i> GET /public/scripts/componentes/modal.js
+<i class="fas fa-arrow-right"></i> 200 fondo.js
+<i class="fas fa-arrow-right"></i> 200 modal.js
+<i class="fas fa-arrow-left"></i> GET /public/scripts/componentes/varios.js
+<i class="fas fa-arrow-left"></i> GET /public/scripts/vistas/bienvenida.js
+<i class="fas fa-arrow-right"></i> 200 varios.js
+<i class="fas fa-arrow-right"></i> 200 bienvenida.js
+<i class="fas fa-arrow-left"></i> GET /public/scripts/vistas/panel_de_control.js
+<i class="fas fa-arrow-left"></i> GET /public/scripts/vistas/administracion_raices.js
+<i class="fas fa-arrow-right"></i> 200 panel_de_control.js
+<i class="fas fa-arrow-right"></i> 200 administracion_raices.js
+<i class="fas fa-arrow-left"></i> GET /public/scripts/globales.js
+<i class="fas fa-arrow-right"></i> 200 globales.js`
 
 LINEA_ACTUAL = 0
 IP_ALEATORIA = ""

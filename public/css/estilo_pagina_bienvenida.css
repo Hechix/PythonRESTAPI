@@ -1,8 +1,5 @@
 .titulo {
     height: 20vh;
-}
-
-.titulo--oscuro {
     color: white
 }
 
@@ -53,10 +50,9 @@
     display: flex;
 }
 
-/* TODO ADAPTAR A MODO CLARO*/
 .botones-horizontales__titulo {
     color: white;
-    font-size: 20px;
+    font-size: 25px;
     margin-left: auto;
 }
 
@@ -76,17 +72,18 @@
     margin-bottom: 10%;
     border: 1px solid;
     box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.75);
-    font-size: 25px;
+    font-size: 30px;
     width: 100%;
 }
 
 .boton--pequeño {
-    font-size: 12px;
+    font-size: 20px;
 }
 
 .boton--no-estirado {
     width: auto;
-    margin: 0;
+    margin: 0 15px 0 0;
+    min-width: 45px;
 }
 
 .boton:hover {
