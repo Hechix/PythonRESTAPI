@@ -6,6 +6,13 @@
         "titulo": "Hechix's Python REST API",
         "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Nulla at dui felis.<br>Nunc consectetur, neque eget egestas iaculis, libero leo aliquam nisl, a dictum lorem nisi et enim.",
         "autor": 1
+    }, {
+        "id": 2,
+        "fecha": "28/3/19",
+        "hora": "16:20",
+        "titulo": "Hechix's Python REST API",
+        "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Nulla at dui felis.<br>Nunc consectetur, neque eget egestas iaculis, libero leo aliquam nisl, a dictum lorem nisi et enim.",
+        "autor": 5
     }],
     "comentarios": [{
         "id": 1,
@@ -25,8 +32,8 @@
         "id": "3",
         "fecha": "1/4/19",
         "hora": "16:21",
-        "contenido": "Ille, ille yuxta me",
-        "postId": "1",
+        "contenido": "<p>Ille, ille yuxta me</p><img style=\"height: 30vh;\" src='imgs/animales.gif'>",
+        "postId": "2",
         "autor": "4"
     }],
     "usuarios": [{
@@ -35,15 +42,23 @@
         "foto": "perro.jpg"
     }, {
         "id": "2",
-        "nombre": "Bart Simp.",
+        "nombre": "Bart Simpson",
         "foto": "bart.jpg"
     }, {
         "id": "3",
-        "nombre": "Homer Simp.",
+        "nombre": "Homer Simpson",
         "foto": "homer.jpg"
     }, {
         "id": "4",
-        "nombre": "Lisa Simp.",
+        "nombre": "Lisa Simpson",
         "foto": "lisa.jpg"
+    }, {
+        "id": "5",
+        "nombre": "Marge Simpson",
+        "foto": "marge.jpg"
+    }, {
+        "id": "6",
+        "nombre": "Maggie Simpson",
+        "foto": "maggie.jpg"
     }]
 }

@@ -55,11 +55,8 @@ body {
 }
 
 .contenido-general {
-    height: 100%;
     border-radius: 20px;
     padding: 20px;
-    overflow: auto;
-    scrollbar-width: thin;
 }
 
 .post {
@@ -135,11 +132,42 @@ body {
 
 .comentario {
     width: 80vw;
-    background: red;
     margin: 5px auto;
     border: 1px solid black;
     display: grid;
     grid-template-columns: 10vw 70vw;
-    grid-template-rows: 5vh 5vh auto;
-    min-height: 15vh;
+    grid-template-rows: 5vh auto;
+    min-height: 27vh;
+    border-radius: 20px;
+}
+
+.comentario__imagen-autor {
+    grid-column: 1;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    height: 25vh;
+    width: 8vw;
+    margin: 1vh 1vw;
+    border: 1px dotted black;
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.comentario__cabecera {
+    grid-column: 2;
+    grid-row: 1;
+    display: flex;
+}
+
+.comentario__autor {
+    margin: auto 0;
+}
+
+.comentario__fecha {
+    margin: auto 25px auto auto;
+    font-style: italic;
+}
+.comentario__contenido {
+	grid-column: 2;
+	grid-row: 2;
 }

@@ -7,9 +7,10 @@ function cargar_demostracion() {
             var json = JSON.parse(peticion_posts.responseText)
             var contenedor = document.getElementById("js-contenido-general")
             json.forEach(post => {
-                if (!USUARIOS_A_RECUPERAR.includes(post.autor)) {
-                    USUARIOS_A_RECUPERAR.push(post.autor)
+                if (!USUARIOS_A_DESCARGAR.includes(post.autor)) {
+                    USUARIOS_A_DESCARGAR.push(post.autor)
                 }
+                COMENTARIOS_DE_POST_A_DESCARGAR.push(post.id)
                 contenedor.innerHTML +=
                     `<div id="post-` + post.id + `" class="post">
                         <div class="post__imagen-autor" data-imagen-autor="` + post.autor + `">
@@ -32,8 +33,8 @@ function cargar_demostracion() {
                         <div class="post__comentarios">
                         </div>
                     </div>`
-                descargar_comentarios(post.id)
             })
+            descargar_comentarios()
         }
     }
 
@@ -42,25 +43,27 @@ function cargar_demostracion() {
 
 }
 
-function descargar_comentarios(id) {
-    var div_comentarios = document.getElementById("post-"+id).getElementsByClassName("post__comentarios")[0]
-    var peticion_comentarios = new XMLHttpRequest()
-    peticion_comentarios.onreadystatechange = function () {
-        if (peticion_comentarios.readyState == 4 && peticion_comentarios.status == 200) {
-            var json = JSON.parse(peticion_comentarios.responseText)
-            console.log(json)
-            json.forEach(comentario=>{
-                if (!USUARIOS_A_RECUPERAR.includes(comentario.autor)) {
-                    USUARIOS_A_RECUPERAR.push(comentario.autor)
-                }
-                div_comentarios.innerHTML +=
-                    `<div id="comen-` + comentario.id + `" class="comentario">
+function descargar_comentarios() {
+    COMENTARIOS_DE_POST_A_DESCARGAR.forEach(idPost => {
+        var div_comentarios = document.getElementById("post-" + idPost).getElementsByClassName("post__comentarios")[0]
+        var peticion_comentarios = new XMLHttpRequest()
+        peticion_comentarios.onreadystatechange = function () {
+            if (peticion_comentarios.readyState == 4 && peticion_comentarios.status == 200) {
+                var json = JSON.parse(peticion_comentarios.responseText)
+                json.forEach(comentario => {
+                    if (!USUARIOS_A_DESCARGAR.includes(comentario.autor)) {
+                        USUARIOS_A_DESCARGAR.push(comentario.autor)
+                    }
+                    div_comentarios.innerHTML +=
+                        `<div id="comen-` + comentario.id + `" class="comentario">
                         <div class="comentario__imagen-autor" data-imagen-autor="` + comentario.autor + `">
                         </div>
-                        <div class="comentario__autor" data-autor="` + comentario.autor + `">
-                        </div>
-                        <div class="comentario__fecha">
-                            ` + comentario.fecha + ` ` + comentario.hora + `
+                        <div class="comentario__cabecera"> 
+                            <div class="comentario__autor" data-autor="` + comentario.autor + `">
+                            </div>
+                            <div class="comentario__fecha">
+                                ` + comentario.fecha + ` ` + comentario.hora + `
+                            </div>
                         </div>
                         <div class="comentario__contenido">
                             <div class="comentario__contenido-interno">
@@ -68,17 +71,18 @@ function descargar_comentarios(id) {
                             </div>
                         </div>
                     </div>`
-            })
-            descargar_usuarios()
+                })
+            }
+            
+    descargar_usuarios()
         }
-    }
-    peticion_comentarios.open("GET", "/comentarios?postId=" + id, true)
-    peticion_comentarios.send();
-
+        peticion_comentarios.open("GET", "/comentarios?postId=" + idPost, true)
+        peticion_comentarios.send();
+    })
 }
 
 function descargar_usuarios() {
-    USUARIOS_A_RECUPERAR.forEach(usuario => {
+    USUARIOS_A_DESCARGAR.forEach(usuario => {
         var peticion_usuarios = new XMLHttpRequest()
 
         peticion_usuarios.onreadystatechange = function () {
@@ -87,15 +91,15 @@ function descargar_usuarios() {
 
                 var imagenes_de_este_usuario = document.querySelectorAll('[data-imagen-autor]')
                 imagenes_de_este_usuario.forEach(imagen => {
-                    if (imagen.dataset["imagenAutor"] == usuario.toString()){
+                    if (imagen.dataset["imagenAutor"] == usuario.toString()) {
                         imagen.innerHTML = '<img class="x__imagen-autor-interno" src="imgs/' + json.foto + '"></img>'
                     }
                 })
 
                 var nombres_de_este_usuario = document.querySelectorAll('[data-autor]')
                 nombres_de_este_usuario.forEach(nombre => {
-                    if (nombre.dataset["autor"] == usuario.toString()){
-                    nombre.innerHTML = json.nombre
+                    if (nombre.dataset["autor"] == usuario.toString()) {
+                        nombre.innerHTML = json.nombre
                     }
                 })
 
@@ -104,6 +108,7 @@ function descargar_usuarios() {
         peticion_usuarios.open("GET", "/usuarios/" + usuario, true)
         peticion_usuarios.send();
     })
+    USUARIOS_A_DESCARGAR = []
 }
 
 function ver_informacion_demostracion() {
@@ -115,5 +120,7 @@ function ver_informacion_demostracion() {
     abrir_modal(modal)
 }
 
-USUARIOS_A_RECUPERAR = []
+COMENTARIOS_DE_POST_A_DESCARGAR = []
+USUARIOS_A_DESCARGAR = []
+
 window.onload = cargar_demostracion
