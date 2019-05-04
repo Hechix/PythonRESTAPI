@@ -25,7 +25,9 @@ body {
     width: 25px;
     height: 25px;
     text-align: center;
+    background: white;
 }
+
 
 .boton:hover {
     background: rgb(0, 225, 255);
@@ -68,7 +70,8 @@ body {
     grid-template-rows: 10vh 17vh auto;
     width: 85vw;
     margin: 1vh auto;
-    min-height: 35vh
+    min-height: 35vh;
+    background: rgba(255, 255, 255, 0.5);
 }
 
 .post__autor {
