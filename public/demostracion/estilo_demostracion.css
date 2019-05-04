@@ -4,13 +4,14 @@ body {
     width: 100vw;
     margin: 0;
     overflow: hidden;
+    background: url(https://cdn.wallpaperdirect.com/shared-assets/images/products/082233full.jpg);
+    background-size: 10vw;
 }
 
 .demo {
     height: 100vh;
     width: 92vw;
     padding: 0 4vw;
-    background: white;
     overflow: auto;
     scrollbar-width: thin;
 }
@@ -69,10 +70,11 @@ body {
     margin: 1vh auto;
     min-height: 35vh
 }
+
 .post__autor {
-	grid-column: 1;
-	grid-row: 3;
-	margin: 10px auto auto auto;
+    grid-column: 1;
+    grid-row: 3;
+    margin: 10px auto auto auto;
 }
 
 .post__imagen-autor {
