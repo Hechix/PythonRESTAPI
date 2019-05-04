@@ -1,40 +1,47 @@
 {
     "posts": [{
-        "id": 1,
+        "id": "1",
         "fecha": "28/3/19",
         "hora": "16:20",
         "titulo": "Hechix's Python REST API",
-        "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Nulla at dui felis.<br>Nunc consectetur, neque eget egestas iaculis, libero leo aliquam nisl, a dictum lorem nisi et enim.",
-        "autor": 1
+        "contenido": "<h3>\u00a1Bienvenidos al mejor foro de internet!</h3>\n<h4>\u00a1Hechix's Foro!</h4>\n\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt sit amet elit eget cursus. Nunc sed rhoncus dui, et porta orci. Nam tincidunt ac magna nec sodales. Integer efficitur arcu vitae tortor tempus semper. Vivamus ac leo purus. Phasellus viverra, nisl in posuere placerat, enim felis sodales neque, pellentesque rutrum mauris dui id sem. Vivamus faucibus arcu quam, non pulvinar sem posuere ut. Phasellus consequat consequat facilisis. Nulla tincidunt erat non nibh lacinia mollis. Suspendisse bibendum vestibulum arcu nec maximus. Donec sagittis ut lorem ut consectetur. Sed leo odio, elementum vel congue sed, facilisis et nulla. Donec sodales orci eu leo convallis bibendum. ",
+        "autor": "1"
     }, {
-        "id": 2,
-        "fecha": "28/3/19",
-        "hora": "16:20",
-        "titulo": "Hechix's Python REST API",
-        "contenido": "Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Nulla at dui felis.<br>Nunc consectetur, neque eget egestas iaculis, libero leo aliquam nisl, a dictum lorem nisi et enim.",
-        "autor": 5
+        "id": "2",
+        "fecha": "28/4/19",
+        "hora": "12:34",
+        "titulo": "Cucurril quaeque tetigit destruens.",
+        "contenido": "Cras semper interdum enim sit amet viverra.<br>Mauris dignissim ante sed mollis molestie. Nunc vehicula metus id congue bibendum.<br>Donec pulvinar nisi nec diam tempus, ut efficitur risus vestibulum.<br><br>Audi famam illius. Spes omnibus, mihi quoque. Terror omnibus, mihi quoque",
+        "autor": "5"
     }],
     "comentarios": [{
-        "id": 1,
+        "id": "1",
         "fecha": "28/3/19",
-        "hora": "16:21",
-        "contenido": "Este es el .json por defecto! :D",
-        "postId": 1,
-        "autor": 2
+        "hora": "16:31",
+        "contenido": "Socii sunt mihi.<br>Qui olim viri fortes. Rivalesque erant. Saeve certando pugnandoque<br>Splendor crescit",
+        "postId": "1",
+        "autor": "2"
     }, {
-        "id": 2,
+        "id": "2",
         "fecha": "1/4/19",
         "hora": "16:21",
         "contenido": "Audi famam illius.<br>Solus in hostes ruit et patriam servavit.",
-        "postId": 1,
-        "autor": 3
+        "postId": "1",
+        "autor": "3"
     }, {
         "id": "3",
-        "fecha": "1/4/19",
-        "hora": "16:21",
+        "fecha": "28/4/19",
+        "hora": "18:30",
         "contenido": "<p>Ille, ille yuxta me</p><img style=\"height: 30vh;\" src='imgs/animales.gif'>",
         "postId": "2",
         "autor": "4"
+    }, {
+        "id": "4",
+        "fecha": "04/05/19",
+        "hora": "17:30",
+        "contenido": "Gugu gaga",
+        "postId": "2",
+        "autor": "6"
     }],
     "usuarios": [{
         "id": "1",
