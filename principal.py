@@ -3,6 +3,7 @@ from threading import Thread
 import logging
 from Peticion import Peticion
 from webbrowser import open_new_tab as abrir_en_navegador
+from sys import argv
 
 
 def main():
@@ -13,7 +14,6 @@ def main():
     servidor_escucha.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     servidor_escucha.bind(CONFIGURACION['SERVIDOR_ENLACE'])
     servidor_escucha.listen(10)
-    # TODO Configuracion / linea comandos si se abre automaticamnte o no V 1.0
     if CONFIGURACION['PAGINA_BIENVENIDA_ABRIR_AUTOMATICAMENTE_AL_INICIO']:
         abrir_en_navegador('http://localhost:' +
                            str(CONFIGURACION['SERVIDOR_ENLACE'][1]))
@@ -61,38 +61,23 @@ def cargar_configuracion():
                 linea = linea.split("#")[0].strip()
 
                 if len(linea) > 0:
-                    parametro, valor = linea.split("=")
-                    parametro = parametro.strip()
-                    valor = valor.strip()
-
-                    if parametro == 'SERVIDOR_DIRECCION':
-                        CONFIGURACION['SERVIDOR_ENLACE'] = (
-                            str(valor), CONFIGURACION['SERVIDOR_ENLACE'][1])
-
-                    elif parametro == 'SERVIDOR_PUERTO':
-                        CONFIGURACION['SERVIDOR_ENLACE'] = (
-                            CONFIGURACION['SERVIDOR_ENLACE'][0], int(valor))
-
-                    else:
-                        if parametro in CONFIGURACION.keys():
-                            if valor == 'True' or valor == 'False':
-                                CONFIGURACION[parametro] = eval(valor)
-
-                            else:
-                                CONFIGURACION[parametro] = valor
-
-                        else:
-                            logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
-                                                level=logging.INFO, datefmt='%d-%m-%y %H:%M:%S')
-                            logging.warn(
-                                'PARAMETRO NO RECONOCIDO  -> '+parametro+' = '+valor)
+                    parametro = procesar_param_configuracion(linea)
 
         except Exception as e:
-            logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
+            logging.basicConfig(format='%(asctime)s - %(message)s',
                                 level=logging.INFO, datefmt='%d-%m-%y %H:%M:%S')
-            logging.error('PARAMETRO INVALIDO:\t' + parametro +
-                          ' = ' + valor + '\n\nDetalle:\t' + str(e)+"\n\nSi el problema persiste, por favor informa:\n\thttps://github.com/Hechix/PythonRESTAPI/issues")
-            exit()
+            logging.error('PARAMETRO INVALIDO: ' + parametro + '\n\nDetalle: ' + str(e) +
+                          "\n\nSi el problema persiste, por favor informa:\n\thttps://github.com/Hechix/PythonRESTAPI/issues")
+            quit()
+
+        for parametro in argv[1:]:
+            try:
+                procesar_param_configuracion(parametro)
+
+            except Exception as e:
+                logging.error('PARAMETRO INVALIDO EN CLI: '+parametro+'\nEl formato debe ser [parametro]=[valor]\n\nDetalle: ' + str(e) +
+                          "\n\nSi el problema persiste, por favor informa:\n\thttps://github.com/Hechix/PythonRESTAPI/issues")
+                quit()
 
     if CONFIGURACION['REGISTRO_IGNORAR']:
         print('Bienvenido a Hechix\'s Python REST API\nEl registo está deshabilitado, puedes activarlo en configuracion.conf')
@@ -101,11 +86,11 @@ def cargar_configuracion():
         if CONFIGURACION['REGISTRO_DEBUG']:
             if CONFIGURACION['REGISTRO_ALMACENAR']:
                 print('Bienvenido a Hechix\'s Python REST API\nEl registo está siendo almacenado y no aparecerá en consola, puedes cambiarlo en configuracion.conf')
-                logging.basicConfig(filename='Registro.log', filemode='a', format='%(asctime)s - %(levelname)s - %(message)s',
+                logging.basicConfig(filename='Registro.log', filemode='a', format='%(asctime)s - %(message)s',
                                     level=logging.DEBUG, datefmt='%d-%m-%y %H:%M:%S')
 
             else:
-                logging.basicConfig(format='%(asctime)s - %(levelname)s - %(message)s',
+                logging.basicConfig(format='%(asctime)s - %(message)s',
                                     level=logging.DEBUG, datefmt='%d-%m-%y %H:%M:%S')
 
             logging.debug('Configuracion:\n')
@@ -125,6 +110,38 @@ def cargar_configuracion():
             else:
                 logging.basicConfig(format='%(asctime)s - %(message)s',
                                     level=logging.INFO, datefmt='%d-%m-%y %H:%M:%S')
+
+
+def procesar_param_configuracion(parametro):
+    parametro, valor = parametro.split("=")
+    parametro = parametro.strip().upper()
+    valor = valor.strip()
+
+    if parametro == 'SERVIDOR_DIRECCION':
+        CONFIGURACION['SERVIDOR_ENLACE'] = (
+            str(valor), CONFIGURACION['SERVIDOR_ENLACE'][1])
+
+    elif parametro == 'SERVIDOR_PUERTO':
+        CONFIGURACION['SERVIDOR_ENLACE'] = (
+            CONFIGURACION['SERVIDOR_ENLACE'][0], int(valor))
+
+    else:
+        if parametro in CONFIGURACION.keys():
+            if valor.lower() == "true" or valor.lower() == "false":
+                valor = valor[0].upper() + valor[1:].lower()
+            if valor == 'True' or valor == 'False':
+                CONFIGURACION[parametro] = eval(valor)
+
+            else:
+                CONFIGURACION[parametro] = valor
+
+        else:
+            logging.basicConfig(format='%(asctime)s - %(message)s',
+                                level=logging.INFO, datefmt='%d-%m-%y %H:%M:%S')
+            logging.warn(
+                'PARAMETRO NO RECONOCIDO  -> '+parametro+' = '+valor)
+
+    return parametro
 
 
 if __name__ == '__main__':
