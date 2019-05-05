@@ -138,7 +138,7 @@ body {
 .comentario {
     width: 70vw;
     margin: 5px 50px 5px auto;
-    border: 1px solid black;
+    border: 1px dashed black;
     display: grid;
     grid-template-columns: 6vw auto;
     grid-template-rows: 5vh auto;

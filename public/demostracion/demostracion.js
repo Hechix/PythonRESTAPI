@@ -73,8 +73,8 @@ function descargar_comentarios() {
                     </div>`
                 })
             }
-            
-    descargar_usuarios()
+
+            descargar_usuarios()
         }
         peticion_comentarios.open("GET", "/comentarios?postId=" + idPost, true)
         peticion_comentarios.send();
@@ -115,7 +115,7 @@ function ver_informacion_demostracion() {
     var modal = {
         contenido: `<h1>Aviso:</h1>
         Este foro de demostración está pensado para ser usado con la base de datos por defecto.<br>
-        Los cambios en los datos aparecerán, pero si se modifica su estructura la demostración se rompe :(`
+        Los cambios en los datos aparecerán, pero si se modifica su estructura la demostración se rompe :(<br><br><br>`
     }
     abrir_modal(modal)
 }
