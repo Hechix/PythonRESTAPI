@@ -92,7 +92,7 @@ function descargar_usuarios() {
                 var imagenes_de_este_usuario = document.querySelectorAll('[data-imagen-autor]')
                 imagenes_de_este_usuario.forEach(imagen => {
                     if (imagen.dataset["imagenAutor"] == usuario.toString()) {
-                        imagen.innerHTML = '<img class="x__imagen-autor-interno" src="imgs/' + json.foto + '"></img>'
+                        imagen.innerHTML = '<img class="x__imagen-autor-interno" src="' + json.foto + '"></img>'
                     }
                 })
 
