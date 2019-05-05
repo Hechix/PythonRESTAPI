@@ -17,10 +17,10 @@ function abrir_modal(modal) {
             </div>
         </div>`
 
-    if (document.getElementById("notificacion")){
+    if (document.getElementById("notificacion")) {
         borrar_notificacion()
     }
-    
+
     body.innerHTML += html
 }
 

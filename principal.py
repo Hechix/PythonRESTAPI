@@ -76,7 +76,7 @@ def cargar_configuracion():
 
             except Exception as e:
                 logging.error('PARAMETRO INVALIDO EN CLI: '+parametro+'\nEl formato debe ser [parametro]=[valor]\n\nDetalle: ' + str(e) +
-                          "\n\nSi el problema persiste, por favor informa:\n\thttps://github.com/Hechix/PythonRESTAPI/issues")
+                              "\n\nSi el problema persiste, por favor informa:\n\thttps://github.com/Hechix/PythonRESTAPI/issues")
                 quit()
 
     if CONFIGURACION['REGISTRO_IGNORAR']:
@@ -148,7 +148,7 @@ if __name__ == '__main__':
     CONFIGURACION = {
         'SERVIDOR_ENCENDIDO': True,
         'SERVIDOR_ENLACE': ('0.0.0.0', -1),
-        'FICHERO_JSON': 'db.json',  # TODO :  Cargar esto desde parametro de terminal // V1.0
+        'FICHERO_JSON': 'db.json',
         'ATRIBUTO_PRIMARIO': 'id',
         'ACEPTAR_GET': True,
         'ACEPTAR_POST':  True,

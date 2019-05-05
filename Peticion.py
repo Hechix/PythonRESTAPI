@@ -100,7 +100,8 @@ class Peticion:
                     self.logging.info(
                         'Aviso: Codificada la respuesta con UTF-8')
                 except:
-                    pass  # TODO ver que hago en este caso
+                    self.devolver_estado(contenido="NO_SE_HA_PODIDO_CODIFICAR")
+                    return
 
         else:
             html = contenido

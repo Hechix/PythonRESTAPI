@@ -57,7 +57,8 @@ def indexar_json(CONFIGURACION):
 
 def guardar_objeto(CONFIGURACION, objeto, indices):
     objeto = json_loads(objeto)
-    objeto[CONFIGURACION["ATRIBUTO_PRIMARIO"]] = objeto[CONFIGURACION["ATRIBUTO_PRIMARIO"]].strip()
+    objeto[CONFIGURACION["ATRIBUTO_PRIMARIO"]
+           ] = objeto[CONFIGURACION["ATRIBUTO_PRIMARIO"]].strip()
 
     if not CONFIGURACION['ATRIBUTO_PRIMARIO'] in objeto.keys():
         raise Exception('OBJETO_SIN_ATRIBUTO_PRIMARIO')
