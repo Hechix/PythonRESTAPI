@@ -69,7 +69,7 @@ body {
     grid-template-columns: 10vw auto;
     grid-template-rows: 10vh 17vh auto;
     width: 85vw;
-    margin: 1vh auto;
+    margin: 0 auto 5vh auto;
     min-height: 35vh;
     background: rgba(255, 255, 255, 0.5);
 }
@@ -89,7 +89,7 @@ body {
     grid-column: 1;
     grid-row-start: 1;
     grid-row-end: 3;
-    border: 1px dotted;
+    border: 1px solid;
 }
 
 .x__imagen-autor-interno {
@@ -137,10 +137,10 @@ body {
 
 .comentario {
     width: 70vw;
-    margin: 5px 50px 5px auto;
+    margin: 5px 50px 20px auto;
     border: 1px solid black;
     display: grid;
-    grid-template-columns: 6vw auto;
+    grid-template-columns: 7vw auto;
     grid-template-rows: 5vh auto;
     border-radius: 20px;
 }
@@ -152,7 +152,7 @@ body {
     height: 13vh;
     width: 5vw;
     margin: 0.5vh 0.5vw;
-    border: 1px dotted black;
+    border: 1px solid black;
     border-radius: 20px;
     overflow: hidden;
 }
@@ -161,6 +161,7 @@ body {
     grid-column: 2;
     grid-row: 1;
     display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.3);
 }
 
 .comentario__autor {
@@ -175,4 +176,8 @@ body {
 .comentario__contenido {
     grid-column: 2;
     grid-row: 2;
+}
+
+.comentario__contenido-interno {
+	padding: 20px;
 }

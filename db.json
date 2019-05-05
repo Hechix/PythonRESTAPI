@@ -32,7 +32,7 @@
         "id": "3",
         "fecha": "28/4/19",
         "hora": "18:30",
-        "contenido": "<p>Ille, ille yuxta me</p><img style=\"height: 30vh;border-radius: 20px;border: 1px dotted;\" src='imgs/excelente.gif'>",
+        "contenido": "<p>Ille, ille yuxta me</p><img style=\"height: 30vh;border-radius: 20px;border: 1px solid;\" src='imgs/excelente.gif'>",
         "postId": "2",
         "autor": "4"
     }, {
@@ -46,26 +46,26 @@
     "usuarios": [{
         "id": "1",
         "nombre": "Hechix",
-        "foto": "perro.jpg"
+        "foto": "imgs/perro.jpg"
     }, {
         "id": "2",
         "nombre": "Bart Simpson",
-        "foto": "bart.jpg"
+        "foto": "imgs/bart.jpg"
     }, {
         "id": "3",
         "nombre": "Homer Simpson",
-        "foto": "homer.jpg"
+        "foto": "imgs/homer.jpg"
     }, {
         "id": "4",
         "nombre": "Lisa Simpson",
-        "foto": "lisa.jpg"
+        "foto": "imgs/lisa.jpg"
     }, {
         "id": "5",
         "nombre": "Marge Simpson",
-        "foto": "marge.jpg"
+        "foto": "imgs/marge.jpg"
     }, {
         "id": "6",
         "nombre": "Maggie Simpson",
-        "foto": "maggie.jpg"
+        "foto": "imgs/maggie.jpg"
     }]
 }

@@ -9,7 +9,7 @@ function cargar_vista_panel_de_control() {
 
     if (document.getElementsByTagName("body")[0].className == "") {
         html = html.replace("@@@@@", '<i class="fas fa-lightbulb"></i>')
-        html = html.replace('class="botones-horizontales__titulo"','class="botones-horizontales__titulo botones-horizontales__titulo--oscuro"')
+        html = html.replace('class="botones-horizontales__titulo"', 'class="botones-horizontales__titulo botones-horizontales__titulo--oscuro"')
     } else {
         html = html.replace("@@@@@", '<i class="far fa-lightbulb"></i>')
     }
@@ -208,7 +208,7 @@ function añadir_registro(evento) {
             Creando nuevo registro en ` + raiz.id + `
         </p>
         <p class="modal__subtitulo">
-            Nuevo identificador (` +  valor_de_configuracion('ATRIBUTO_PRIMARIO')+ `):
+            Nuevo identificador (` + valor_de_configuracion('ATRIBUTO_PRIMARIO') + `):
         </p>
         <input id="js-nuevo-id" type="text">`
 
