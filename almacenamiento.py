@@ -1,4 +1,5 @@
 from json import load as json_load, loads as json_loads, dump as json_dump
+from os import listdir as os_listdir
 
 
 def cargar_json(CONFIGURACION):
@@ -137,3 +138,38 @@ def modificar_objeto(CONFIGURACION, objeto, indices):
         json_dump(json, archivo)
 
     return str(objeto)
+
+
+def leer_archivo(directorio, trozos_URI):
+    try:
+        archivos_binarios = [
+            'jpg',
+            'png',
+            'gif',
+            'mp4',
+            'webm'
+        ]
+
+        metodo_lectura = 'r'
+
+        if trozos_URI[-1].split(".")[-1] in archivos_binarios:
+            metodo_lectura = 'rb'
+
+        with open(directorio, metodo_lectura) as archivo_leido:
+            return 200, archivo_leido.read(), trozos_URI[-1]
+
+    except Exception as e:
+        if type(e).__name__ == 'UnicodeDecodeError':
+            return 500, 'NO_SE_PUEDE_DECODIFICAR', False
+
+        elif type(e).__name__ == 'FileNotFoundError':
+            return 404, False, False
+
+        else:
+            return 500, False, False
+
+
+def leer_directorio(directorio, trozos_URI):
+    for cosa in os_listdir(directorio):
+        print(cosa)
+    return 200, 'TST', False

@@ -1,5 +1,6 @@
 import almacenamiento
 from json import dumps as json_dump
+from os import path as os_path
 
 
 class Peticion:
@@ -65,7 +66,7 @@ class Peticion:
         except Exception as e:
             self.devolver_estado()
 
-    def devolver_estado(self, codigo_estado=500, contenido=False, nombre_archivo=None, es_json=False):
+    def devolver_estado(self, codigo_estado=500, contenido=False, nombre_archivo=False, es_json=False):
         codigos_estado = {
             200: 'OK',
             400: 'PETICION_INCORRECTA',
@@ -237,37 +238,25 @@ class Peticion:
 
         elif trozos_URI[0] == self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']:
 
-            directorio = ""
+            directorio = self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']
             for x in range(1, len(trozos_URI)):
                 directorio += "/" + trozos_URI[x]
 
-            try:
-                archivos_binarios = [
-                    'jpg',
-                    'png',
-                    'gif',
-                    'mp4',
-                    'webm'
-                ]
+            print(directorio)
 
-                metodo_lectura = 'r'
+            if os_path.isdir(directorio):
+                codigo_estado, contenido, nombre_archivo = almacenamiento.leer_directorio(
+                    directorio, trozos_URI)
+                self.devolver_estado(codigo_estado, contenido, nombre_archivo)
 
-                if trozos_URI[-1].split(".")[-1] in archivos_binarios:
-                    metodo_lectura = 'rb'
+            elif os_path.isfile(directorio):
+                codigo_estado, contenido, nombre_archivo = almacenamiento.leer_archivo(
+                    directorio, trozos_URI)
+                self.devolver_estado(codigo_estado, contenido, nombre_archivo)
 
-                with open(self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO'] + directorio, metodo_lectura) as archivo_leido:
-                    self.devolver_estado(
-                        200, archivo_leido.read(), nombre_archivo=trozos_URI[-1])
+            else:
+                self.devolver_estado(404)
 
-            except Exception as e:
-                if type(e).__name__ == 'UnicodeDecodeError':
-                    self.devolver_estado(500, 'NO_SE_PUEDE_DECODIFICAR')
-
-                elif type(e).__name__ == 'FileNotFoundError':
-                    self.devolver_estado(404)
-
-                else:
-                    self.devolver_estado(500)
         else:
             try:
                 datos_almacenados = almacenamiento.leer_json(
