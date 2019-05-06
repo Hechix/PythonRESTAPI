@@ -26,6 +26,7 @@ body {
     height: 25px;
     text-align: center;
     background: white;
+    box-shadow: 0px 0px 5px 0px black
 }
 
 
@@ -71,7 +72,8 @@ body {
     width: 85vw;
     margin: 0 auto 5vh auto;
     min-height: 35vh;
-    background: rgba(255, 255, 255, 0.5);
+    background: white;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
 }
 
 .post__autor {
@@ -143,6 +145,7 @@ body {
     grid-template-columns: 7vw auto;
     grid-template-rows: 5vh auto;
     border-radius: 20px;
+    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
 }
 
 .comentario__imagen-autor {
@@ -161,7 +164,7 @@ body {
     grid-column: 2;
     grid-row: 1;
     display: flex;
-    border-bottom: 1px solid rgba(0,0,0,0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
 }
 
 .comentario__autor {
@@ -179,5 +182,5 @@ body {
 }
 
 .comentario__contenido-interno {
-	padding: 20px;
+    padding: 20px;
 }
