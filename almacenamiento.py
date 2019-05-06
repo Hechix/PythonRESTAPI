@@ -170,6 +170,20 @@ def leer_archivo(directorio, trozos_URI):
 
 
 def leer_directorio(directorio, trozos_URI):
+    html = '<!DOCTYPE html>\
+            <html lang="en">\
+            <head>\
+                <meta charset="UTF-8">\
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+                <meta http-equiv="X-UA-Compatible" content="ie=edge">\
+                <title>'+directorio+'</title>\
+            </head>\
+            <body>\
+                <h1>' + directorio + '</h1>'
+
     for cosa in os_listdir(directorio):
-        print(cosa)
-    return 200, 'TST', False
+        html += '<h3>'+cosa+'</h3>'
+
+    html += '</body>\
+            </html>'
+    return 200, html, False
