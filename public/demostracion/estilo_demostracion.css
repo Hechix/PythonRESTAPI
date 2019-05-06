@@ -56,6 +56,7 @@ body {
     font-family: 'Gochi Hand', monospace;
     border-bottom: 10px double red;
     border-radius: 50px;
+    background: linear-gradient(to right, transparent, white, transparent);
 }
 
 .contenido-general {
@@ -73,7 +74,7 @@ body {
     margin: 0 auto 5vh auto;
     min-height: 35vh;
     background: white;
-    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }
 
 .post__autor {
@@ -92,6 +93,7 @@ body {
     grid-row-start: 1;
     grid-row-end: 3;
     border: 1px solid;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
 .x__imagen-autor-interno {
@@ -145,7 +147,7 @@ body {
     grid-template-columns: 7vw auto;
     grid-template-rows: 5vh auto;
     border-radius: 20px;
-    box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.75);
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.75);
 }
 
 .comentario__imagen-autor {
@@ -158,6 +160,7 @@ body {
     border: 1px solid black;
     border-radius: 20px;
     overflow: hidden;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
 }
 
 .comentario__cabecera {
@@ -183,4 +186,10 @@ body {
 
 .comentario__contenido-interno {
     padding: 20px;
+}
+
+.comentario__contenido-interno img {
+    height: 30vh;
+    border-radius: 20px;
+    border: 1px solid;
 }
