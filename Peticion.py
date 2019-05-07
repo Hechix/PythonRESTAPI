@@ -106,7 +106,7 @@ class Peticion:
 
         else:
             html = contenido
-            
+
         if nombre_archivo:
             self.logging.info(self.cliente_direccion + '\t-> ' +
                               str(codigo_estado) + ' '+nombre_archivo)
