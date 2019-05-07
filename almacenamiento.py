@@ -157,7 +157,7 @@ def leer_archivo(directorio, trozos_URI):
             metodo_lectura = 'rb'
 
         with open(directorio, metodo_lectura) as archivo_leido:
-            return 200, archivo_leido.read(), trozos_URI[-1]
+            return 200, archivo_leido.read(), "/"+directorio
 
     except Exception as e:
         if type(e).__name__ == 'UnicodeDecodeError':
@@ -176,6 +176,11 @@ def leer_directorio(directorio, trozos_URI, archivo_pagina_estatica, buscar_arch
         codigo, contenido, nom_archivo = leer_archivo(
             directorio + "/" + archivo_pagina_estatica, trozos_URI)
         return codigo, contenido, nom_archivo
+
+    directorio_padre = "/"
+
+    for dire_en_rama in range(len(trozos_URI)-1):
+        directorio_padre += trozos_URI[dire_en_rama] + "/"
 
     html = '<!DOCTYPE html>\
             <html lang="en">\
@@ -197,28 +202,44 @@ def leer_directorio(directorio, trozos_URI, archivo_pagina_estatica, buscar_arch
                         border-left: 3px solid green;\
                         padding-left: 5px;\
                     }\
-                    .archivo_peso {\
+                    .archivo_peso, .directorio_cantidad {\
                         text-align: right;\
                     }\
                 </style>\
             </head>\
             <body>\
                 <h1>' + directorio + '</h1>\
-                <table>'
+                <table>\
+                    <tr>\
+                        <td class="directorio">\
+                            <a href="' + directorio_padre+'">'+directorio_padre+'</a>\
+                        </td>\
+                    </tr>'
 
     for cosa in archivos_en_dire:
         if os_path.isdir(directorio + "/" + cosa):
-            html += '<tr><td class="directorio"><a href="/' + \
-                directorio+"/"+cosa+'">'+cosa+'/</a></td></tr>'
+            cantidad_objetos = str(len(os_listdir(directorio + "/" + cosa)))
+            html += '<tr>\
+                        <td class="directorio">\
+                            <a href="/' + directorio+"/"+cosa+'">'+cosa+'/</a>\
+                        </td>\
+                        <td class="directorio_cantidad">'+cantidad_objetos+'</td>\
+                        <td>Objetos</td>\
+                    </tr>'
         else:
             peso, escala_peso = calcular_tamaño(directorio+"/"+cosa)
-            html += '<tr><td class="archivo"><a href="/'+directorio + \
-                "/"+cosa+'">'+cosa+'</a></td><td class="archivo_peso">'+peso+'</td><td>'+escala_peso+'</td></tr>'
+            html += '<tr>\
+                        <td class="archivo">\
+                            <a href="/'+directorio + "/"+cosa+'">'+cosa+'</a>\
+                        </td>\
+                        <td class="archivo_peso">'+peso+'</td>\
+                        <td>'+escala_peso+'</td>\
+                    </tr>'
 
     html += '   </table>\
             </body>\
         </html>'
-    return 200, html, False
+    return 200, html, "/" + directorio
 
 
 def calcular_tamaño(archivo):
