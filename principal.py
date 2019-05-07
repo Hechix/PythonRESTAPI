@@ -9,6 +9,20 @@ from sys import argv
 def main():
     global CONFIGURACION
     cargar_configuracion()
+
+    if "-h" in argv or "--help" in argv:
+        print("Ayuda de CLI\n")
+        print("Sintaxis: hechixs_python_rest_api.exe [comando]=[valor]\n")
+        print("\t- Los parametros deben estar separados por espacios")
+        print("\t- Los parametros se pueden configurar en el achivo configuracion.conf")
+        print("\t- CLI prevalece sobre configuracion.conf")
+        print("\t- Si un parametro no se configura o se elimina de configuracion.conf, se usará el valor por defecto\n")
+        print("Configuración actual:\n")
+        for parametro in CONFIGURACION.keys():
+            print("\t"+parametro+" = "+str(CONFIGURACION[parametro]))
+        print("\nDocumentación: https://github.com/Hechix/PythonRESTAPI/")
+        return
+
     logging.debug('INICIANDO SERVER')
     servidor_escucha = socket(AF_INET, SOCK_STREAM)
     servidor_escucha.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
@@ -72,7 +86,8 @@ def cargar_configuracion():
 
         for parametro in argv[1:]:
             try:
-                procesar_param_configuracion(parametro)
+                if not parametro == "-h" and not parametro == "--help":
+                    procesar_param_configuracion(parametro)
 
             except Exception as e:
                 logging.error('PARAMETRO INVALIDO EN CLI: '+parametro+'\nEl formato debe ser [parametro]=[valor]\n\nDetalle: ' + str(e) +
