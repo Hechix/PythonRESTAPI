@@ -94,11 +94,11 @@ def cargar_configuracion():
                 quit()
 
     if CONFIGURACION['REGISTRO_IGNORAR']:
-        print('Bienvenido a Hechix\'s Python REST API\nEl registo está deshabilitado, puedes activarlo en configuracion.conf')
+        print('Bienvenido a Hechix\'s Python REST API\nEl registo está deshabilitado, puedes activarlo en configuracion.conf o con un parametro CLI')
 
     else:
             if CONFIGURACION['REGISTRO_ALMACENAR']:
-                print('Bienvenido a Hechix\'s Python REST API\nEl registo está siendo almacenado y no aparecerá en consola, puedes cambiarlo en configuracion.conf')
+                print('Bienvenido a Hechix\'s Python REST API\nEl registo está siendo almacenado y no aparecerá en consola, puedes cambiarlo en configuracion.conf o con un parametro CLI')
                 logging.basicConfig(filename='Registro.log', filemode='a', format='%(asctime)s - %(message)s',
                                     level=logging.INFO, datefmt='%d-%m-%y %H:%M:%S')
 
