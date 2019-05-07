@@ -138,7 +138,7 @@ def procesar_param_configuracion(parametro):
         else:
             logging.basicConfig(format='%(asctime)s - %(message)s',
                                 level=logging.INFO, datefmt='%d-%m-%y %H:%M:%S')
-            logging.warn(
+            logging.info(
                 'PARAMETRO NO RECONOCIDO  -> '+parametro+' = '+valor)
 
     return parametro
