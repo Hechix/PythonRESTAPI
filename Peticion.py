@@ -1,6 +1,7 @@
 import almacenamiento
 from json import dumps as json_dump
-from os import path as os_path
+from os.path import isdir as os_path_isdir
+from os.path import isfile as os_path_isfile
 
 
 class Peticion:
@@ -11,8 +12,6 @@ class Peticion:
         self.logging = logging
         self.CONFIGURACION = CONFIGURACION
         self.URI = '/'
-        self.logging.debug('Inicializada Peticion para ' +
-                           self.cliente_direccion)
 
     def procesar(self):
         self.datos_recibidos = self.cliente_conexion.recv(8192)
@@ -117,8 +116,6 @@ class Peticion:
 
         self.cliente_conexion.sendall(html)
         self.cliente_conexion.close()
-        self.logging.debug(self.cliente_direccion +
-                           '\t-> Finalizada la conexion')
 
     def trocear_URI(self, parametros=False):
         separacion_URI_de_parametros = self.URI.split('?')
@@ -242,7 +239,7 @@ class Peticion:
             for x in range(1, len(trozos_URI)):
                 directorio += "/" + trozos_URI[x]
 
-            if os_path.isdir(directorio):
+            if os_path_isdir(directorio):
                 if self.CONFIGURACION['INDEXAR_DIRECTORIOS']:
                     codigo_estado, contenido, nombre_archivo = almacenamiento.leer_directorio(
                         directorio, trozos_URI, self.CONFIGURACION['PAGINA_ESTATICA_ARCHIVO'], self.CONFIGURACION['BUSCAR_PAGINA_ESTATICA_AL_INDEXAR_DIRECTORIO'])
@@ -250,7 +247,7 @@ class Peticion:
                     codigo_estado, contenido, nombre_archivo = 403, False, False
                 self.devolver_estado(codigo_estado, contenido, nombre_archivo)
 
-            elif os_path.isfile(directorio):
+            elif os_path_isfile(directorio):
                 codigo_estado, contenido, nombre_archivo = almacenamiento.leer_archivo(
                     directorio, trozos_URI)
                 self.devolver_estado(codigo_estado, contenido, nombre_archivo)

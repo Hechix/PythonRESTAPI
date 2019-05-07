@@ -9,7 +9,20 @@ from sys import argv
 def main():
     global CONFIGURACION
     cargar_configuracion()
-    logging.debug('INICIANDO SERVER')
+
+    if "-h" in argv or "--help" in argv:
+        print("Ayuda de CLI\n")
+        print("Sintaxis: hechixs_python_rest_api.exe [comando]=[valor]\n")
+        print("\t- Los parametros deben estar separados por espacios")
+        print("\t- Los parametros se pueden configurar en el achivo configuracion.conf")
+        print("\t- CLI prevalece sobre configuracion.conf")
+        print("\t- Si un parametro no se configura o se elimina de configuracion.conf, se usará el valor por defecto\n")
+        print("Configuración actual:\n")
+        for parametro in CONFIGURACION.keys():
+            print("\t"+parametro+" = "+str(CONFIGURACION[parametro]))
+        print("\nDocumentación: https://github.com/Hechix/PythonRESTAPI/")
+        return
+
     servidor_escucha = socket(AF_INET, SOCK_STREAM)
     servidor_escucha.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     servidor_escucha.bind(CONFIGURACION['SERVIDOR_ENLACE'])
@@ -72,7 +85,8 @@ def cargar_configuracion():
 
         for parametro in argv[1:]:
             try:
-                procesar_param_configuracion(parametro)
+                if not parametro == "-h" and not parametro == "--help":
+                    procesar_param_configuracion(parametro)
 
             except Exception as e:
                 logging.error('PARAMETRO INVALIDO EN CLI: '+parametro+'\nEl formato debe ser [parametro]=[valor]\n\nDetalle: ' + str(e) +
@@ -80,30 +94,11 @@ def cargar_configuracion():
                 quit()
 
     if CONFIGURACION['REGISTRO_IGNORAR']:
-        print('Bienvenido a Hechix\'s Python REST API\nEl registo está deshabilitado, puedes activarlo en configuracion.conf')
+        print('Bienvenido a Hechix\'s Python REST API\nEl registo está deshabilitado, puedes activarlo en configuracion.conf o con un parametro CLI')
 
     else:
-        if CONFIGURACION['REGISTRO_DEBUG']:
             if CONFIGURACION['REGISTRO_ALMACENAR']:
-                print('Bienvenido a Hechix\'s Python REST API\nEl registo está siendo almacenado y no aparecerá en consola, puedes cambiarlo en configuracion.conf')
-                logging.basicConfig(filename='Registro.log', filemode='a', format='%(asctime)s - %(message)s',
-                                    level=logging.DEBUG, datefmt='%d-%m-%y %H:%M:%S')
-
-            else:
-                logging.basicConfig(format='%(asctime)s - %(message)s',
-                                    level=logging.DEBUG, datefmt='%d-%m-%y %H:%M:%S')
-
-            logging.debug('Configuracion:\n')
-
-            for parametro in CONFIGURACION.keys():
-                logging.debug(parametro + (' ' * (25 - len(parametro))
-                                           ) + str(CONFIGURACION[parametro]))
-
-            logging.debug(('-' * 30)+'\n')
-
-        else:
-            if CONFIGURACION['REGISTRO_ALMACENAR']:
-                print('Bienvenido a Hechix\'s Python REST API\nEl registo está siendo almacenado y no aparecerá en consola, puedes cambiarlo en configuracion.conf')
+                print('Bienvenido a Hechix\'s Python REST API\nEl registo está siendo almacenado y no aparecerá en consola, puedes cambiarlo en configuracion.conf o con un parametro CLI')
                 logging.basicConfig(filename='Registro.log', filemode='a', format='%(asctime)s - %(message)s',
                                     level=logging.INFO, datefmt='%d-%m-%y %H:%M:%S')
 
@@ -138,7 +133,7 @@ def procesar_param_configuracion(parametro):
         else:
             logging.basicConfig(format='%(asctime)s - %(message)s',
                                 level=logging.INFO, datefmt='%d-%m-%y %H:%M:%S')
-            logging.warn(
+            logging.info(
                 'PARAMETRO NO RECONOCIDO  -> '+parametro+' = '+valor)
 
     return parametro
@@ -154,7 +149,6 @@ if __name__ == '__main__':
         'ACEPTAR_POST':  True,
         'ACEPTAR_PUT': True,
         'ACEPTAR_DELETE': True,
-        'REGISTRO_DEBUG': True,
         'REGISTRO_ALMACENAR': False,
         'REGISTRO_IGNORAR': False,
         'SERVIR_ARCHIVOS': True,
