@@ -212,7 +212,7 @@ class Peticion:
 
         if len(trozos_URI) == 0:
 
-            if self.CONFIGURACION['SERVIR_ARCHIVOS']:
+            if self.CONFIGURACION['SERVIDOR_ESTATICO']:
 
                 try:
 

@@ -151,7 +151,7 @@ if __name__ == '__main__':
         'ACEPTAR_DELETE': True,
         'REGISTRO_ALMACENAR': False,
         'REGISTRO_IGNORAR': False,
-        'SERVIR_ARCHIVOS': True,
+        'SERVIDOR_ESTATICO': True,
         'INDEXAR_DIRECTORIOS': True,
         'PAGINA_ESTATICA_ABRIR_AUTOMATICAMENTE_AL_INICIO': True,
         'PAGINA_ESTATICA_ARCHIVO': 'index.html',
