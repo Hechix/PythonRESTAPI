@@ -12,8 +12,6 @@ class Peticion:
         self.logging = logging
         self.CONFIGURACION = CONFIGURACION
         self.URI = '/'
-        self.logging.debug('Inicializada Peticion para ' +
-                           self.cliente_direccion)
 
     def procesar(self):
         self.datos_recibidos = self.cliente_conexion.recv(8192)
@@ -118,8 +116,6 @@ class Peticion:
 
         self.cliente_conexion.sendall(html)
         self.cliente_conexion.close()
-        self.logging.debug(self.cliente_direccion +
-                           '\t-> Finalizada la conexion')
 
     def trocear_URI(self, parametros=False):
         separacion_URI_de_parametros = self.URI.split('?')

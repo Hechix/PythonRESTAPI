@@ -23,7 +23,6 @@ def main():
         print("\nDocumentación: https://github.com/Hechix/PythonRESTAPI/")
         return
 
-    logging.debug('INICIANDO SERVER')
     servidor_escucha = socket(AF_INET, SOCK_STREAM)
     servidor_escucha.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     servidor_escucha.bind(CONFIGURACION['SERVIDOR_ENLACE'])
@@ -98,25 +97,6 @@ def cargar_configuracion():
         print('Bienvenido a Hechix\'s Python REST API\nEl registo está deshabilitado, puedes activarlo en configuracion.conf')
 
     else:
-        if CONFIGURACION['REGISTRO_DEBUG']:
-            if CONFIGURACION['REGISTRO_ALMACENAR']:
-                print('Bienvenido a Hechix\'s Python REST API\nEl registo está siendo almacenado y no aparecerá en consola, puedes cambiarlo en configuracion.conf')
-                logging.basicConfig(filename='Registro.log', filemode='a', format='%(asctime)s - %(message)s',
-                                    level=logging.DEBUG, datefmt='%d-%m-%y %H:%M:%S')
-
-            else:
-                logging.basicConfig(format='%(asctime)s - %(message)s',
-                                    level=logging.DEBUG, datefmt='%d-%m-%y %H:%M:%S')
-
-            logging.debug('Configuracion:\n')
-
-            for parametro in CONFIGURACION.keys():
-                logging.debug(parametro + (' ' * (25 - len(parametro))
-                                           ) + str(CONFIGURACION[parametro]))
-
-            logging.debug(('-' * 30)+'\n')
-
-        else:
             if CONFIGURACION['REGISTRO_ALMACENAR']:
                 print('Bienvenido a Hechix\'s Python REST API\nEl registo está siendo almacenado y no aparecerá en consola, puedes cambiarlo en configuracion.conf')
                 logging.basicConfig(filename='Registro.log', filemode='a', format='%(asctime)s - %(message)s',
@@ -169,7 +149,6 @@ if __name__ == '__main__':
         'ACEPTAR_POST':  True,
         'ACEPTAR_PUT': True,
         'ACEPTAR_DELETE': True,
-        'REGISTRO_DEBUG': True,
         'REGISTRO_ALMACENAR': False,
         'REGISTRO_IGNORAR': False,
         'SERVIR_ARCHIVOS': True,
