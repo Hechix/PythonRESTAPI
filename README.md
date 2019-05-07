@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 534c3c7b9c71fda3a5fda835597ba371ec8c3260
 # PythonRestAPI
 
 Una REST API "Stand-Alone" de propósito general escrita en Python.
@@ -15,18 +11,6 @@ Es un proyecto para final de curso LOREM IPSUM LOREM IPSUM, como base de datos s
 
 ### Pre-requisitos
 
-<<<<<<< HEAD
-// TODO
-Descarga (archivo zip), descomprimelo LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM
-
-### Configuración
-
-// TODO
-Lo primero que deberías hacer es configurar el servidor, ya viene pre-configurado para LOREM IPSUM LOREM IPSUM, esto se puede hacer LOREM IPSUM LOREM IPSUM
-
-- Configuración
-- CLI (se explica abajo?)
-=======
 Todo lo que necesitas está en el archivo [Hechix's Python REST API.zip](https://google.es). //TODO AÑADIR URL
 
 ### Configuración
@@ -64,7 +48,6 @@ Existen múltiples parámetros que son aceptados, para modificarlos, edita el ar
 ATRIBUTO_PRIMARIO, ACEPTAR_GET, ACEPTAR_POST, ACEPTAR_PUT y ACEPTAR_DELETE
 es necesario para el correcto funcionamiento de la página estática por defecto`
 - URI_ESPECIAL_CONFIGURACION = True
->>>>>>> 534c3c7b9c71fda3a5fda835597ba371ec8c3260
 
 ### Ejecución
 
