@@ -30,7 +30,7 @@ Si se elimina o no se configura algún parámetro, se usará el valor de la sigu
 - REGISTRO_IGNORAR = False
 
 *Página estática y directorio*
-- SERVIR_ARCHIVOS = True
+- SERVIDOR_ESTATICO = True
 - INDEXAR_DIRECTORIOS = True
 - PAGINA_ESTATICA_ABRIR_AUTOMATICAMENTE_AL_INICIO = True
 - PAGINA_ESTATICA_ARCHIVO = index.html
@@ -53,8 +53,11 @@ Ahora ya podemos empezar, la sintaxis de CLI es: `hechixs_python_rest_api.exe`
 ## Funcionalidad
 ### Capacidades
 El servidor tiene múltiples capacidades.
-----URI NORMALES
-----PARAMEROS NORMALES
+
+**URIs normales**:  Son las "clásicas" `/posts, /posts/1, /posts/1/autor, ...`
+
+**Parámetros normales**: Son parámetros condicionales, se pueden juntar con los especiales, sirven para modificar el retorno de datos `/posts?autor=1, /comentarios?postId=1, ...`
+
 **URIs especiales**: Son URLs pensadas para expandir las capacidades del servidor, pueden activarse y desactivarse con el parámetro de configuración `URI_ESPECIALES`
 - /_raices  *- Devuelve las raíces (posts, cometarios, usuarios), es el mismo comportamiento que si se desactiva la página estática*
 - /_configuracion *- Devuelve los valores de configuración del servidor `ATRIBUTO_PRIMARIO, ACEPTAR_GET, ACEPTAR_POST, ACEPTAR_PUT y ACEPTAR_DELETE`. Es necesario para el correcto funcionamiento de la página estática por defecto*
@@ -68,10 +71,16 @@ El servidor tiene múltiples capacidades.
 > Ejemplo: si `/numeros` devuelve `[1,2,3,4,5]`, `/numeros?_total` devuelve `5`
 
 ### Páginas web estáticas
-// TODO
-El servidor puede servir una web estátca LOREM IPSUM LOREM IPSUM, la web por defecto es un CRUD, con una pequeña web a modo de demostración de cómo se usan los datos en la base de datos LOREM IPSUM LOREM IPSUM,
-- Imágenes y videos
-- ???
+El servidor por defecto, sirve una web estática, que se almacena en el directorio `/public`.
+
+La web por defecto es un CRUD, con una pequeña web a modo de demostración de cómo se usan los datos en la base de datos. Ese es su único propósito y se recomienda eliminarla cuando se modifique la base de datos.
+
+En caso de pedir un directorio `EJ: /public`, se buscará el archivo índice, si no se encuentra, se listará el directorio, esto puede desactivarse con `INDEXAR_DIRECTORIOS` y la búsqueda del archivo con `BUSCAR_PAGINA_ESTATICA_AL_INDEXAR_DIRECTORIO`
+
+Se leerán archivos de texto plano, y los siguientes archivos binarios `jpg, png, gif, mp4, webm`
+
+Se puede desactivar completamente la función de servidor estático con el parámetro `SERVIDOR_ESTATICO`
+Tanto el directorio como el archivo índice se modifican respectivamente con `PAGINA_ESTATICA_DIRECTORIO` y `PAGINA_ESTATICA_ARCHIVO`.
 
 ### Códigos de error
 // TODO
