@@ -1,5 +1,6 @@
 import almacenamiento
 from json import dumps as json_dump
+from os import path as os_path
 
 
 class Peticion:
@@ -65,7 +66,7 @@ class Peticion:
         except Exception as e:
             self.devolver_estado()
 
-    def devolver_estado(self, codigo_estado=500, contenido=False, nombre_archivo=None, es_json=False):
+    def devolver_estado(self, codigo_estado=500, contenido=False, nombre_archivo=False, es_json=False):
         codigos_estado = {
             200: 'OK',
             400: 'PETICION_INCORRECTA',
@@ -214,13 +215,13 @@ class Peticion:
 
         if len(trozos_URI) == 0:
 
-            if self.CONFIGURACION['PAGINA_BIENVENIDA_SERVIR']:
+            if self.CONFIGURACION['SERVIR_ARCHIVOS']:
 
                 try:
 
-                    with open(self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']+'/'+self.CONFIGURACION['PAGINA_BIENVENIDA_ARCHIVO'], 'r') as pagina_bienvenida:
-                        self.devolver_estado(200, pagina_bienvenida.read(
-                        ), nombre_archivo=self.CONFIGURACION['PAGINA_BIENVENIDA_ARCHIVO'])
+                    with open(self.CONFIGURACION['PAGINA_ESTATICA_DIRECTORIO']+'/'+self.CONFIGURACION['PAGINA_ESTATICA_ARCHIVO'], 'r') as PAGINA_ESTATICA:
+                        self.devolver_estado(200, PAGINA_ESTATICA.read(
+                        ), nombre_archivo=self.CONFIGURACION['PAGINA_ESTATICA_ARCHIVO'])
 
                 except Exception as e:
                     self.indexar_json()
@@ -235,39 +236,28 @@ class Peticion:
 
             eval(URIs_especiales[trozos_URI[0]])
 
-        elif trozos_URI[0] == self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']:
+        elif trozos_URI[0] == self.CONFIGURACION['PAGINA_ESTATICA_DIRECTORIO']:
 
-            directorio = ""
+            directorio = self.CONFIGURACION['PAGINA_ESTATICA_DIRECTORIO']
             for x in range(1, len(trozos_URI)):
                 directorio += "/" + trozos_URI[x]
 
-            try:
-                archivos_binarios = [
-                    'jpg',
-                    'png',
-                    'gif',
-                    'mp4',
-                    'webm'
-                ]
-
-                metodo_lectura = 'r'
-
-                if trozos_URI[-1].split(".")[-1] in archivos_binarios:
-                    metodo_lectura = 'rb'
-
-                with open(self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO'] + directorio, metodo_lectura) as archivo_leido:
-                    self.devolver_estado(
-                        200, archivo_leido.read(), nombre_archivo=trozos_URI[-1])
-
-            except Exception as e:
-                if type(e).__name__ == 'UnicodeDecodeError':
-                    self.devolver_estado(500, 'NO_SE_PUEDE_DECODIFICAR')
-
-                elif type(e).__name__ == 'FileNotFoundError':
-                    self.devolver_estado(404)
-
+            if os_path.isdir(directorio):
+                if self.CONFIGURACION['INDEXAR_DIRECTORIOS']:
+                    codigo_estado, contenido, nombre_archivo = almacenamiento.leer_directorio(
+                        directorio, trozos_URI, self.CONFIGURACION['PAGINA_ESTATICA_ARCHIVO'], self.CONFIGURACION['BUSCAR_PAGINA_ESTATICA_AL_INDEXAR_DIRECTORIO'])
                 else:
-                    self.devolver_estado(500)
+                    codigo_estado, contenido, nombre_archivo = 403, False, False
+                self.devolver_estado(codigo_estado, contenido, nombre_archivo)
+
+            elif os_path.isfile(directorio):
+                codigo_estado, contenido, nombre_archivo = almacenamiento.leer_archivo(
+                    directorio, trozos_URI)
+                self.devolver_estado(codigo_estado, contenido, nombre_archivo)
+
+            else:
+                self.devolver_estado(404)
+
         else:
             try:
                 datos_almacenados = almacenamiento.leer_json(

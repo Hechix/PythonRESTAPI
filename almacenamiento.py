@@ -1,4 +1,6 @@
 from json import load as json_load, loads as json_loads, dump as json_dump
+from os import listdir as os_listdir
+from os import path as os_path
 
 
 def cargar_json(CONFIGURACION):
@@ -137,3 +139,118 @@ def modificar_objeto(CONFIGURACION, objeto, indices):
         json_dump(json, archivo)
 
     return str(objeto)
+
+
+def leer_archivo(directorio, trozos_URI):
+    try:
+        archivos_binarios = [
+            'jpg',
+            'png',
+            'gif',
+            'mp4',
+            'webm'
+        ]
+
+        metodo_lectura = 'r'
+
+        if trozos_URI[-1].split(".")[-1] in archivos_binarios:
+            metodo_lectura = 'rb'
+
+        with open(directorio, metodo_lectura) as archivo_leido:
+            return 200, archivo_leido.read(), "/"+directorio
+
+    except Exception as e:
+        if type(e).__name__ == 'UnicodeDecodeError':
+            return 500, 'NO_SE_PUEDE_DECODIFICAR', False
+
+        elif type(e).__name__ == 'FileNotFoundError':
+            return 404, False, False
+
+        else:
+            return 500, False, False
+
+
+def leer_directorio(directorio, trozos_URI, archivo_pagina_estatica, buscar_archivo_pag_estatica):
+    archivos_en_dire = os_listdir(directorio)
+    if buscar_archivo_pag_estatica and archivo_pagina_estatica in archivos_en_dire:
+        codigo, contenido, nom_archivo = leer_archivo(
+            directorio + "/" + archivo_pagina_estatica, trozos_URI)
+        return codigo, contenido, nom_archivo
+
+    directorio_padre = "/"
+
+    for dire_en_rama in range(len(trozos_URI)-1):
+        directorio_padre += trozos_URI[dire_en_rama] + "/"
+
+    html = '<!DOCTYPE html>\
+            <html lang="en">\
+            <head>\
+                <meta charset="UTF-8">\
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">\
+                <meta http-equiv="X-UA-Compatible" content="ie=edge">\
+                <title>'+directorio+'</title>\
+                <style>\
+                    table{\
+                        width:100%;\
+                        margin: 0 15px;\
+                    }\
+                    .directorio {\
+                        border-left: 3px solid blue;\
+                        padding-left: 5px;\
+                    }\
+                    .archivo {\
+                        border-left: 3px solid green;\
+                        padding-left: 5px;\
+                    }\
+                    .archivo_peso, .directorio_cantidad {\
+                        text-align: right;\
+                    }\
+                </style>\
+            </head>\
+            <body>\
+                <h1>' + directorio + '</h1>\
+                <table>\
+                    <tr>\
+                        <td class="directorio">\
+                            <a href="' + directorio_padre+'">'+directorio_padre+'</a>\
+                        </td>\
+                    </tr>'
+
+    for cosa in archivos_en_dire:
+        if os_path.isdir(directorio + "/" + cosa):
+            cantidad_objetos = str(len(os_listdir(directorio + "/" + cosa)))
+            html += '<tr>\
+                        <td class="directorio">\
+                            <a href="/' + directorio+"/"+cosa+'">'+cosa+'/</a>\
+                        </td>\
+                        <td class="directorio_cantidad">'+cantidad_objetos+'</td>\
+                        <td>Objetos</td>\
+                    </tr>'
+        else:
+            peso, escala_peso = calcular_tamaño(directorio+"/"+cosa)
+            html += '<tr>\
+                        <td class="archivo">\
+                            <a href="/'+directorio + "/"+cosa+'">'+cosa+'</a>\
+                        </td>\
+                        <td class="archivo_peso">'+peso+'</td>\
+                        <td>'+escala_peso+'</td>\
+                    </tr>'
+
+    html += '   </table>\
+            </body>\
+        </html>'
+    return 200, html, "/" + directorio
+
+
+def calcular_tamaño(archivo):
+    escalas = ["B", "KB", "MB", "GB", "TB"]
+    escala_actual = 0
+    peso = os_path.getsize(archivo)
+    while peso > 1000:
+        if escala_actual < len(escalas):
+            peso = int(peso / 1000)
+            escala_actual += 1
+        else:
+            break
+
+    return str(peso), escalas[escala_actual]
