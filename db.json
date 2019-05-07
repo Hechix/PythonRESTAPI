@@ -32,7 +32,7 @@
         "id": "3",
         "fecha": "28/4/19",
         "hora": "18:30",
-        "contenido": "<p>Ille, ille yuxta me</p><img src='imgs/excelente.gif'>",
+        "contenido": "<p>Ille, ille yuxta me</p><img src='/public/demostracion/imgs/excelente.gif'>",
         "postId": "2",
         "autor": "4"
     }, {

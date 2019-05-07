@@ -14,7 +14,7 @@ def main():
     servidor_escucha.setsockopt(SOL_SOCKET, SO_REUSEADDR, 1)
     servidor_escucha.bind(CONFIGURACION['SERVIDOR_ENLACE'])
     servidor_escucha.listen(10)
-    if CONFIGURACION['PAGINA_BIENVENIDA_ABRIR_AUTOMATICAMENTE_AL_INICIO']:
+    if CONFIGURACION['PAGINA_ESTATICA_ABRIR_AUTOMATICAMENTE_AL_INICIO']:
         abrir_en_navegador('http://localhost:' +
                            str(CONFIGURACION['SERVIDOR_ENLACE'][1]))
 
@@ -157,10 +157,12 @@ if __name__ == '__main__':
         'REGISTRO_DEBUG': True,
         'REGISTRO_ALMACENAR': False,
         'REGISTRO_IGNORAR': False,
-        'PAGINA_BIENVENIDA_SERVIR': True,
-        'PAGINA_BIENVENIDA_ABRIR_AUTOMATICAMENTE_AL_INICIO': True,
-        'PAGINA_BIENVENIDA_ARCHIVO': 'index.html',
-        'PAGINA_BIENVENIDA_DIRECTORIO': 'public',
+        'SERVIR_ARCHIVOS': True,
+        'INDEXAR_DIRECTORIOS': True,
+        'PAGINA_ESTATICA_ABRIR_AUTOMATICAMENTE_AL_INICIO': True,
+        'PAGINA_ESTATICA_ARCHIVO': 'index.html',
+        'PAGINA_ESTATICA_DIRECTORIO': 'public',
+        'BUSCAR_PAGINA_ESTATICA_AL_INDEXAR_DIRECTORIO': True,
         'URI_ESPECIALES': True,
         'PARAMETROS_ESPECIALES': True,
         'URI_ESPECIAL_CONFIGURACION': True
