@@ -1,14 +1,13 @@
 # PythonRestAPI
 Una REST API "Stand-Alone" de propósito general escrita en Python.
 
-## Descripcion
+## Descripción
 // TODO
 Es un proyecto para final de curso LOREM IPSUM LOREM IPSUM, como base de datos se usa un archivo json LOREM IPSUM LOREM IPSUM, se recomienda leer este documento antes de continuar
 
 ## Cómo empezar
 ### Pre-requisitos
 Todo lo que necesitas está en el archivo [Hechix's Python REST API.zip](https://google.es). //TODO AÑADIR URL
-
 ### Configuración
 Existen múltiples parámetros que son aceptados, para modificarlos, edita el archivo configuración.conf, ó añadelos en el CLI `hechixs_python_rest_api.exe [parametro]=[valor]`, más información en el apartado **Ejecucion**, el orden de prioridad es: `CLI > configuacion.conf > por defecto`
 
@@ -41,11 +40,6 @@ Si se elimina o no se configura algún parámetro, se usará el valor de la sigu
 *URI y parametros especiales*  `_raices, _limite, _desde ...`
 - URI_ESPECIALES = True
 - PARAMETROS_ESPECIALES = True
-
-`NOTA: /_configuracion devuelve los valores de:
-ATRIBUTO_PRIMARIO, ACEPTAR_GET, ACEPTAR_POST, ACEPTAR_PUT y ACEPTAR_DELETE
-es necesario para el correcto funcionamiento de la página estática por defecto`
-
 - URI_ESPECIAL_CONFIGURACION = True
 
 ### Ejecución
@@ -54,32 +48,40 @@ Ahora ya podemos empezar, la sintaxis de CLI es: `hechixs_python_rest_api.exe`
 - Separados por espacios `hechixs_python_rest_api.exe [parametro]=[valor] [parametro]=[valor] [parametro]=[valor]`
 - Para ver la ayuda, se puede emplear -h o --help: `hechixs_python_rest_api.exe -h`
 
+> Ejemplo `hechixs_python_rest_api.exe PAGINA_ESTATICA_ABRIR_AUTOMATICAMENTE_AL_INICIO=False` en este caso, se iniciará el servidor pero no se va a abrir la página estática
+
 ## Funcionalidad
 ### Capacidades
-// TODO
-El servidor es capaz de LOREM IPSUM LOREM IPSUM
-- URI especiales
-- Lista URI especiales
-- Parametros especiales
-- Lista Parametros especiales
-- Servicio páginas web estáticas (explicar abajo la x defecto)
-- La base de datos es un archivo json
+El servidor tiene múltiples capacidades.
+----URI NORMALES
+----PARAMEROS NORMALES
+**URIs especiales**: Son URLs pensadas para expandir las capacidades del servidor, pueden activarse y desactivarse con el parámetro de configuración `URI_ESPECIALES`
+- /_raices  *- Devuelve las raíces (posts, cometarios, usuarios), es el mismo comportamiento que si se desactiva la página estática*
+- /_configuracion *- Devuelve los valores de configuración del servidor `ATRIBUTO_PRIMARIO, ACEPTAR_GET, ACEPTAR_POST, ACEPTAR_PUT y ACEPTAR_DELETE`. Es necesario para el correcto funcionamiento de la página estática por defecto*
+
+**Parámetros especiales**: Son parámetros que modifican el retorno de los datos, pueden activarse y desactivarse con el parámetro de configuración `PARAMETROS_ESPECIALES` 
+- _limite=x *- Limita la cantidad de resultados a x `/posts?_limite=1`*
+> Ejemplo: si `/numeros` devuelve `[1,2,3,4,5]`, `/numeros?_limite=3` devuelve `[1,2,3]`
+- _desde=x *- "Corta" los resultados  devuelve a partir de x `/posts?_desde=1`*
+> Ejemplo: si `/numeros` devuelve `[1,2,3,4,5]`, `/numeros?_desde=3` devuelve `[4,5]`
+- _total *- Limita la cantidad de resultados `/posts?_total`*
+> Ejemplo: si `/numeros` devuelve `[1,2,3,4,5]`, `/numeros?_total` devuelve `5`
 
 ### Páginas web estáticas
 // TODO
 El servidor puede servir una web estátca LOREM IPSUM LOREM IPSUM, la web por defecto es un CRUD, con una pequeña web a modo de demostración de cómo se usan los datos en la base de datos LOREM IPSUM LOREM IPSUM,
 - Imágenes y videos
-- ???  
+- ???
 
 ### Códigos de error
 // TODO
-- Lista de códigos de error personalizados  
+- Lista de códigos de error personalizados
 
 ## Version
 // TODO
-Esta es la versión 1.0, no hay planes de mejora en el futuro LOREM IPSUM LOREM IPSUM  
+Esta es la versión 1.0, no hay planes de mejora en el futuro LOREM IPSUM LOREM IPSUM
 
-## Licencia 
+## Licencia
 // TODO
 Se permite usar este software para cualquier propósito académico o personal, no se permite modificar el código fuente sin permiso previo (o si?), LOREM IPSUM LOREM IPSUM
 - Buscar la licencia
