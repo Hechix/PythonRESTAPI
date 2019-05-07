@@ -1,3 +1,4 @@
+
 # PythonRestAPI
 
 Una REST API "Stand-Alone" de propósito general escrita en Python.
@@ -11,16 +12,43 @@ Es un proyecto para final de curso LOREM IPSUM LOREM IPSUM, como base de datos s
 
 ### Pre-requisitos
 
-// TODO
-Descarga (archivo zip), descomprimelo LOREM IPSUM LOREM IPSUM LOREM IPSUM LOREM IPSUM
+Todo lo que necesitas está en el archivo [Hechix's Python REST API.zip](https://google.es). //TODO AÑADIR URL
 
 ### Configuración
 
-// TODO
-Lo primero que deberías hacer es configurar el servidor, ya viene pre-configurado para LOREM IPSUM LOREM IPSUM, esto se puede hacer LOREM IPSUM LOREM IPSUM
+Existen múltiples parámetros que son aceptados, para modificarlos, edita el archivo configuración.conf, ó añadelos en el CLI `hechixs_python_rest_api.exe [parametro]=[valor]`, más información en el apartado **Ejecucion**, si se elimina o no se configura algún parámetro, se usará el valor de la siguiente lista.
 
-- Configuración
-- CLI (se explica abajo?)
+ *Parametros sobre el servidor y el archivo JSON*
+- SERVIDOR_DIRECCION = 0.0.0.0
+- SERVIDOR_PUERTO = 80
+- FICHERO_JSON = db.json
+- ATRIBUTO_PRIMARIO = id *- Este es el atributo sobre el que se realizan las busquedas*
+
+*Metodos validos*
+- ACEPTAR_GET = True
+- ACEPTAR_POST = True
+- ACEPTAR_PUT = True
+- ACEPTAR_DELETE = True
+
+*Registro de eventos*
+- REGISTRO_ALMACENAR = False
+- REGISTRO_IGNORAR = False
+
+*Página estatica y directorio*
+- SERVIR_ARCHIVOS = True
+- INDEXAR_DIRECTORIOS = True
+- PAGINA_ESTATICA_ABRIR_AUTOMATICAMENTE_AL_INICIO = True
+- PAGINA_ESTATICA_ARCHIVO = index.html
+- PAGINA_ESTATICA_DIRECTORIO = public
+- BUSCAR_PAGINA_ESTATICA_AL_INDEXAR_DIRECTORIO = True
+
+*URI y parametros especiales* `_raices, _limite, _desde ...`
+- URI_ESPECIALES = True
+- PARAMETROS_ESPECIALES = True
+`NOTA: /_configuracion devuelve los valores de:
+ATRIBUTO_PRIMARIO, ACEPTAR_GET, ACEPTAR_POST, ACEPTAR_PUT y ACEPTAR_DELETE
+es necesario para el correcto funcionamiento de la página estática por defecto`
+- URI_ESPECIAL_CONFIGURACION = True
 
 ### Ejecución
 
