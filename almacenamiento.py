@@ -1,5 +1,6 @@
 from json import load as json_load, loads as json_loads, dump as json_dump
 from os import listdir as os_listdir
+from os import path as os_path
 
 
 def cargar_json(CONFIGURACION):
@@ -169,7 +170,13 @@ def leer_archivo(directorio, trozos_URI):
             return 500, False, False
 
 
-def leer_directorio(directorio, trozos_URI):
+def leer_directorio(directorio, trozos_URI, archivo_pagina_estatica, buscar_archivo_pag_estatica):
+    archivos_en_dire = os_listdir(directorio)
+    if buscar_archivo_pag_estatica and archivo_pagina_estatica in archivos_en_dire:
+        codigo, contenido, nom_archivo = leer_archivo(
+            directorio + "/" + archivo_pagina_estatica, trozos_URI)
+        return codigo, contenido, nom_archivo
+
     html = '<!DOCTYPE html>\
             <html lang="en">\
             <head>\
@@ -177,13 +184,52 @@ def leer_directorio(directorio, trozos_URI):
                 <meta name="viewport" content="width=device-width, initial-scale=1.0">\
                 <meta http-equiv="X-UA-Compatible" content="ie=edge">\
                 <title>'+directorio+'</title>\
+                <style>\
+                    table{\
+                        width:100%;\
+                        margin: 0 15px;\
+                    }\
+                    .directorio {\
+                        border-left: 3px solid blue;\
+                        padding-left: 5px;\
+                    }\
+                    .archivo {\
+                        border-left: 3px solid green;\
+                        padding-left: 5px;\
+                    }\
+                    .archivo_peso {\
+                        text-align: right;\
+                    }\
+                </style>\
             </head>\
             <body>\
-                <h1>' + directorio + '</h1>'
+                <h1>' + directorio + '</h1>\
+                <table>'
 
-    for cosa in os_listdir(directorio):
-        html += '<h3>'+cosa+'</h3>'
+    for cosa in archivos_en_dire:
+        if os_path.isdir(directorio + "/" + cosa):
+            html += '<tr><td class="directorio"><a href="/' + \
+                directorio+"/"+cosa+'">'+cosa+'/</a></td></tr>'
+        else:
+            peso, escala_peso = calcular_tamaño(directorio+"/"+cosa)
+            html += '<tr><td class="archivo"><a href="/'+directorio + \
+                "/"+cosa+'">'+cosa+'</a></td><td class="archivo_peso">'+peso+'</td><td>'+escala_peso+'</td></tr>'
 
-    html += '</body>\
-            </html>'
+    html += '   </table>\
+            </body>\
+        </html>'
     return 200, html, False
+
+
+def calcular_tamaño(archivo):
+    escalas = ["B", "KB", "MB", "GB", "TB"]
+    escala_actual = 0
+    peso = os_path.getsize(archivo)
+    while peso > 1000:
+        if escala_actual < len(escalas):
+            peso = int(peso / 1000)
+            escala_actual += 1
+        else:
+            break
+
+    return str(peso), escalas[escala_actual]

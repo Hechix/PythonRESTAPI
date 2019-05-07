@@ -215,13 +215,13 @@ class Peticion:
 
         if len(trozos_URI) == 0:
 
-            if self.CONFIGURACION['PAGINA_BIENVENIDA_SERVIR']:
+            if self.CONFIGURACION['SERVIR_ARCHIVOS']:
 
                 try:
 
-                    with open(self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']+'/'+self.CONFIGURACION['PAGINA_BIENVENIDA_ARCHIVO'], 'r') as pagina_bienvenida:
-                        self.devolver_estado(200, pagina_bienvenida.read(
-                        ), nombre_archivo=self.CONFIGURACION['PAGINA_BIENVENIDA_ARCHIVO'])
+                    with open(self.CONFIGURACION['PAGINA_ESTATICA_DIRECTORIO']+'/'+self.CONFIGURACION['PAGINA_ESTATICA_ARCHIVO'], 'r') as PAGINA_ESTATICA:
+                        self.devolver_estado(200, PAGINA_ESTATICA.read(
+                        ), nombre_archivo=self.CONFIGURACION['PAGINA_ESTATICA_ARCHIVO'])
 
                 except Exception as e:
                     self.indexar_json()
@@ -236,17 +236,18 @@ class Peticion:
 
             eval(URIs_especiales[trozos_URI[0]])
 
-        elif trozos_URI[0] == self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']:
+        elif trozos_URI[0] == self.CONFIGURACION['PAGINA_ESTATICA_DIRECTORIO']:
 
-            directorio = self.CONFIGURACION['PAGINA_BIENVENIDA_DIRECTORIO']
+            directorio = self.CONFIGURACION['PAGINA_ESTATICA_DIRECTORIO']
             for x in range(1, len(trozos_URI)):
                 directorio += "/" + trozos_URI[x]
 
-            print(directorio)
-
             if os_path.isdir(directorio):
-                codigo_estado, contenido, nombre_archivo = almacenamiento.leer_directorio(
-                    directorio, trozos_URI)
+                if self.CONFIGURACION['INDEXAR_DIRECTORIOS']:
+                    codigo_estado, contenido, nombre_archivo = almacenamiento.leer_directorio(
+                        directorio, trozos_URI, self.CONFIGURACION['PAGINA_ESTATICA_ARCHIVO'], self.CONFIGURACION['BUSCAR_PAGINA_ESTATICA_AL_INDEXAR_DIRECTORIO'])
+                else:
+                    codigo_estado, contenido, nombre_archivo = 403, False, False
                 self.devolver_estado(codigo_estado, contenido, nombre_archivo)
 
             elif os_path.isfile(directorio):
