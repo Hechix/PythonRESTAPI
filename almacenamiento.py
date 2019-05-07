@@ -1,6 +1,7 @@
 from json import load as json_load, loads as json_loads, dump as json_dump
 from os import listdir as os_listdir
-from os import path as os_path
+from os.path import isdir as os_path_isdir
+from os.path import getsize as os_path_getsize
 
 
 def cargar_json(CONFIGURACION):
@@ -217,7 +218,7 @@ def leer_directorio(directorio, trozos_URI, archivo_pagina_estatica, buscar_arch
                     </tr>'
 
     for cosa in archivos_en_dire:
-        if os_path.isdir(directorio + "/" + cosa):
+        if os_path_isdir(directorio + "/" + cosa):
             cantidad_objetos = str(len(os_listdir(directorio + "/" + cosa)))
             html += '<tr>\
                         <td class="directorio">\
@@ -245,7 +246,7 @@ def leer_directorio(directorio, trozos_URI, archivo_pagina_estatica, buscar_arch
 def calcular_tamaño(archivo):
     escalas = ["B", "KB", "MB", "GB", "TB"]
     escala_actual = 0
-    peso = os_path.getsize(archivo)
+    peso = os_path_getsize(archivo)
     while peso > 1000:
         if escala_actual < len(escalas):
             peso = int(peso / 1000)
