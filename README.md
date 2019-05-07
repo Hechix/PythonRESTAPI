@@ -1,9 +1,15 @@
-# PythonRestAPI
+# Hechix's Python REST API
 Una REST API "Stand-Alone" de propósito general escrita en Python.
 
 ## Descripción
-// TODO
-Es un proyecto para final de curso LOREM IPSUM LOREM IPSUM, como base de datos se usa un archivo json LOREM IPSUM LOREM IPSUM, se recomienda leer este documento antes de continuar
+Este es un proyecto para final de curso, se trata de un servidor, que gestiona una REST API de uso general, pensada para ser usada como mini-servidor web para proyectos pequeños.
+- No tiene ningún tipo de autenticación
+- Como base de datos se usa un archivo json
+- Muy configurable
+- Sirve páginas web estáticas
+- Descomprimir y ejecutar.
+
+Se recomienda leer este documento antes de continuar.
 
 ## Cómo empezar
 ### Pre-requisitos
