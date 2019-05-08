@@ -13,7 +13,7 @@ Se recomienda leer este documento antes de continuar.
 
 ## Cómo empezar
 ### Pre-requisitos / Descargas
-Todo lo que necesitas está en el archivo [Hechix's Python REST API.zip](https://google.es).
+Todo lo que necesitas está en el archivo [Hechix's_Python_REST_API.zip](https://github.com/Hechix/PythonRESTAPI/releases/download/1.0/Hechixs_Python_REST_API.zip).
 ### Configuración
 Existen múltiples parámetros que son aceptados, para modificarlos, edita el archivo configuración.conf, o añádelos en el CLI `hechixs_python_rest_api.exe [parametro]=[valor]`, más información en el apartado **Ejecución**, el orden de prioridad es: `CLI > configuacion.conf > por defecto`
 
