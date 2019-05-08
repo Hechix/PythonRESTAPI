@@ -26,22 +26,28 @@ Si se elimina o no se configura algún parámetro, se usará el valor de la sigu
 - ATRIBUTO_PRIMARIO = id *- Este es el atributo sobre el que se realizan las búsquedas*
 
 *Métodos validos*
-- ACEPTAR_GET = True
-- ACEPTAR_POST = True
-- ACEPTAR_PUT = True
-- ACEPTAR_DELETE = True
+|Nombre|Defecto|Alternativo|
+|-|-|-|
+|ACEPTAR_GET |**True**|False
+|ACEPTAR_POST|**True**|False
+|ACEPTAR_PUT|**True**|False
+|ACEPTAR_DELETE|**True**|False
 
 *Registro de eventos*
-- REGISTRO_ALMACENAR = False *- Guardar en Registro.log*
-- REGISTRO_IGNORAR = False *- No imprimir ni guardar*
+|Nombre|Defecto|Alternativo||
+|-|-|-|-|
+|REGISTRO_ALMACENAR |**False**|True|*Guardar en Registro.log*
+|REGISTRO_IGNORAR |**False**|True|*No imprimir ni guardar*
 
 *Página estática y directorio*
-- SERVIDOR_ESTATICO = True
-- INDEXAR_DIRECTORIOS = True
-- PAGINA_ESTATICA_ABRIR_AUTOMATICAMENTE_AL_INICIO = True
-- PAGINA_ESTATICA_ARCHIVO = index.html
-- PAGINA_ESTATICA_DIRECTORIO = public
-- BUSCAR_PAGINA_ESTATICA_AL_INDEXAR_DIRECTORIO = True
+|Nombre|Defecto|Alternativo|
+|-|-|-
+|SERVIDOR_ESTATICO |**True**|False
+|INDEXAR_DIRECTORIOS |**True**|False
+|PAGINA_ESTATICA_ABRIR_AUTOMATICAMENTE_AL_INICIO |**True**|False
+|PAGINA_ESTATICA_ARCHIVO |**index.html**|*Personalizado*
+|PAGINA_ESTATICA_DIRECTORIO |**public**|*Personalizado*
+|BUSCAR_PAGINA_ESTATICA_AL_INDEXAR_DIRECTORIO |**True**|False
 
 *URI y parametros especiales*  `_raices, _limite, _desde ...`
 - URI_ESPECIALES = True
