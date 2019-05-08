@@ -12,28 +12,28 @@ Este es un proyecto para final de curso, se trata de un servidor, que gestiona u
 Se recomienda leer este documento antes de continuar.
 
 ## Cómo empezar
-### Pre-requisitos
-Todo lo que necesitas está en el archivo [Hechix's Python REST API.zip](https://google.es). //TODO AÑADIR URL
+### Pre-requisitos / Descargas
+Todo lo que necesitas está en el archivo [Hechix's Python REST API.zip](https://google.es).
 ### Configuración
-Existen múltiples parámetros que son aceptados, para modificarlos, edita el archivo configuración.conf, ó añadelos en el CLI `hechixs_python_rest_api.exe [parametro]=[valor]`, más información en el apartado **Ejecucion**, el orden de prioridad es: `CLI > configuacion.conf > por defecto`
+Existen múltiples parámetros que son aceptados, para modificarlos, edita el archivo configuración.conf, ó añádelos en el CLI `hechixs_python_rest_api.exe [parametro]=[valor]`, más información en el apartado **Ejecución**, el orden de prioridad es: `CLI > configuacion.conf > por defecto`
 
 Si se elimina o no se configura algún parámetro, se usará el valor de la siguiente lista.
 
-*Parametros sobre el servidor y el archivo JSON*
+*Parámetros sobre el servidor y el archivo JSON*
 - SERVIDOR_DIRECCION = 0.0.0.0
 - SERVIDOR_PUERTO = 80
 - FICHERO_JSON = db.json
-- ATRIBUTO_PRIMARIO = id *- Este es el atributo sobre el que se realizan las busquedas*
+- ATRIBUTO_PRIMARIO = id *- Este es el atributo sobre el que se realizan las búsquedas*
 
-*Metodos validos*
+*Métodos validos*
 - ACEPTAR_GET = True
 - ACEPTAR_POST = True
 - ACEPTAR_PUT = True
 - ACEPTAR_DELETE = True
 
 *Registro de eventos*
-- REGISTRO_ALMACENAR = False
-- REGISTRO_IGNORAR = False
+- REGISTRO_ALMACENAR = False *- Guardar en Registro.log*
+- REGISTRO_IGNORAR = False *- No imprimir ni guardar*
 
 *Página estática y directorio*
 - SERVIDOR_ESTATICO = True
@@ -65,7 +65,7 @@ El servidor tiene múltiples capacidades.
 **Parámetros normales**: Son parámetros condicionales, se pueden juntar con los especiales, sirven para modificar el retorno de datos `/posts?autor=1, /comentarios?postId=1, ...`
 
 **URIs especiales**: Son URLs pensadas para expandir las capacidades del servidor, pueden activarse y desactivarse con el parámetro de configuración `URI_ESPECIALES`
-- /_raices  *- Devuelve las raíces (posts, cometarios, usuarios), es el mismo comportamiento que si se desactiva la página estática*
+- /_raices  *- Devuelve las raíces (posts, comentarios, usuarios), es el mismo comportamiento que si se desactiva la página estática*
 - /_configuracion *- Devuelve los valores de configuración del servidor `ATRIBUTO_PRIMARIO, ACEPTAR_GET, ACEPTAR_POST, ACEPTAR_PUT y ACEPTAR_DELETE`. Es necesario para el correcto funcionamiento de la página estática por defecto*
 
 **Parámetros especiales**: Son parámetros que modifican el retorno de los datos, pueden activarse y desactivarse con el parámetro de configuración `PARAMETROS_ESPECIALES` 
@@ -91,17 +91,8 @@ Tanto el directorio como el archivo índice se modifican respectivamente con `PA
 ### Códigos de error
 // TODO
 - Lista de códigos de error personalizados
-
-## Version
-// TODO
-Esta es la versión 1.0, no hay planes de mejora en el futuro LOREM IPSUM LOREM IPSUM
-
+- 
 ## Licencia
-// TODO
-Se permite usar este software para cualquier propósito académico o personal, no se permite modificar el código fuente sin permiso previo (o si?), LOREM IPSUM LOREM IPSUM
-- Buscar la licencia
+Se permite usar este software para cualquier propósito académico o personal, no se permite modificar el código fuente ni distribuirlo sin enlazar a este repositorio.
 
-## ???
-### ???
-- LOREM
-- IPSUM
+[Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)](https://creativecommons.org/licenses/by-nc-nd/4.0/)
