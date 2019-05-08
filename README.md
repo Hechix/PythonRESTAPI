@@ -22,7 +22,7 @@ Si se elimina o no se configura algún parámetro, se usará el valor de la sigu
 *Parámetros sobre el servidor y el archivo JSON*
 
 | Nombre | Defecto | Alternativo |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | SERVIDOR_DIRECCION | **0.0.0.0** | False |
 | SERVIDOR_PUERTO | **80** | False |
 | FICHERO_JSON | **db.json** | False |
