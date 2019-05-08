@@ -28,10 +28,10 @@ Si se elimina o no se configura algún parámetro, se usará el valor de la sigu
 *Métodos validos*
 |Nombre|Defecto|Alternativo|
 |-|-|-|
-|ACEPTAR_GET |**True**|False
-|ACEPTAR_POST|**True**|False
-|ACEPTAR_PUT|**True**|False
-|ACEPTAR_DELETE|**True**|False
+|ACEPTAR_GET |**True**|False|
+|ACEPTAR_POST|**True**|False|
+|ACEPTAR_PUT|**True**|False|
+|ACEPTAR_DELETE|**True**|False|
 
 *Registro de eventos*
 |Nombre|Defecto|Alternativo||
