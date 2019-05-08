@@ -89,9 +89,28 @@ Se puede desactivar completamente la función de servidor estático con el pará
 Tanto el directorio como el archivo índice se modifican respectivamente con `PAGINA_ESTATICA_DIRECTORIO` y `PAGINA_ESTATICA_ARCHIVO`.
 
 ### Códigos de error
-// TODO
-- Lista de códigos de error personalizados
-- 
+Códigos genéricos:
+- 400: PETICION_INCORRECTA
+- 403: ACCESO_DENEGADO
+- 404: NO_EXISTEN_DATOS
+- 500: ERROR_INTERNO_DEL_SERVIDOR
+
+Códigos situacionales:
+- 400: OBJETO_SIN_ATRIBUTO_PRIMARIO
+- 400: NO_EXISTE_EL_DESTINO
+- 400: DESTINO_INCORRECTO
+- 403: METODO_NO_ADMITIDO 
+>  - Se está intentando hacer GET, POST, PUT o DELETE que está desactivado.
+>  - Se está intentando usar un método diferente a GET, POST, PUT o DELETE, sólo son soportados los mencionados.
+- 403: PARAMETROS_ESPECIALES_DESACTIVADOS
+- 404: ALMACENAMIENTO_JSON_OBJETO_SIN_ATRIBUTO_PRIMARIO
+- 404: ALMACENAMIENTO_JSON_MALFORMADO
+- 404: ATRIBUTO_PRIMARIO_YA_EXISTENTE
+- 500: NO_SE_HA_PODIDO_CODIFICAR 
+> El archivo no se ha podido codificar ni en cp1252, ni UTF-8, posiblemente tenga carácteres raros o sea un binario no definido (mirar **Páginas web estáticas**).
+- 500: ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO
+> También puede estar malformado, pero no se diferencia.
+
 ## Licencia
 Se permite usar este software para cualquier propósito académico o personal, no se permite modificar el código fuente ni distribuirlo sin enlazar a este repositorio.
 
