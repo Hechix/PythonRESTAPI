@@ -1,13 +1,3 @@
-
-| Nombre | Defecto | Alternativo|
-| --- | --- | --- |
-| SERVIDOR_ESTATICO | **True** | False |
-| INDEXAR_DIRECTORIOS | **True** | False |
-| PAGINA_ESTATICA_ABRIR_AUTOMATICAMENTE_AL_INICIO | **True** | False |
-| PAGINA_ESTATICA_ARCHIVO | **index.html** | *Personalizado* |
-| PAGINA_ESTATICA_DIRECTORIO | **public** | *Personalizado* |
-| BUSCAR_PAGINA_ESTATICA_AL_INDEXAR_DIRECTORIO | **True** | False |
-
 # Hechix's Python REST API
 Una REST API "Stand-Alone" de propósito general escrita en Python.
 
@@ -46,8 +36,8 @@ Si se elimina o no se configura algún parámetro, se usará el valor de la sigu
 *Registro de eventos*
 |Nombre|Defecto|Alternativo||
 |-|-|-|-|
-|REGISTRO_ALMACENAR |**False**|True|*Guardar en Registro.log*
-|REGISTRO_IGNORAR |**False**|True|*No imprimir ni guardar*
+|REGISTRO_ALMACENAR |**False**|True|*Guardar en Registro.log*|
+|REGISTRO_IGNORAR |**False**|True|*No imprimir ni guardar*|
 
 *Página estática y directorio*
 | Nombre | Defecto | Alternativo|
