@@ -41,7 +41,7 @@ Si se elimina o no se configura algún parámetro, se usará el valor de la sigu
 
 *Página estática y directorio*
 | Nombre | Defecto | Alternativo|
-|-|-|-|
+| --- | --- | --- |
 | SERVIDOR_ESTATICO | **True** | False |
 | INDEXAR_DIRECTORIOS | **True** | False |
 | PAGINA_ESTATICA_ABRIR_AUTOMATICAMENTE_AL_INICIO | **True** | False |
