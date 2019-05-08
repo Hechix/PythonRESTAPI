@@ -20,10 +20,13 @@ Existen múltiples parámetros que son aceptados, para modificarlos, edita el ar
 Si se elimina o no se configura algún parámetro, se usará el valor de la siguiente lista.
 
 *Parámetros sobre el servidor y el archivo JSON*
-- SERVIDOR_DIRECCION = 0.0.0.0
-- SERVIDOR_PUERTO = 80
-- FICHERO_JSON = db.json
-- ATRIBUTO_PRIMARIO = id *- Este es el atributo sobre el que se realizan las búsquedas*
+
+| Nombre | Defecto | Alternativo |
+| --- | --- | --- | --- |
+| SERVIDOR_DIRECCION | **0.0.0.0** | False |
+| SERVIDOR_PUERTO | **80** | False |
+| FICHERO_JSON | **db.json** | False |
+| ATRIBUTO_PRIMARIO | **id** | False |
 
 *Métodos validos*
 
@@ -53,9 +56,12 @@ Si se elimina o no se configura algún parámetro, se usará el valor de la sigu
 | BUSCAR_PAGINA_ESTATICA_AL_INDEXAR_DIRECTORIO | **True** | False |
 
 *URI y parametros especiales*  `_raices, _limite, _desde ...`
-- URI_ESPECIALES = True
-- PARAMETROS_ESPECIALES = True
-- URI_ESPECIAL_CONFIGURACION = True
+
+| Nombre | Defecto | Alternativo |
+| --- | --- | --- |
+| URI_ESPECIALES | **True** | False |
+| PARAMETROS_ESPECIALES | **True** | False |
+| URI_ESPECIAL_CONFIGURACION | **True** | False |
 
 ### Ejecución
 Ahora ya podemos empezar, la sintaxis de CLI es: `hechixs_python_rest_api.exe`
