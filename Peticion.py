@@ -152,13 +152,17 @@ class Peticion:
         errores_personalizados = [
             'ALMACENAMIENTO_JSON_OBJETO_SIN_ATRIBUTO_PRIMARIO',
             'ALMACENAMIENTO_JSON_MALFORMADO',
-            'OBJETO_SIN_ATRIBUTO_PRIMARIO',
-            'NO_EXISTE_EL_DESTINO',
             'ATRIBUTO_PRIMARIO_YA_EXISTENTE'
+        ]
+        errores_400 = [
+            'OBJETO_SIN_ATRIBUTO_PRIMARIO',
+            'NO_EXISTE_EL_DESTINO'
         ]
 
         if error in errores_personalizados:
             self.devolver_estado(404, error)
+        elif error in errores_400:
+            self.devolver_estado(400, error)
         else:
             self.devolver_estado(cod_error, msg_error)
 
