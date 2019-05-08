@@ -26,18 +26,18 @@ Si se elimina o no se configura algún parámetro, se usará el valor de la sigu
 - ATRIBUTO_PRIMARIO = id *- Este es el atributo sobre el que se realizan las búsquedas*
 
 *Métodos validos*
-|Nombre|Defecto|Alternativo|
-|-|-|-|
-|ACEPTAR_GET |**True**|False|
-|ACEPTAR_POST|**True**|False|
-|ACEPTAR_PUT|**True**|False|
-|ACEPTAR_DELETE|**True**|False|
+| Nombre | Defecto | Alternativo |
+| --- | --- | --- |
+| ACEPTAR_GET | **True** | False |
+| ACEPTAR_POST | **True** | False |
+| ACEPTAR_PUT | **True** | False |
+| ACEPTAR_DELETE | **True** | False |
 
 *Registro de eventos*
-|Nombre|Defecto|Alternativo||
-|-|-|-|-|
-|REGISTRO_ALMACENAR |**False**|True|*Guardar en Registro.log*|
-|REGISTRO_IGNORAR |**False**|True|*No imprimir ni guardar*|
+| Nombre | Defecto | Alternativo | Nota |
+| --- | --- | --- | --- |
+| REGISTRO_ALMACENAR | **False** | True | *Guardar en Registro.log* |
+| REGISTRO_IGNORAR | **False** | True | *No imprimir ni guardar* |
 
 *Página estática y directorio*
 | Nombre | Defecto | Alternativo|
