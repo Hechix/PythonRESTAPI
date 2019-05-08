@@ -23,10 +23,10 @@ Si se elimina o no se configura algún parámetro, se usará el valor de la sigu
 
 | Nombre | Defecto | Alternativo |
 | --- | --- | --- |
-| SERVIDOR_DIRECCION | **0.0.0.0** | False |
-| SERVIDOR_PUERTO | **80** | False |
-| FICHERO_JSON | **db.json** | False |
-| ATRIBUTO_PRIMARIO | **id** | False |
+| SERVIDOR_DIRECCION | **0.0.0.0** | *Personalizado* |
+| SERVIDOR_PUERTO | **80** | *Personalizado* |
+| FICHERO_JSON | **db.json** | *Personalizado* |
+| ATRIBUTO_PRIMARIO | **id** | *Personalizado* |
 
 *Métodos validos*
 
