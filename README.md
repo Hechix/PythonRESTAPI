@@ -15,7 +15,7 @@ Se recomienda leer este documento antes de continuar.
 ### Pre-requisitos / Descargas
 Todo lo que necesitas está en el archivo [Hechix's Python REST API.zip](https://google.es).
 ### Configuración
-Existen múltiples parámetros que son aceptados, para modificarlos, edita el archivo configuración.conf, ó añádelos en el CLI `hechixs_python_rest_api.exe [parametro]=[valor]`, más información en el apartado **Ejecución**, el orden de prioridad es: `CLI > configuacion.conf > por defecto`
+Existen múltiples parámetros que son aceptados, para modificarlos, edita el archivo configuración.conf, o añádelos en el CLI `hechixs_python_rest_api.exe [parametro]=[valor]`, más información en el apartado **Ejecución**, el orden de prioridad es: `CLI > configuacion.conf > por defecto`
 
 Si se elimina o no se configura algún parámetro, se usará el valor de la siguiente lista.
 
@@ -110,7 +110,7 @@ Códigos situacionales:
 > El archivo no se ha podido codificar ni en cp1252, ni UTF-8, posiblemente tenga carácteres raros o sea un binario no definido (mirar **Páginas web estáticas**).
 - 500: ALMACENAMIENTO_JSON_INEXISTENTE_O_CORRUPTO
 > También puede estar malformado, pero no se diferencia.
-
+> 
 ## Licencia
 Se permite usar este software para cualquier propósito académico o personal, no se permite modificar el código fuente ni distribuirlo sin enlazar a este repositorio.
 
