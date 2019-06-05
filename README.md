@@ -13,7 +13,7 @@ Se recomienda leer este documento antes de continuar.
 
 ## Cómo empezar
 ### Pre-requisitos / Descargas
-Todo lo que necesitas está en el archivo [Hechix's Python REST API.zip](https://google.es).
+Todo lo que necesitas está en el archivo [Hechix's_Python_REST_API.zip](https://github.com/Hechix/PythonRESTAPI/releases/download/1.0/Hechixs_Python_REST_API.zip), alternativamente también se puede descargar sin el CRUD [Hechix's_Python_REST_API_no_CRUD.zip](https://github.com/Hechix/PythonRESTAPI/releases/download/1.0/Hechixs_Python_REST_API_no_CRUD.zip)
 ### Configuración
 Existen múltiples parámetros que son aceptados, para modificarlos, edita el archivo configuración.conf, o añádelos en el CLI `hechixs_python_rest_api.exe [parametro]=[valor]`, más información en el apartado **Ejecución**, el orden de prioridad es: `CLI > configuacion.conf > por defecto`
 
@@ -88,7 +88,7 @@ El servidor tiene múltiples capacidades.
 > Ejemplo: si `/numeros` devuelve `[1,2,3,4,5]`, `/numeros?_limite=3` devuelve `[1,2,3]`
 - _desde=x *- "Corta" los resultados  devuelve a partir de x `/posts?_desde=1`*
 > Ejemplo: si `/numeros` devuelve `[1,2,3,4,5]`, `/numeros?_desde=3` devuelve `[4,5]`
-- _total *- Limita la cantidad de resultados `/posts?_total`*
+- _total *- Hace un recuento de la cantidad de resultados `/posts?_total`*
 > Ejemplo: si `/numeros` devuelve `[1,2,3,4,5]`, `/numeros?_total` devuelve `5`
 
 ### Páginas web estáticas
