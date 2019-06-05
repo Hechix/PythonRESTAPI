@@ -88,7 +88,7 @@ El servidor tiene múltiples capacidades.
 > Ejemplo: si `/numeros` devuelve `[1,2,3,4,5]`, `/numeros?_limite=3` devuelve `[1,2,3]`
 - _desde=x *- "Corta" los resultados  devuelve a partir de x `/posts?_desde=1`*
 > Ejemplo: si `/numeros` devuelve `[1,2,3,4,5]`, `/numeros?_desde=3` devuelve `[4,5]`
-- _total *- Limita la cantidad de resultados `/posts?_total`*
+- _total *- Hace un recuento de la cantidad de resultados `/posts?_total`*
 > Ejemplo: si `/numeros` devuelve `[1,2,3,4,5]`, `/numeros?_total` devuelve `5`
 
 ### Páginas web estáticas
